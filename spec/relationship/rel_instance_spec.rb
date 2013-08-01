@@ -30,9 +30,24 @@ module Oriented
 
         describe "#each" do 
           let(:dummy) {dummy_class.new}
-          let(:related) {related_class.new}
+          let(:related1) {related_class.new}
+          let(:related2) {related_class.new}
           before(:each) do
-            dummy.spanks << related 
+            dummy_class.send(:has_many, :spanks)
+            dummy.spanks << related1
+            dummy.spanks << related2
+            dummy.save
+          end
+
+          it "iterates through the vertices" do
+            ids = [related1.id, related2.id]            
+            dummy.spanks.each {|r| ids.should include(r.id)}
+          end
+        end
+
+        describe "#all" do
+          it "returns all the other vertices" do
+            
           end
         end
       end
@@ -47,15 +62,13 @@ module Oriented
           end
         end
 
-        describe "#other_node" do
-          it "returns the other node" do
+        describe "#other_vertex" do
+          it "returns the other vertex" do
             e = subject.create_relationship_to(other)
             vertex.save
-            puts e.identity.to_s
-            subject.other_node.id.to_s.should == other.id 
+            subject.other_vertex.id.to_s.should == other.id 
           end
         end
-
       end
 
     end

@@ -16,7 +16,7 @@ module Oriented
         end
       end
 
-      def other_node
+      def other_vertex
         return unless @rel_type.cardinality == :one
         vertex_query.first 
       end
@@ -59,7 +59,6 @@ module Oriented
       def check_edge_type(rel_label)
         exists = vertex.graph.get_edge_type(rel_label.to_s)
         unless exists
-          puts "CREATING EDGE"
           vertex.graph.create_edge_type(rel_label.to_s)
         end
       end

@@ -21,11 +21,11 @@ module Oriented
         unless method_defined?(method_name)
           class_eval <<-RUBY, __FILE__, __LINE__
             def #{method_name} 
-              rel = self.class._rels[:'#{rel_label}']
-              Relationship.new(self.__java_obj, :'#{rel_label}')
+              rel = self.class._rels[:'#{method_name}']
+              rel_instance = Oriented::Relationship::RelInstance.new(self, rel)
             end
           RUBY
-          _rels[rel_label] = Oriented::Relationship::RelType.new(rel_label, self, options.merge({rel_type: :many}))
+          _rels[rel_label] = Oriented::Relationship::RelType.new(rel_label, self, options.merge({cardinality: :many}))
         end
       end
 
@@ -36,7 +36,7 @@ module Oriented
             def #{method_name} 
               rel = self.class._rels[:'#{method_name}']
               rel_instance = Oriented::Relationship::RelInstance.new(self, rel)
-              rel_instance.other_node
+              wrap(rel_instance.other_vertex)
             end
           RUBY
         end

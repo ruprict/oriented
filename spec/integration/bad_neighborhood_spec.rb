@@ -3,8 +3,8 @@ require_relative "../fixtures/models"
 describe "BadNeighborhood" do
   let(:barbie) { Model.new(name: "Barbie")}  
   let(:bad_guy) {DrugDealer.new(name: "Baddie", product: 'Crank')}
-  let(:ramona) {Stylis.new(name: 'Ramona')}
-  let(:pat) {Stylis.new(name: 'Pat')}
+  let(:ramona) {Stylist.new(name: 'Ramona')}
+  let(:pat) {Stylist.new(name: 'Pat')}
 
   it "lets Barbie get a drug dealer" do
     barbie.drug_dealer = bad_guy

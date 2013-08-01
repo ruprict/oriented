@@ -4,6 +4,7 @@ module Oriented
   module Vertex
     extend ActiveSupport::Concern
     include Oriented::Relationships
+    include Oriented::Wrapper
 
     attr_accessor :__java_obj
 
