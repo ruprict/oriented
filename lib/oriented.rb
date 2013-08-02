@@ -6,6 +6,9 @@ require "oriented/relationship/rel_type"
 require "oriented/relationship/rel_instance"
 require "oriented/relationships"
 
+require "oriented/type_converters"
+require "oriented/properties"
+
 # Vertex
 require "oriented/vertex"
 

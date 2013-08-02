@@ -5,6 +5,7 @@ module Oriented
     extend ActiveSupport::Concern
     include Oriented::Relationships
     include Oriented::Wrapper
+    include Oriented::Properties
 
     attr_accessor :__java_obj
 
@@ -14,6 +15,7 @@ module Oriented
 
     def initialize(attrs={})
       @__java_obj = DB.add_vertex("class:#{self.class.to_s}")        
+      write_default_values
       attrs.each_pair {|attr,val| public_send("#{attr}=", val)}
     end
 
@@ -42,17 +44,6 @@ module Oriented
     end
 
     module ClassMethods 
-      def property(name)
-        return if field_names.include?(name) 
-        field_names << name
-        define_method name do
-          __java_obj.get_property(name.to_s)
-        end
-
-        define_method "#{name}=" do |val|
-          __java_obj.set_property(name.to_s, val)
-        end
-      end
 
 
       #TODO: Query methods
