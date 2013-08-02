@@ -33,7 +33,7 @@ module Oriented
           let(:related1) {related_class.new}
           let(:related2) {related_class.new}
           before(:each) do
-            dummy_class.send(:has_many, :spanks)
+            dummy_class.send(:has_n, :spanks)
             dummy.spanks << related1
             dummy.spanks << related2
             dummy.save

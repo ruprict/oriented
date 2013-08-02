@@ -3,12 +3,7 @@ require 'spec_helper'
 module Oriented
   describe Vertex do
 
-    class Model
-      include Vertex
-
-      field :name
-    end
-  
+    let(:dummy_class) {Class.new.send(:include, Vertex)} 
     subject{Model.new}
     describe "#new" do
       
@@ -17,11 +12,12 @@ module Oriented
       end
 
       it "takes a list of attributes" do
-        Model.new(name: 'Bob').name.should == 'Bob' 
+        dummy_class.send(:property, :name)
+        dummy_class.new(name: 'Bob').name.should == 'Bob' 
       end
     end
 
-    describe ".field" do
+    describe ".property" do
       before(:each) do
         subject.name = "Fred"
       end

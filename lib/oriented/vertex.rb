@@ -42,7 +42,7 @@ module Oriented
     end
 
     module ClassMethods 
-      def field(name)
+      def property(name)
         return if field_names.include?(name) 
         field_names << name
         define_method name do

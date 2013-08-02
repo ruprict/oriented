@@ -16,7 +16,7 @@ module Oriented
         @rels ||= {}
       end
 
-      def has_many(rel_label, options={})
+      def has_n(rel_label, options={})
         method_name = rel_label.downcase
         unless method_defined?(method_name)
           class_eval <<-RUBY, __FILE__, __LINE__

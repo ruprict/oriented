@@ -9,7 +9,7 @@ module Oriented
 
     describe ".has_many" do
       before(:each) do
-        model_class.send(:has_many, :stylists)
+        model_class.send(:has_n, :stylists)
       end
 
       it "defines a rel type based on the relation label" do

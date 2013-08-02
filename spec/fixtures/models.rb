@@ -2,21 +2,21 @@ require 'oriented'
 class Model
   include Oriented::Vertex
 
-  field :name
+  property :name
 
-  has_many(:stylists)
+  has_n(:stylists)
   has_one(:drug_dealer)
 end
 
 class DrugDealer
   include Oriented::Vertex
-  field :name
-  field :product
+  property :name
+  property :product
 end
 
 class Stylist
   include Oriented::Vertex
-  field :name
+  property :name
 
-  has_many(:pieces_of_gossip)
+  has_n(:pieces_of_gossip)
 end
