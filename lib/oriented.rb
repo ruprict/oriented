@@ -1,5 +1,9 @@
 require "oriented/version"
 
+# Core Java Object
+require "orientdb"
+require "oriented/core/core"
+
 # Relationships
 require "oriented/wrapper"
 require "oriented/relationship/rel_type"
