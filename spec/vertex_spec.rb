@@ -8,7 +8,7 @@ module Oriented
       dummy_class.send(:property, :name) 
       dummy_class.new
     }
-    describe "#new" do
+    describe ".new" do
       
       it "creates a java object" do
         subject.__java_obj.should_not be_nil
@@ -55,7 +55,25 @@ module Oriented
       end
     end
 
-    describe ".save" do
+    describe ".odb_class_name" do
+      before(:each) do
+        c = "Class#{rand(999) + 1 }"
+        Kernel.const_set(c, dummy_class)
+      end
+      it "is the same as the Ruby class name" do
+        dummy_class.odb_class_name.should == dummy_class.name 
+      end
+
+      context "when specified" do
+        it "sets the odb_class_name" do
+          puts dummy_class.methods.grep(/odb/)
+          dummy_class.send(:odb_class_name=, "Buckets")
+          dummy_class.odb_class_name.should == "Buckets" 
+        end
+      end
+    end
+
+    describe "#save" do
       it "persists the object" do
         subject.name = 'Fred'
         subject.save

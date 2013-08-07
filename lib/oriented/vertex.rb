@@ -6,6 +6,7 @@ module Oriented
     include Oriented::Relationships
     include Oriented::Wrapper
     include Oriented::Properties
+    include Oriented::ClassName
 
     attr_accessor :__java_obj
 
