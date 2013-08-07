@@ -15,7 +15,7 @@ module Oriented
     end
 
     def initialize(attrs={})
-      @__java_obj = DB.add_vertex("class:#{self.class.to_s}")        
+      @__java_obj = Oriented::Core::JavaVertex.new("#{self.class.to_s}")        
       write_default_values
       attrs.each_pair {|attr,val| public_send("#{attr}=", val)}
     end
