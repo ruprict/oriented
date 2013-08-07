@@ -1,0 +1,8 @@
+require "oriented/core/to_java"
+require "oriented/core/property"
+require "oriented/core/rels/rels"
+require "oriented/core/edge/class_methods"
+require "oriented/core/edge/edge"
+require "oriented/core/java_edge"
+require "oriented/core/vertex/class_methods"
+require "oriented/core/java_vertex"
