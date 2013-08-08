@@ -3,14 +3,17 @@ require 'active_support/concern'
 module Oriented
   module Vertex
     extend ActiveSupport::Concern
+    include Oriented::Vertex::Delegates    
 
+    include Oriented::ClassName    
+    include Oriented::Persistence
     include Oriented::Relationships
     # extend Oriented::Wrapper::ClassMethods
         
     include Oriented::Wrapper
     include Oriented::Properties
-    include Oriented::ClassName
-    include Oriented::Vertex::Delegates    
+
+
 
     def self.included(base)
       base.extend(ClassMethods)
@@ -22,11 +25,11 @@ module Oriented
       __java_obj.id.to_s if __java_obj
     end
 
-    def save
-      return unless __java_obj
-      __java_obj.save
-      connection.commit()  
-    end
+    # def save
+    #   return unless __java_obj
+    #   __java_obj.save
+    #   connection.commit()  
+    # end
 
     def persisted?
       __java_obj.id.persistent?

@@ -1,9 +1,11 @@
 module Oriented
   module Edge
     extend ActiveSupport::Concern
+    include Oriented::Edge::Delegates    
+    include Oriented::Persistence    
     include Oriented::Properties
     include Oriented::Wrapper
-    include Oriented::Edge::Delegates
+
 
     def self.included(base)
       base.extend(ClassMethods)

@@ -142,7 +142,24 @@ module Oriented
         
         it "return all props" do          
           other_class.props.should == {"kind"=>"club", "testprop"=>"test"}
-        end
+        end        
+      end      
+    end
+    
+    context "Persistence" do
+      let(:other_class) {
+        c = define_test_class(Vertex)
+        c.send(:property, :kind) 
+        c.new(kind: "club")
+      } 
+      subject {
+        dummy_class.send(:property, :guid)
+        dummy_class
+      }
+      
+      it "should create a new java instance" do
+        obj = subject.get_or_create(guid: "12345")
+        obj.guid.should == "12345"
         
       end
     end
