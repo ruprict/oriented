@@ -8,7 +8,8 @@ describe "BadNeighborhood" do
 
   it "lets Barbie get a drug dealer" do
     barbie.drug_dealer = bad_guy
-    barbie.drug_dealer.id.should == bad_guy.id
+    puts bad_guy.__java_obj.id
+    barbie.drug_dealer.id.should == bad_guy.id.to_s
   end
 
   it "lets Barbie have multiple stylists" do

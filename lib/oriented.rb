@@ -5,6 +5,7 @@ require "orientdb"
 require "oriented/core/core"
 
 # Relationships
+require "oriented/wrapper/class_methods"
 require "oriented/wrapper"
 require "oriented/relationship/rel_type"
 require "oriented/relationship/rel_instance"
