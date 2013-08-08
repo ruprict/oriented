@@ -49,7 +49,7 @@ module Oriented
         (prop && prop[:converter]) || Oriented::TypeConverters::DefaultConverter
       end
     end
-    protected
+
     def write_default_values
       self.class.attribute_defaults.each_pair do |attr, val| 
         self.send("#{attr}=", val)
