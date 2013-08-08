@@ -16,6 +16,7 @@ require "oriented/class_name"
 require "oriented/properties"
 
 # Vertex
+require "oriented/vertex/delegates"
 require "oriented/vertex"
 
 # Edge

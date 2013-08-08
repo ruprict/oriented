@@ -30,7 +30,6 @@ module Oriented
 
     # alias_method :wrap, :wrapper    
 
-
     Oriented::Core::JavaVertex.wrapper_proc=method(:wrapper)
     Oriented::Core::JavaEdge.wrapper_proc=method(:wrapper)
 

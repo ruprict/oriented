@@ -2,7 +2,7 @@ module Oriented
   module Relationship
     class RelInstance
       include Enumerable
-      include Oriented::Wrapper
+      # include Oriented::Wrapper
 
       def initialize(vertex, rel_type)
         @vertex = vertex
@@ -19,7 +19,7 @@ module Oriented
 
       def other_vertex
         return unless @rel_type.cardinality == :one
-        vertex_query.first 
+        vertex_query.first.wrapper 
       end
 
       def << (other)
