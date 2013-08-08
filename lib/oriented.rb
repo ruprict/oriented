@@ -19,6 +19,7 @@ require "oriented/properties"
 require "oriented/vertex"
 
 # Edge
+require "oriented/edge/delegates"
 require "oriented/edge"
 
 module Oriented
