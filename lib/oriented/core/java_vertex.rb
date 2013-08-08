@@ -2,12 +2,13 @@ module Oriented
   module Core
     class JavaVertex
           extend Oriented::Core::Vertex::ClassMethods    
-          # extend OrientDB::Core::Wrapper::ClassMethods
-          # 
+          extend Oriented::Core::Wrapper::ClassMethods
+
           include Oriented::Core::Property
           # include OrientDB::Core::Vertex
           include Oriented::Core::Rels           
-          # include OrientDB::Core::Wrapper
+          include Oriented::Core::Wrapper     
+          
           def exist?
             Oriented::Core::JavaVertex.exist?(self)
           end
@@ -27,7 +28,7 @@ module Oriented
                 include Oriented::Core::Property
                 # include OrientDB::Core::Vertex          
                 include Oriented::Core::Rels          
-                # include OrientDB::Core::Wrapper     
+                include Oriented::Core::Wrapper         
                 
                 def class
                   Oriented::Core::JavaVertex
