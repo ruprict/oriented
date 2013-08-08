@@ -4,16 +4,11 @@ module Oriented
   module Relationship
     describe RelInstance do
       let(:dummy_class) { define_test_class(Vertex)}
-      let(:related_class) { define_test_class( Vertex)}
+      let(:related_class) { define_test_class(Vertex)}
       let(:vertex) { v = dummy_class.new; v.save; v}
       let(:rel_type) { RelType.new("spanks", dummy_class)}
       let(:other) {o= related_class.new; o.save; o}
       subject {described_class.new(vertex, rel_type)}
-
-      before(:each) do
-        DB.create_vertex_type(dummy_class.to_s)
-        DB.create_vertex_type(related_class.to_s)
-      end
 
       describe ".initialize" do
         it "takes a vertex and rel_type" do

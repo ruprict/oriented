@@ -9,23 +9,35 @@ module Oriented
     let(:end_vertex) {vertex_class.new}
     describe ".new" do
       before(:each) do
+        define_edge_type("knows")
         dummy_class.send(:property, :name) 
       end
 
-      it "should take start and end vertices and a set of properties" do
+      it "should take start and end vertices, a label,  and a set of properties" do
         dc=nil
-        expect{dc = dummy_class.new(start_vertex, end_vertex, name: "Fred")}.to_not raise_error
+        expect{dc = dummy_class.new(start_vertex, end_vertex, "knows", name: "Fred")}.to_not raise_error
         dc.name = "Fred"
+        dc.label.should == "knows"
       end
     end
 
     describe "#start_vertex" do
       subject {
-        dummy_class.new(start_vertex, end_vertex) 
+        dummy_class.new(start_vertex, end_vertex, "knows") 
       }
 
-      it "should return the start node" do
+      it "should return the start vertex" do
         subject.start_vertex.id.should == start_vertex.id
+      end
+    end
+
+    describe "#end_vertex" do
+      subject {
+        dummy_class.new(start_vertex, end_vertex, "knows") 
+      }
+
+      it "should return the end vertex" do
+        subject.end_vertex.id.should == end_vertex.id
       end
     end
   end

@@ -50,8 +50,6 @@ module Oriented
       # @private
       def self.extended(klass)
         klass.instance_eval do
-          # puts "extended"
-          # puts self
           class << self
             alias_method :orig_new, :new
           end
