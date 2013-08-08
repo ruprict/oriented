@@ -36,6 +36,7 @@ module Oriented
     end
 
     def id
+      puts "INSIDE VERTEX ID  #{__java_obj.id.to_s}"
       __java_obj.id.to_s if __java_obj
     end
 
