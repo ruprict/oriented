@@ -10,7 +10,7 @@ module Oriented
     include Oriented::Wrapper
     include Oriented::Properties
     include Oriented::ClassName
-    
+    include Oriented::Vertex::Delegates    
 
     def self.included(base)
       base.extend(ClassMethods)
@@ -19,7 +19,6 @@ module Oriented
 
 
     def id
-      puts "INSIDE VERTEX ID  #{__java_obj.id.to_s}"
       __java_obj.id.to_s if __java_obj
     end
 
