@@ -2,12 +2,13 @@ module Oriented
   module Core
     class JavaEdge
           extend Oriented::Core::Edge::ClassMethods    
-          # extend OrientDB::Core::Wrapper::ClassMethods
+          extend Oriented::Core::Wrapper::ClassMethods
           # 
           include Oriented::Core::Property
           include Oriented::Core::Edge
           include Oriented::Core::Rels           
-          # include OrientDB::Core::Wrapper
+          include Oriented::Core::Wrapper     
+          
           def exist?
             Oriented::Core::JavaEdge.exist?(self)
           end
@@ -27,7 +28,7 @@ module Oriented
                 include Oriented::Core::Property
                 include Oriented::Core::Edge          
                 include Oriented::Core::Rels          
-                # include OrientDB::Core::Wrapper     
+                include Oriented::Core::Wrapper     
                 
                 # def class
                 #   Oriented::Core::JavaEdge
