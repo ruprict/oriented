@@ -36,9 +36,6 @@ module Oriented
        self
      end       
      
-     def self.to_adapter 
-       self
-    end
 
     protected
 
@@ -74,6 +71,11 @@ module Oriented
       def connection
         DB 
       end
+      
+      def to_adapter 
+        self
+      end
+      
 
       protected
 

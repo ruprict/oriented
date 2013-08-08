@@ -13,10 +13,6 @@ module Oriented
      def wrapper
        self
      end       
-     
-     def self.to_adapter 
-       self
-    end
 
     module ClassMethods 
 
@@ -29,6 +25,11 @@ module Oriented
         props.each_pair {|attr,val| wrapper.public_send("#{attr}=", val)} if props       
         wrapper
       end
+      
+      def to_adapter 
+         self
+      end
+      
     end
   end
 end
