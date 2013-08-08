@@ -3,7 +3,7 @@ require 'spec_helper'
 module Oriented
   describe Vertex do
 
-    let(:dummy_class) {Class.new.send(:include, Vertex)} 
+    let(:dummy_class) {define_test_class(Vertex)} 
     subject{
       dummy_class.send(:property, :name) 
       dummy_class.new
