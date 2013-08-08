@@ -54,7 +54,11 @@ module Oriented
       
       #TODO: Query methods
       def find(rid)
-        connection.get_vertex(rid)
+        vertex = connection.get_vertex(rid)
+        return nil unless vertex
+        m = orig_new
+        m.__java_obj = vertex
+        m
         #wrap(obj)
       end
 

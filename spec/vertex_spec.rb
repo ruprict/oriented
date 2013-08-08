@@ -56,10 +56,7 @@ module Oriented
     end
 
     describe ".odb_class_name" do
-      before(:each) do
-        c = "Class#{rand(999) + 1 }"
-        Kernel.const_set(c, dummy_class)
-      end
+
       it "is the same as the Ruby class name" do
         dummy_class.odb_class_name.should == dummy_class.name 
       end
@@ -80,5 +77,76 @@ module Oriented
         subject.persisted?.should be_true
       end
     end
+    
+    describe "#find" do
+      it "returns a wrapped vertex" do
+        subject.save
+        obj = dummy_class.find(subject.id)
+        obj.__java_obj.should == subject.__java_obj
+      end
+
+      context "has_one" do
+        
+        let(:other_class) {
+          c = define_test_class(Vertex)
+          c.send(:property, :kind) 
+          c.new(kind: "club")
+        } 
+        subject {
+          dummy_class.send(:has_one, :previous)
+          dummy_class.new
+        }
+        before(:each) do
+          subject.previous = other_class
+          subject.save          
+        end
+        
+        it "return previous vertex" do
+          obj = dummy_class.find(subject.id)
+          obj.previous.kind.should == "club"
+        end
+        
+      end    
+      
+      context "has_many" do
+        
+        let(:other_class) {
+          c = define_test_class(Vertex)
+          c.send(:property, :kind) 
+          c.new(kind: "club")
+        } 
+        subject {
+          dummy_class.send(:has_n, :targets)
+          dummy_class.new
+        }
+        before(:each) do
+          subject.targets << other_class
+          subject.save          
+        end
+        
+        it "return previous vertex" do
+          obj = dummy_class.find(subject.id)
+          obj.targets.first.kind.should == "club"
+        end
+        
+      end  
+      
+      context "props" do
+        let(:other_class) {
+          c = define_test_class(Vertex)
+          c.send(:property, :kind) 
+          obj = c.new(kind: "club")
+          obj.__java_obj["testprop"] = "test"
+          obj
+        }
+        
+        it "return previous vertex" do
+          other_class.props.should == {"kind"=>"club"}
+
+        end
+        
+      end
+    end
+    
   end
 end
