@@ -7,23 +7,16 @@ module Oriented
     include Oriented::Relationships
     # extend Oriented::Wrapper::ClassMethods
         
-    # include Oriented::Wrapper
+    include Oriented::Wrapper
     include Oriented::Properties
     include Oriented::ClassName
-
-
     
-    attr_accessor :__java_obj
 
     def self.included(base)
       base.extend(ClassMethods)
       base.extend Oriented::Wrapper::ClassMethods      
     end
 
-
-    def __java_obj
-      @__java_obj 
-    end
 
     def id
       puts "INSIDE VERTEX ID  #{__java_obj.id.to_s}"

@@ -2,8 +2,8 @@ require 'spec_helper'
 
 module Oriented
   describe Edge do
-    let(:vertex_class) {Class.new.send(:include, Vertex) }
-    let(:dummy_class) {Class.new.send(:include, Edge)} 
+    let(:vertex_class) {define_test_class( Vertex) }
+    let(:dummy_class) {define_test_class(Edge)} 
 
     let(:start_vertex) {vertex_class.new}
     let(:end_vertex) {vertex_class.new}
