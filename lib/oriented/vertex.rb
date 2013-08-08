@@ -31,6 +31,14 @@ module Oriented
     def persisted?
       __java_obj.id.persistent?
     end
+    
+     def wrapper
+       self
+     end       
+     
+     def self.to_adapter 
+       self
+    end
 
     protected
 

@@ -9,6 +9,14 @@ module Oriented
       base.extend(ClassMethods)
       base.extend Oriented::Wrapper::ClassMethods      
     end
+    
+     def wrapper
+       self
+     end       
+     
+     def self.to_adapter 
+       self
+    end
 
     module ClassMethods 
 

@@ -135,13 +135,13 @@ module Oriented
           c = define_test_class(Vertex)
           c.send(:property, :kind) 
           obj = c.new(kind: "club")
-          obj.__java_obj["testprop"] = "test"
+          obj["testprop"] = "test"
+          obj.save
           obj
         }
         
-        it "return previous vertex" do
-          other_class.props.should == {"kind"=>"club"}
-
+        it "return all props" do          
+          other_class.props.should == {"kind"=>"club", "testprop"=>"test"}
         end
         
       end
