@@ -7,7 +7,7 @@ module Oriented
     #   base.extend ClassMethods
     # end
 
-    def wrapper(java_obj)
+    def self.wrapper(java_obj)
 
       classname = java_obj.element_type == 'Edge' ? "Oriented::Edge" : java_obj.label
       new_instance = to_class(classname).orig_new
@@ -24,14 +24,14 @@ module Oriented
 
     # @param [String] class_name the name we want the Class for
     # @return [Class] the class corresponding to the given name
-    def to_class(class_name)
+    def self.to_class(class_name)
       class_name.split("::").inject(Kernel) { |container, name| container.const_get(name.to_s) }
     end
 
     # alias_method :wrap, :wrapper    
 
 
-    extend self
+    # extend self
 
     Oriented::Core::JavaVertex.wrapper_proc=method(:wrapper)
     Oriented::Core::JavaEdge.wrapper_proc=method(:wrapper)
