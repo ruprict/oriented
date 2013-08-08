@@ -9,6 +9,7 @@ module Oriented
     let(:end_vertex) {vertex_class.new}
     describe ".new" do
       before(:each) do
+        define_edge_type("knows")
         dummy_class.send(:property, :name) 
       end
 

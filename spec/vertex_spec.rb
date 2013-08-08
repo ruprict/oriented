@@ -66,7 +66,6 @@ module Oriented
 
       context "when specified" do
         it "sets the odb_class_name" do
-          puts dummy_class.methods.grep(/odb/)
           dummy_class.send(:odb_class_name=, "Buckets")
           dummy_class.odb_class_name.should == "Buckets" 
         end

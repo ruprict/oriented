@@ -6,11 +6,19 @@ describe "BadNeighborhood" do
   let(:ramona) {Stylist.new(name: 'Ramona')}
   let(:pat) {Stylist.new(name: 'Pat')}
 
+  before do
+    %w(Model DrugDealer Stylist).each do |vt|
+      DB.stop_transaction(OrientDB::Conclusion::SUCCESS)
+      DB.create_vertex_type(vt) unless DB.get_vertex_type(vt)
+    end
+    %w(drug_dealer stylists).each do |vt|
+      DB.stop_transaction(OrientDB::Conclusion::SUCCESS)
+      DB.create_edge_type(vt) unless DB.get_edge_type(vt)
+    end
+  end
   it "lets Barbie get a drug dealer" do
     barbie.drug_dealer = bad_guy
     # puts bad_guy.__java_obj.id
-    puts barbie.drug_dealer
-    
     barbie.drug_dealer.id.should == bad_guy.id.to_s
   end
 

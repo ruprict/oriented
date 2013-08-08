@@ -8,12 +8,13 @@ module Oriented
       let(:obj2) {Oriented::Core::JavaVertex.new('Obj2')}       
       
       subject{
+        DB.stop_transaction(OrientDB::Conclusion::SUCCESS)
+        %w(Obj1 Obj2).each do |vt|
+          define_vertex_type(vt) 
+        end
+        define_edge_type("TestEdge")
         described_class.new(obj, obj2, "TestEdge")
       }
-      
-      # let(:other) {
-      #   described_class.new("OtherClass")
-      # }
       
       describe ".new" do
       
