@@ -36,7 +36,7 @@ module Oriented
             def #{method_name} 
               rel = self.class._rels[:'#{method_name}']
               rel_instance = Oriented::Relationship::RelInstance.new(self, rel)
-              wrap(rel_instance.other_vertex)
+              rel_instance.other_vertex
             end
           RUBY
         end

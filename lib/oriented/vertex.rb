@@ -3,22 +3,33 @@ require 'active_support/concern'
 module Oriented
   module Vertex
     extend ActiveSupport::Concern
+
     include Oriented::Relationships
-    include Oriented::Wrapper
+    # extend Oriented::Wrapper::ClassMethods
+        
+    # include Oriented::Wrapper
     include Oriented::Properties
     include Oriented::ClassName
 
+
+    
     attr_accessor :__java_obj
 
     def self.included(base)
       base.extend(ClassMethods)
+      base.extend Oriented::Wrapper::ClassMethods      
     end
 
-    def initialize(attrs={})
-      @__java_obj = Oriented::Core::JavaVertex.new("#{self.class.to_s}")        
-      write_default_values
-      attrs.each_pair {|attr,val| public_send("#{attr}=", val)}
-    end
+
+    # def new(attrs={})
+    #   puts "initialize"
+    #   puts self
+    #   puts "INSIDE NEW METHOD"
+    #   puts self.class.to_s
+    #   @__java_obj = Oriented::Core::JavaVertex.new("#{self.class.to_s}")        
+    #   write_default_values
+    #   attrs.each_pair {|attr,val| public_send("#{attr}=", val)}
+    # end
 
     def __java_obj
       @__java_obj 
@@ -46,7 +57,18 @@ module Oriented
 
     module ClassMethods 
 
-
+      def new(*args)
+        props = args.first
+        java_obj = Oriented::Core::JavaVertex.new("#{self.class.to_s}")        
+        wrapper = super()
+        wrapper.__java_obj = java_obj
+        wrapper.write_default_values
+        props.each_pair {|attr,val| wrapper.public_send("#{attr}=", val)} if props       
+        wrapper
+        # write_default_values
+        # attrs.each_pair {|attr,val| public_send("#{attr}=", val)}
+      end
+      
       #TODO: Query methods
       def find(rid)
         connection.get_vertex(rid)

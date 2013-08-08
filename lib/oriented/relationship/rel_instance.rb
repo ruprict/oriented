@@ -12,7 +12,8 @@ module Oriented
 
       def each
         vertex_query.each do |v|
-          yield self.class.wrap(v)
+          yield v.wrapper
+          # yield self.class.wrap(v)
         end
       end
 
