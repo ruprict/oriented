@@ -21,16 +21,6 @@ module Oriented
     end
 
 
-    # def new(attrs={})
-    #   puts "initialize"
-    #   puts self
-    #   puts "INSIDE NEW METHOD"
-    #   puts self.class.to_s
-    #   @__java_obj = Oriented::Core::JavaVertex.new("#{self.class.to_s}")        
-    #   write_default_values
-    #   attrs.each_pair {|attr,val| public_send("#{attr}=", val)}
-    # end
-
     def __java_obj
       @__java_obj 
     end
@@ -59,8 +49,8 @@ module Oriented
 
       def new(*args)
         props = args.first
-        java_obj = Oriented::Core::JavaVertex.new("#{self.class.to_s}")        
         wrapper = super()
+        java_obj = Oriented::Core::JavaVertex.new("#{wrapper.class.to_s}")        
         wrapper.__java_obj = java_obj
         wrapper.write_default_values
         props.each_pair {|attr,val| wrapper.public_send("#{attr}=", val)} if props       

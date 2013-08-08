@@ -3,7 +3,7 @@ require 'spec_helper'
 module Oriented
   module Relationship
     describe RelType do
-      let(:dummy_class) {Class.new.send(:include, Vertex)}
+      let(:dummy_class) {define_test_class( Vertex)}
 
       describe ".initialize" do
         it "takes a label, source_class, and options" do

@@ -18,7 +18,6 @@ module Oriented
         #  Neo4j::Relationship.new :friend, node1, node2, :since => '2001-01-02', :status => 'okey'
         #
         def new(start_vertex, end_vertex, type, props=nil)
-          puts "NEW INSIDE CORE EDGE"
           # java_type = ToJava.type_to_java(type)
           # rel = start_vertex._java_obj.create_relationship_to(end_vertex._java_obj, java_type)
           rel = start_vertex.add_edge(type, end_vertex)            
