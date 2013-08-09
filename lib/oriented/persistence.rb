@@ -99,6 +99,14 @@ module Oriented
           instance
         end
 
+        def get!(rid)
+          vertex = connection.get_vertex(rid)
+          return nil unless vertex
+          m = orig_new
+          m.__java_obj = vertex
+          m
+        end
+        
         # Initialize a model and set a bunch of attributes at the same time.  Returns
         # the object whether saved successfully or not.
         def create(*args)
