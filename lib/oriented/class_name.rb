@@ -15,6 +15,10 @@ module Oriented
       def odb_class_name
         @_obd_class_name ||= name.to_s 
       end
+      
+      def oclass
+        DB.get_vertex_type(odb_class_name) 
+      end
     end
   end
 end

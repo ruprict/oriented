@@ -5,6 +5,21 @@ module Oriented
     def self.included(base)
       base.extend ClassMethods 
     end
+    
+    def props
+      ret = {}
+      property_names.each do |property_name|
+        ret[property_name] = respond_to?(property_name) ? send(property_name) : send(:[], property_name)
+      end
+      ret      
+    end
+    
+    def property_names 
+      @_properties ||= {}
+      keys = @_properties.keys + self.class._props.keys.map(&:to_s)      
+      keys += __java_obj.property_keys.to_a if __java_obj
+      keys.flatten.uniq
+    end
 
     module ClassMethods
 
@@ -39,7 +54,7 @@ module Oriented
         end
 
         define_method "#{name}=" do |val|
-          __java_obj.set_property(name.to_s, self.class._converter(name).to_java(val))
+          __java_obj.send(:[]=, name.to_s, self.class._converter(name).to_java(val))
         end
         
       end

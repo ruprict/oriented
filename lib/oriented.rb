@@ -4,6 +4,9 @@ require "oriented/version"
 require "orientdb"
 require "oriented/core/core"
 
+# Persistence
+require "oriented/persistence"
+
 # Relationships
 require "oriented/wrapper/class_methods"
 require "oriented/wrapper"

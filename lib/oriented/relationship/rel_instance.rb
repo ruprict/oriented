@@ -16,10 +16,16 @@ module Oriented
           # yield self.class.wrap(v)
         end
       end
+      
+      def empty?
+        return !other_vertex if @rel_type.cardinality == :one
+        first == nil
+      end
 
       def other_vertex
         return unless @rel_type.cardinality == :one
-        vertex_query.first.wrapper 
+        other = vertex_query.first
+        other.wrapper if other
       end
 
       def << (other)

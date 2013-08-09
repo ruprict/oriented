@@ -1,14 +1,20 @@
 module Oriented
   module Edge
     extend ActiveSupport::Concern
+    include Oriented::Edge::Delegates    
+    include Oriented::Persistence    
     include Oriented::Properties
     include Oriented::Wrapper
-    include Oriented::Edge::Delegates
+
 
     def self.included(base)
       base.extend(ClassMethods)
       base.extend Oriented::Wrapper::ClassMethods      
     end
+    
+     def wrapper
+       self
+     end       
 
     module ClassMethods 
 
@@ -21,6 +27,11 @@ module Oriented
         props.each_pair {|attr,val| wrapper.public_send("#{attr}=", val)} if props       
         wrapper
       end
+      
+      def to_adapter 
+         self
+      end
+      
     end
   end
 end
