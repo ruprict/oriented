@@ -15,6 +15,7 @@ module Oriented
       # @see Neo4j::Rails::Validations Neo4j::Rails::Validations - for the :validate parameter
       # @see Neo4j::Rails::Callbacks Neo4j::Rails::Callbacks - for callbacks
       def save(*)
+        puts "INSIDE Save"
         create_or_update
         DB.commit()
       end
@@ -32,7 +33,7 @@ module Oriented
       # @see Neo4j::Rails::Callbacks Neo4j::Rails::Callbacks - for callbacks
       def save!(*args)
         puts "save!"
-        puts args
+        puts "save args = #{args}"
         save
         # unless save(*args)
         #   raise RecordInvalidError.new(self)
@@ -131,7 +132,9 @@ module Oriented
           if vtx && vtx.first
             return vtx.first.wrapper
           else
-            return self.new(props).wrapper
+            obj = self.new(props).wrapper
+            obj.save
+            return obj
           end
           # raise "Can't get or create entity since #{props.inspect} does not included unique key #{props[unique_factory_key]}'" unless props[unique_factory_key]
           # index = index_for_type(_decl_props[unique_factory_key][:index])
