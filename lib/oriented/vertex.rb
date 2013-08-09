@@ -51,13 +51,11 @@ module Oriented
       def new(*args)
         props = args.first
         wrapper = super()
-        java_obj = Oriented::Core::JavaVertex.new("#{wrapper.class.to_s}")        
+        java_obj = Oriented::Core::JavaVertex.new("#{self.odb_class_name}")        
         wrapper.__java_obj = java_obj
         wrapper.write_default_values
         props.each_pair {|attr,val| wrapper.public_send("#{attr}=", val)} if props       
         wrapper
-        # write_default_values
-        # attrs.each_pair {|attr,val| public_send("#{attr}=", val)}
       end
       
       #TODO: Query methods

@@ -15,7 +15,6 @@ module Oriented
       # @see Neo4j::Rails::Validations Neo4j::Rails::Validations - for the :validate parameter
       # @see Neo4j::Rails::Callbacks Neo4j::Rails::Callbacks - for callbacks
       def save(*)
-        puts "INSIDE Save"
         create_or_update
         DB.commit()
       end

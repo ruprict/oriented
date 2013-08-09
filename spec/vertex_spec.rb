@@ -31,7 +31,7 @@ module Oriented
 
       context "taking a default value" do
         before(:each) do
-          dummy_class.send(:property, :kind, {default: :dummy})
+          dummy_class.send(:property, :kind, {type: :symbol, default: :dummy})
         end
 
         it "works" do
@@ -52,20 +52,6 @@ module Oriented
           dummy_class._props[:kind][:converter].should == Oriented::TypeConverters::SymbolConverter
         end
         
-      end
-    end
-
-    describe ".odb_class_name" do
-
-      it "is the same as the Ruby class name" do
-        dummy_class.odb_class_name.should == dummy_class.name 
-      end
-
-      context "when specified" do
-        it "sets the odb_class_name" do
-          dummy_class.send(:odb_class_name=, "Buckets")
-          dummy_class.odb_class_name.should == "Buckets" 
-        end
       end
     end
 
@@ -96,6 +82,7 @@ module Oriented
           dummy_class.new
         }
         before(:each) do
+          define_edge_type("previous")
           subject.previous = other_class
           subject.save          
         end
@@ -119,6 +106,7 @@ module Oriented
           dummy_class.new
         }
         before(:each) do
+          define_edge_type("targets")
           subject.targets << other_class
           subject.save          
         end

@@ -8,12 +8,12 @@ module Oriented
 
     module ClassMethods
 
-      def odb_class_name=(val)
+      def set_odb_class_name(val)
         @_obd_class_name = val
       end
 
       def odb_class_name
-        @_obd_class_name ||= name.to_s 
+        @_obd_class_name || name.to_s
       end
       
       def oclass

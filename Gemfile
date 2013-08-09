@@ -4,4 +4,4 @@ source 'https://rubygems.org'
 gemspec
 
 
-gem 'orientdb', github: 'ruprict/orientdb-jruby', branch: '1.5.0'
+gem 'orientdb', github: 'ruprict/orientdb-jruby', branch: 'gremlin'
