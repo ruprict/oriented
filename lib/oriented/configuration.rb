@@ -11,11 +11,14 @@ module Oriented
 
   class Configuration
     attr_accessor :pooled, :url, :username, :password
+    attr_accessor :min_pool, :max_pool
 
     def initialize
       # defaults
       # If true, this will create a pooled connection
       @pooled = false
+      @min_pool = 1
+      @max_pool = 5
     end
 
     def clear

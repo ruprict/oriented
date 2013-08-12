@@ -34,7 +34,9 @@ module Oriented
       end
 
       describe "#from" do
-        let(:other_class) {Class.new.send(:include, Vertex)}
+        let(:other_class) {
+          define_test_class( Vertex)
+        }
         context "when just a symbol is passed " do
 
           subject{described_class.new("touches", dummy_class).from(:target)}
@@ -50,6 +52,7 @@ module Oriented
         end
 
         context "when a class name and a symbol are passed" do
+          before(:each){ dummy_class.set_odb_class_name "TestODB"}
           subject{described_class.new("touches", dummy_class).from(other_class, :target)}
 
           it "makes the direction in" do
@@ -57,11 +60,11 @@ module Oriented
           end
 
           it "makes the label the symbol plus target class" do
-            subject.label.should == "#{other_class}-target"
+            subject.label.should == "#{dummy_class.odb_class_name}-target"
           end
 
           it "sets the target class" do
-            subject.target_class.should == other_class
+            subject.target_class.should == other_class.to_s
           end
         end
       end
@@ -83,6 +86,7 @@ module Oriented
         end
 
         context "when a class name is passed" do
+          before(:each){ dummy_class.set_odb_class_name "TestODB"}
           subject{described_class.new("touches", dummy_class).to(other_class)}
 
           it "makes the direction out" do
@@ -90,11 +94,11 @@ module Oriented
           end
 
           it "makes the label the source class name method target class name" do
-            subject.label.should == "#{other_class}-touches" 
+            subject.label.should == "#{dummy_class.odb_class_name}-touches" 
           end
 
           it "sets the target class" do
-            subject.target_class.should == other_class
+            subject.target_class.should == other_class.odb_class_name
           end
         end
       end
