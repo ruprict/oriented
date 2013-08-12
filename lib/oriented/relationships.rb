@@ -48,7 +48,6 @@ module Oriented
              rel_instance = Oriented::Relationship::RelInstance.new(self, rel)
              rel_instance.destroy_relationship
              rel_instance.create_relationship_to(other)
-             self.connection.commit()
             end
           RUBY
         end

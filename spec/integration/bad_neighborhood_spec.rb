@@ -8,12 +8,12 @@ describe "BadNeighborhood" do
 
   before do
     %w(Model DrugDealer Stylist).each do |vt|
-      DB.stop_transaction(OrientDB::Conclusion::SUCCESS)
-      DB.create_vertex_type(vt) unless DB.get_vertex_type(vt)
+      Oriented.connection.graph.stop_transaction(OrientDB::Conclusion::SUCCESS)
+      Oriented.connection.graph.create_vertex_type(vt) unless Oriented.connection.graph.get_vertex_type(vt)
     end
     %w(drug_dealer stylists).each do |vt|
-      DB.stop_transaction(OrientDB::Conclusion::SUCCESS)
-      DB.create_edge_type(vt) unless DB.get_edge_type(vt)
+      Oriented.connection.graph.stop_transaction(OrientDB::Conclusion::SUCCESS)
+      Oriented.connection.graph.create_edge_type(vt) unless Oriented.connection.graph.get_edge_type(vt)
     end
   end
   it "lets Barbie get a drug dealer" do

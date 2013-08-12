@@ -56,8 +56,8 @@ module Oriented
             subject.direction.should == Oriented::Relationships::Direction::IN
           end
 
-          it "makes the label the symbol" do
-            subject.label.should == :target.to_s
+          it "makes the label the symbol plus target class" do
+            subject.label.should == "#{other_class}-target"
           end
 
           it "sets the target class" do
@@ -89,8 +89,8 @@ module Oriented
             subject.direction.should == Oriented::Relationships::Direction::OUT
           end
 
-          it "makes the label the method" do
-            subject.label.should == :touches.to_s
+          it "makes the label the source class name method target class name" do
+            subject.label.should == "#{other_class}-touches" 
           end
 
           it "sets the target class" do

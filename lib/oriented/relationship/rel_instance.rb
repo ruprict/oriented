@@ -7,7 +7,7 @@ module Oriented
       def initialize(vertex, rel_type)
         @vertex = vertex
         @rel_type = rel_type
-        check_edge_type(@rel_type.label)
+        #check_edge_type(@rel_type.label)
       end  
 
       def each

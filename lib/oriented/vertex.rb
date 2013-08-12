@@ -42,9 +42,6 @@ module Oriented
 
     protected
 
-    def connection
-      __java_obj.graph || self.class.connection
-    end
 
     module ClassMethods 
 
@@ -60,7 +57,7 @@ module Oriented
       
       #TODO: Query methods
       def find(rid)
-        vertex = connection.get_vertex(rid)
+        vertex = Oriented.connection.graph.get_vertex(rid)
         return nil unless vertex
         m = orig_new
         m.__java_obj = vertex
@@ -68,10 +65,6 @@ module Oriented
         #wrap(obj)
       end
 
-      #TODO: Need to handle connections properly
-      def connection
-        DB 
-      end
       
       def to_adapter 
         self

@@ -1,5 +1,8 @@
 require "oriented/version"
 
+require 'oriented/configuration'
+require 'oriented/connection'
+
 # Core Java Object
 require "orientdb"
 require "oriented/core/core"

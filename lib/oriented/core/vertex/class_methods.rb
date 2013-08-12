@@ -31,7 +31,7 @@ module Oriented
           # db = (!props && args[0]) || args[1] || Neo4j.started_db
           cls = (!props && args[0]) || args[1]
           
-          vertex = DB.add_vertex("class:#{cls.to_s}")   
+          vertex = Oriented.connection.graph.add_vertex("class:#{cls.to_s}")   
           props.each_pair { |k, v| vertex[k]= v } if props
           vertex
         end

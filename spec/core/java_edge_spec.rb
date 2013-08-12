@@ -8,7 +8,7 @@ module Oriented
       let(:obj2) {Oriented::Core::JavaVertex.new('Obj2')}       
       
       subject{
-        DB.stop_transaction(OrientDB::Conclusion::SUCCESS)
+        Oriented.connection.graph.stop_transaction(OrientDB::Conclusion::SUCCESS)
         %w(Obj1 Obj2).each do |vt|
           define_vertex_type(vt) 
         end

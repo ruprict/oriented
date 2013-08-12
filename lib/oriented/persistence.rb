@@ -16,7 +16,7 @@ module Oriented
       # @see Neo4j::Rails::Callbacks Neo4j::Rails::Callbacks - for callbacks
       def save(*)
         create_or_update
-        DB.commit()
+        Oriented.connection.graph.commit()
       end
       # tx_methods :save
 
@@ -135,7 +135,7 @@ module Oriented
 
           idx = self.oclass.indexes.first
           
-          vtx = DB.get_vertices(idx.name, props[idx.definition.fields[0]]).to_a if idx && props[idx.definition.fields[0]]
+          vtx = Oriented.connection.graph.get_vertices(idx.name, props[idx.definition.fields[0]]).to_a if idx && props[idx.definition.fields[0]]
           if vtx && vtx.first
             return vtx.first.wrapper
           else
