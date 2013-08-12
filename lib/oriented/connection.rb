@@ -23,8 +23,7 @@ module Oriented
     end
 
     def connect
-      return if @java_connection
-      @java_connection = acquire_java_connection
+      @java_connection ||= acquire_java_connection
       @graph = OrientDB::OrientGraph.new(@java_connection)
     end
 
