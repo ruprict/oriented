@@ -99,7 +99,7 @@ module Oriented
         end
 
         def get!(rid)
-          vertex = connection.get_vertex(rid)
+          vertex = Oriented.graph.get_vertex(rid)
           return nil unless vertex
           m = orig_new
           m.__java_obj = vertex
