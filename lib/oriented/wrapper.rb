@@ -12,7 +12,8 @@ module Oriented
 
     def self.wrapper(java_obj)
       classname = java_obj.element_type == 'Edge' ? "Oriented::Edge" : java_obj.label
-      new_instance = to_class(classname).orig_new
+      clname = Oriented::Registry.model_class_for(classname)
+      new_instance = to_class(clname).orig_new
       new_instance.__java_obj = java_obj
       new_instance
 
