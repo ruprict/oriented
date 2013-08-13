@@ -31,8 +31,6 @@ module Oriented
       # @see Neo4j::Rails::Validations Neo4j::Rails::Validations - for the :validate parameter
       # @see Neo4j::Rails::Callbacks Neo4j::Rails::Callbacks - for callbacks
       def save!(*args)
-        puts "save!"
-        puts "save args = #{args}"
         save
         # unless save(*args)
         #   raise RecordInvalidError.new(self)
