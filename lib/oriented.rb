@@ -1,4 +1,5 @@
 require "oriented/version"
+require "oriented/registry"
 
 require 'oriented/configuration'
 require 'oriented/connection'
