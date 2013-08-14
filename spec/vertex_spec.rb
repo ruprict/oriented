@@ -20,6 +20,12 @@ module Oriented
       end
     end
 
+    describe "._orient_rid" do
+      it "returns the java id" do
+        dummy_class.new._orient_id.should_not be_nil 
+      end
+    end
+
     describe ".property" do
       before(:each) do
         subject.name = "Fred"
@@ -52,6 +58,13 @@ module Oriented
           dummy_class._props[:kind][:converter].should == Oriented::TypeConverters::SymbolConverter
         end
         
+      end
+
+      context "restricted attributes" do
+
+        it "includes _orient_id" do
+          expect {dummy_class.send(:property, :_orient_id)}.to raise_error 
+        end
       end
     end
 

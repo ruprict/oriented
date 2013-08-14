@@ -20,17 +20,6 @@ module Oriented
       base.extend Oriented::Wrapper::ClassMethods      
     end
 
-
-    def id
-      __java_obj.id.to_s if __java_obj
-    end
-
-    # def save
-    #   return unless __java_obj
-    #   __java_obj.save
-    #   connection.commit()  
-    # end
-
     def persisted?
       __java_obj.id.persistent?
     end

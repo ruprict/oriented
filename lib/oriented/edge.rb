@@ -5,6 +5,7 @@ module Oriented
     include Oriented::Persistence    
     include Oriented::Properties
     include Oriented::Wrapper
+    include Oriented::ClassName    
 
 
     def self.included(base)

@@ -31,8 +31,6 @@ module Oriented
       # @see Neo4j::Rails::Validations Neo4j::Rails::Validations - for the :validate parameter
       # @see Neo4j::Rails::Callbacks Neo4j::Rails::Callbacks - for callbacks
       def save!(*args)
-        puts "save!"
-        puts "save args = #{args}"
         save
         # unless save(*args)
         #   raise RecordInvalidError.new(self)
@@ -99,7 +97,7 @@ module Oriented
         end
 
         def get!(rid)
-          vertex = connection.get_vertex(rid)
+          vertex = Oriented.graph.get_vertex(rid)
           return nil unless vertex
           m = orig_new
           m.__java_obj = vertex

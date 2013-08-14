@@ -25,8 +25,8 @@ module Oriented
               rel_instance = Oriented::Relationship::RelInstance.new(self, rel)
             end
           RUBY
-          _rels[rel_label] = Oriented::Relationship::RelType.new(rel_label, self, options.merge({cardinality: :many}))
         end
+        _rels[rel_label] = Oriented::Relationship::RelType.new(rel_label, self, options.merge({cardinality: :many}))
       end
 
       def has_one(rel_label, options={})

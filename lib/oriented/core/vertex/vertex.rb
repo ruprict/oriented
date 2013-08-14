@@ -2,11 +2,10 @@ module Oriented
   module Core
     # Can be used to define your own wrapper class around nodes and relationships
     module Vertex
-      
-      def blah
-        
+    
+      def get_rid
+        get_id.to_s
       end
-
     end
   end
 end

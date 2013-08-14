@@ -2,6 +2,10 @@ module Oriented
   module Properties
     extend ActiveSupport::Concern
 
+    RESTRICTED_PROPERTIES = [:_orient_id]
+
+    class RestrictedPropertyError < StandardError; end
+
     def self.included(base)
       base.extend ClassMethods 
     end
@@ -35,6 +39,7 @@ module Oriented
         options = props.last.kind_of?(Hash) ? props.pop : {}
         
         props.each do |prop|
+          raise RestrctedPropertyError if RESTRICTED_PROPERTIES.include?(prop)
           next if _props.has_key?(prop)
           _props[prop] ||= {}
           options.each {|k, v| _props[prop][k] = v}
