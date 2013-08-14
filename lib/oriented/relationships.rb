@@ -21,7 +21,7 @@ module Oriented
         unless method_defined?(method_name)
           class_eval <<-RUBY, __FILE__, __LINE__
             def #{method_name} 
-              rel = self.class._rels[:'#{method_name}']
+              rel = self.class._rels[:'#{method_name}']  
               rel_instance = Oriented::Relationship::RelInstance.new(self, rel)
             end
           RUBY

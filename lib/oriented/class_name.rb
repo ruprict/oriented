@@ -17,7 +17,7 @@ module Oriented
       end
       
       def oclass
-        Oriented.connection.graph.get_vertex_type(odb_class_name) 
+        Oriented.connection.graph.get_vertex_type(Oriented::Registry.data_class_for(self.name.to_s)) 
       end
     end
   end
