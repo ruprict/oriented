@@ -18,6 +18,12 @@ module Oriented
         end
       end
 
+      after do
+        Oriented.configure do |config|
+          config.url = "local:#{TMP_DB_PATH}"
+        end
+      end
+
       it "sets the config options" do
         Oriented.configuration.url.should == "remote:somehost/somedb"
         Oriented.configuration.pooled.should be_true

@@ -1,8 +1,7 @@
 module Oriented
-  module Relationship
-    class RelInstance
+  module Relationships
+    class VertexInstance
       include Enumerable
-      # include Oriented::Wrapper
 
       def initialize(vertex, rel_type)
         @vertex = vertex

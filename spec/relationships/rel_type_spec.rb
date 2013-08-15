@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Oriented
-  module Relationship
+  module Relationships
     describe RelType do
       let(:dummy_class) {define_test_class( Vertex)}
 
@@ -21,6 +21,13 @@ module Oriented
         it "defaults to OUT" do
           described_class.new("touches", dummy_class).direction.should == Oriented::Relationships::Direction::OUT
         end
+
+        context "when a string is passed in" do
+          it "makes it a direction" do
+          described_class.new("touches", dummy_class, {dir: "out"}).direction.should == Oriented::Relationships::Direction::OUT
+          end
+        end
+        
       end
 
       describe "#cardinality" do
@@ -52,7 +59,7 @@ module Oriented
         end
 
         context "when a class name and a symbol are passed" do
-          before(:each){ dummy_class.set_odb_class_name "TestODB"}
+          before(:each){ Oriented::Registry.stub(:odb_class_for) {"TestODB"}}
           subject{described_class.new("touches", dummy_class).from(other_class, :target)}
 
           it "makes the direction in" do
@@ -60,17 +67,17 @@ module Oriented
           end
 
           it "makes the label the symbol plus target class" do
-            subject.label.should == "#{dummy_class.odb_class_name}-target"
+            subject.label.should == "#{other_class.odb_class_name}-target"
           end
 
           it "sets the target class" do
-            subject.target_class.should == other_class.to_s
+            subject.target_class.to_s.should == other_class.odb_class_name.to_s
           end
         end
       end
 
       describe "#to" do
-        let(:other_class) {Class.new.send(:include, Vertex)}
+        let(:other_class) {define_test_class( Vertex)}
         context "when just a symbol is passed " do
 
           subject{described_class.new("touches", dummy_class).to(:target)}
@@ -86,7 +93,6 @@ module Oriented
         end
 
         context "when a class name is passed" do
-          before(:each){ dummy_class.set_odb_class_name "TestODB"}
           subject{described_class.new("touches", dummy_class).to(other_class)}
 
           it "makes the direction out" do
@@ -98,7 +104,7 @@ module Oriented
           end
 
           it "sets the target class" do
-            subject.target_class.should == other_class.odb_class_name
+            subject.target_class.to_s.should == other_class.odb_class_name
           end
         end
       end

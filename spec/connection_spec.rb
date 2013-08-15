@@ -12,9 +12,6 @@ module Oriented
         end
       end
 
-      after(:each) do
-      end
-
       it "creates a connection" do
         conn = Oriented.connection
         conn.graph.should_not be_nil

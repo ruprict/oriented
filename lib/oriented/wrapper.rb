@@ -11,16 +11,14 @@ module Oriented
     end
 
     def self.wrapper(java_obj)
-      classname = java_obj.element_type == 'Edge' ? "Oriented::Edge" : java_obj.label
-      clname = Oriented::Registry.model_class_for(classname)
+      return java_obj if java_obj.element_type == 'Edge' 
+      classname = java_obj.label
+      clname = Oriented::Registry.ruby_class_for(classname)
       new_instance = to_class(clname).orig_new
+
       new_instance.__java_obj = java_obj
       new_instance
 
-      # c = Object.const_get(java_obj.label)  
-      # model = c.new
-      # model.__java_obj = java_obj
-      # model
     end
 
     # @param [String] class_name the name we want the Class for

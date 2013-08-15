@@ -26,6 +26,8 @@ module Oriented
       @url = nil
       @password = nil
       @username = nil
+      @min_pool = 1
+      @max_pool = 5
     end
   end
 end

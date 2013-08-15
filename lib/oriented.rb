@@ -14,8 +14,9 @@ require "oriented/persistence"
 # Relationships
 require "oriented/wrapper/class_methods"
 require "oriented/wrapper"
-require "oriented/relationship/rel_type"
-require "oriented/relationship/rel_instance"
+require "oriented/relationships/rel_type"
+require "oriented/relationships/vertex_instance"
+require "oriented/relationships/edges_instance"
 require "oriented/relationships"
 
 require "oriented/type_converters"

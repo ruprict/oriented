@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 module Oriented
-  module Relationship
-    describe RelInstance do
+  module Relationships
+    describe VertexInstance do
       let(:dummy_class) { define_test_class(Vertex)}
       let(:related_class) { define_test_class(Vertex)}
       let(:vertex) { v = dummy_class.new; v.save; v}
@@ -55,6 +55,11 @@ module Oriented
           it "creates the relationship" do
             subject.create_relationship_to(other)
             subject.map(&:id).should include(other.id)
+          end
+
+          it "should take properties" do
+            e = subject.create_relationship_to(other, {prop1: "val1"})
+            e["prop1"].should == "val1"
           end
         end
 
