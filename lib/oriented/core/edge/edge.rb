@@ -3,6 +3,10 @@ module Oriented
     # Can be used to define your own wrapper class around nodes and relationships
     module Edge
 
+      def get_rid
+        get_id.to_s
+      end
+
       # Same as Java::OrgNeo4jGraphdb::Relationship#getEndNode
       # @see http://api.neo4j.org/1.6.1/org/neo4j/graphdb/Relationship.html#getEndNode()
       def _end_vertex

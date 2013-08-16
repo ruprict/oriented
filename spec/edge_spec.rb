@@ -40,5 +40,30 @@ module Oriented
         subject.end_vertex.id.should == end_vertex.id
       end
     end
+
+    describe "#find" do
+      subject {
+        dummy_class.new(start_vertex, end_vertex, "knows") 
+      }
+      context "without properties" do
+        it "returns a edge" do
+          subject.save
+          Oriented.graph.commit
+          obj = dummy_class.find(subject.id)
+          obj.class.should.to_s === Oriented::Core::JavaEdge.to_s
+
+        end
+      end
+
+      context "with properties" do
+        subject {
+          dummy_class.send(:property, :prop)
+          dummy_class.new(start_vertex, end_vertex, "knows", {prop: "val"}) 
+        }
+        it "returns instance of the class" do
+          dummy_class.find(subject.id).should be_a(dummy_class) 
+        end
+      end
+    end
   end
 end

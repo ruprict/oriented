@@ -28,7 +28,20 @@ module Oriented
         props.each_pair {|attr,val| wrapper.public_send("#{attr}=", val)} if props       
         wrapper
       end
-      
+
+      def find(id)
+        edge = Oriented.graph.get_edge(id)
+        puts edge._start_vertex
+        puts edge.label
+        puts edge.props
+        return nil unless edge
+        edge.wrapper
+      end
+
+      def find_all
+        Oriented.graph.get_vertices_of_class(Oriented::Registry.odb_class_for(self.name.to_s), false)  
+      end
+
       def to_adapter 
          self
       end

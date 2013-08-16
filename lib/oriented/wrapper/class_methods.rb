@@ -51,6 +51,7 @@ module Oriented
       def self.extended(klass)
         klass.instance_eval do
           class << self
+
             alias_method :orig_new, :new
           end
         end unless klass.respond_to?(:orig_new)

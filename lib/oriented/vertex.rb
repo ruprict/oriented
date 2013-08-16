@@ -45,12 +45,13 @@ module Oriented
       
       #TODO: Query methods
       def find(rid)
-        vertex = Oriented.connection.graph.get_vertex(rid)
+        vertex = Oriented.graph.get_vertex(rid)
         return nil unless vertex
-        m = orig_new
-        m.__java_obj = vertex
-        m
-        #wrap(obj)
+        vertex.wrapper
+      end
+
+      def find_all
+        Oriented.graph.get_vertices_of_class(Oriented::Registry.odb_class_for(self.name.to_s), false).map(&:wrapper)
       end
 
       

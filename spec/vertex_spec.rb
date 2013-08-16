@@ -83,8 +83,12 @@ module Oriented
         obj.__java_obj.should == subject.__java_obj
       end
 
+      it "returns instances of the class" do
+        dummy_class.find(subject.id).should be_a(dummy_class) 
+      end
+
       context "has_one" do
-        
+
         let(:other_class) {
           c = define_test_class(Vertex)
           c.send(:property, :kind) 
@@ -99,16 +103,16 @@ module Oriented
           subject.previous = other_class
           subject.save          
         end
-        
+
         it "return previous vertex" do
           obj = dummy_class.find(subject.id)
           obj.previous.kind.should == "club"
         end
-        
+
       end    
-      
+
       context "has_many" do
-        
+
         let(:other_class) {
           c = define_test_class(Vertex)
           c.send(:property, :kind) 
@@ -123,14 +127,30 @@ module Oriented
           subject.targets << other_class
           subject.save          
         end
-        
+
         it "return previous vertex" do
           obj = dummy_class.find(subject.id)
           obj.targets.first.kind.should == "club"
         end
-        
+
       end  
-      
+
+      describe "#find_all" do
+        before(:each) do
+          dummy_class.new
+          dummy_class.new
+          Oriented.graph.commit
+        end
+
+        it "finds all the vertices for the given class" do
+          dummy_class.find_all.count == 2
+        end
+
+        it "returns instances of the class" do
+          dummy_class.find_all.first.should be_a(dummy_class) 
+        end
+      end
+
       context "props" do
         let(:other_class) {
           c = define_test_class(Vertex)
@@ -140,13 +160,13 @@ module Oriented
           obj.save
           obj
         }
-        
+
         it "return all props" do          
           other_class.props.should == {"kind"=>"club", "testprop"=>"test"}
         end        
       end      
     end
-    
+
     context "Persistence" do
       let(:other_class) {
         c = define_test_class(Vertex)
@@ -157,13 +177,13 @@ module Oriented
         dummy_class.send(:property, :guid)
         dummy_class
       }
-      
+
       it "should create a new java instance" do
         obj = subject.get_or_create(guid: "12345")
         obj.guid.should == "12345"
-        
+
       end
     end
-    
+
   end
 end

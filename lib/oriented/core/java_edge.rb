@@ -14,9 +14,9 @@ module Oriented
           end
 
           # Overrides the class so that the java object feels like a Ruby object.
-          # def class
-          #   Oriented::Core::JavaEdge
-          # end
+           def class
+             Oriented::Core::JavaEdge
+           end
 
 
           class << self
@@ -30,9 +30,9 @@ module Oriented
                 include Oriented::Core::Rels          
                 include Oriented::Core::Wrapper     
                 
-                # def class
-                #   Oriented::Core::JavaEdge
-                # end     
+                 def class
+                   Oriented::Core::JavaEdge
+                 end     
 
               end
             end

@@ -12,9 +12,7 @@ $odb.close
 
 
 Oriented.configure do |config|
-  config.url = "remote:localhost/testgrp2"
-  config.username = "kyck"
-  config.password = "soccer"
+  config.url = "local:#{TMP_DB_PATH}"
 end
 
 DB_CREATED = true
