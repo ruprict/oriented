@@ -37,8 +37,8 @@ module Oriented
               r2 = subject.create_relationship_to(other2)
               Oriented.graph.commit
               e = subject.to_other(other)
-              e.should_not be_nil
-              e.id.to_s.should == r1.id.to_s
+              e.count.should == 1
+              e.first.id.to_s.should == r1.id.to_s
             end
 
 
@@ -62,8 +62,8 @@ module Oriented
               r2 = subject.create_relationship_to(other2, {prop1: "val2"})
               Oriented.graph.commit
               e = subject.to_other(other)
-              e.should_not be_nil
-              e.id.to_s.should == r1.id.to_s
+              e.count.should == 1
+              e.first.id.to_s.should == r1.id.to_s
             end
 
 
