@@ -41,12 +41,15 @@ module Oriented
       private
 
       def get_direction(dir)
-        case dir
+        @direction ||= case dir
         when Direction
           dir
         when String
-          Direction::OUT if dir =~ /out/i
-          Direction::IN if dir =~ /in/i
+          if (dir =~ /out/i) == 0
+            @direction = Direction::OUT
+          elsif ( dir =~ /in/i ) == 0 
+            @direction = Direction::IN
+          end
         else
           raise ArgumentError.new("Unknown Direction")
         end

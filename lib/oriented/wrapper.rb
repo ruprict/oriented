@@ -11,9 +11,11 @@ module Oriented
     end
 
     def self.wrapper(java_obj)
-      return java_obj if java_obj.get_element_type =="Edge"
       classname = java_obj.get_label
       clname = Oriented::Registry.ruby_class_for(classname)
+      return java_obj if clname[0].nil?
+      clname = clname[0].upcase + clname[1..-1]
+      return java_obj if java_obj.get_element_type == "Edge" && !Kernel.const_defined?(clname) 
       new_instance = to_class(clname).orig_new
 
       new_instance.__java_obj = java_obj

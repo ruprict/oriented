@@ -6,8 +6,6 @@ module Oriented
         # Tries to load a wrapper for this node if possible
         # @see #wrapper_proc=
         def wrapper(entity)
-          puts "Oriented::Core::Wrapper::ClassMethods"
-          puts entity.label
           @_wrapper_proc ? @_wrapper_proc.call(entity) : entity
         end
 

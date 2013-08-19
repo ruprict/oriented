@@ -31,9 +31,6 @@ module Oriented
 
       def find(id)
         edge = Oriented.graph.get_edge(id)
-        puts edge._start_vertex
-        puts edge.label
-        puts edge.props
         return nil unless edge
         edge.wrapper
       end

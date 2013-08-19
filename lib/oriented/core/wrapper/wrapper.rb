@@ -6,8 +6,6 @@ module Oriented
       # @return [self, Object] return self or a wrapper Ruby object
       # @see  Neo4j::Node::ClassMethods#wrapper
       def wrapper
-        puts "Oriented::Core::Wrapper"
-        puts self.label
         self.class.wrapper(self)
       end
 

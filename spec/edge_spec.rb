@@ -60,6 +60,11 @@ module Oriented
           dummy_class.send(:property, :prop)
           dummy_class.new(start_vertex, end_vertex, "knows", {prop: "val"}) 
         }
+
+        before(:each) do
+          Oriented::Registry.stub(:ruby_class_for).with("knows").and_return(dummy_class.name)
+        end
+        
         it "returns instance of the class" do
           dummy_class.find(subject.id).should be_a(dummy_class) 
         end
