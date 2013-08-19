@@ -16,7 +16,6 @@ module Oriented
 
         it "take properties" do
           e = subject.create_relationship_to(other, {prop1: "val1"})
-          
           e["prop1"].should == "val1"
         end
        
@@ -53,17 +52,14 @@ module Oriented
               e.count.should == 1
               e.first.id.to_s.should == r1.id.to_s
             end
-
-
           end
-
         end
 
         context "with edge properties" do
           it "returns the edge from self to the other specified" do
             r = subject.create_relationship_to(other, {prop1: "val1"})
             Oriented.graph.commit
-            e = subject.to_other(other)
+            e = subject.to_other(other).first
             e.should_not be_nil 
           end  
 
