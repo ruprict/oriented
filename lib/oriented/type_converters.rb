@@ -233,6 +233,27 @@ module Oriented
       end
     end
 
+    class EmbeddedSetConverter
+      class << self
+        def convert?(clazz_or_symbol)
+          Set == clazz_or_symbol || :embedded_set == clazz_or_symbol
+        end
+
+        def to_java(value)
+          return Set.new if value.nil?
+          value.to_java
+        end
+
+        def to_ruby(value)
+          value 
+        end
+
+        def index_as
+          Set 
+        end
+      end
+    end
+
     class << self
 
       # Mostly for testing purpose, You can use this method in order to
@@ -247,12 +268,12 @@ module Oriented
       def converter(type = nil, enforce_type = true)
         return DefaultConverter unless type
         @converters ||= begin
-          Oriented::TypeConverters.constants.find_all do |c|
-            Oriented::TypeConverters.const_get(c).respond_to?(:convert?)
-          end.map do  |c|
-            Oriented::TypeConverters.const_get(c)
-          end
-        end
+                          Oriented::TypeConverters.constants.find_all do |c|
+                            Oriented::TypeConverters.const_get(c).respond_to?(:convert?)
+                          end.map do  |c|
+                            Oriented::TypeConverters.const_get(c)
+                          end
+                        end
         found = @converters.find {|c| c.convert?(type) }
         raise "The type #{type.inspect} is unknown. Use one of #{@converters.map{|c| c.name }.join(", ")} or create a custom type converter." if !found && enforce_type
         found or DefaultConverter

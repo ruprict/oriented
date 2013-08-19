@@ -17,6 +17,11 @@ module Oriented
          dt = DateTime.new(2013, 12, 30)
          Oriented::TypeConverters.convert(dt).should == dt.to_time.to_i
        end
+
+       it "converts a Set" do
+         set = Set.new([1,2,3])
+         Oriented::TypeConverters.convert(set).should == Set.new([ 1,2,3 ]).to_java
+       end
     end
   end
 end
