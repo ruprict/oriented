@@ -34,7 +34,7 @@ module Oriented
       end
 
       def create_relationship_to(other, attrs={})
-        vertex.add_edge(@rel_type.label.to_s, other.__java_obj, nil, nil, attrs)
+        vertex.add_edge(@rel_type.label.to_s, other.__java_obj, nil, nil, attrs).wrapper
       end
 
       def destroy_relationship
