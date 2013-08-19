@@ -14,9 +14,22 @@ module Oriented
           subject.map(&:id).should include(e.id)
         end
 
-        it "should take properties" do
+        it "take properties" do
           e = subject.create_relationship_to(other, {prop1: "val1"})
+          
           e["prop1"].should == "val1"
+        end
+       
+        context "when a relationship has properties" do
+          before(:each) do
+            @rel_class = define_test_class(Edge)
+            Oriented::Registry.map(@rel_class.name, "spanks")
+          end
+
+          it "returns a class" do
+            e = subject.create_relationship_to(other, {prop1: "val1"})
+            e.should be_a(@rel_class)
+          end
         end
       end
 
