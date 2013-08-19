@@ -7,8 +7,10 @@ module Oriented
       @connection
     end
 
-    def graph
-      connection.graph
+    def graph(stop_transaction = false)
+      connection
+      @connection.graph.stop_transaction(OrientDB::Conclusion::SUCCESS) if stop_transaction
+      @connection.graph
     end
   end
 
