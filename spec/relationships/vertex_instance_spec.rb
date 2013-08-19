@@ -22,6 +22,10 @@ module Oriented
           it "adds a relationship" do
             expect{subject << other}.to change {subject.count}.by(1)
           end
+
+          it "returns a vertex" do
+            (subject << other).should be_a(Vertex)
+          end
         end
 
         describe "#each" do 

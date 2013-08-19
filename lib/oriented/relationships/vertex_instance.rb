@@ -30,6 +30,7 @@ module Oriented
       def << (other)
         return if @rel_type.cardinality == :one
         create_relationship_to(other)
+        other
       end
 
       def create_relationship_to(other, attrs={})
