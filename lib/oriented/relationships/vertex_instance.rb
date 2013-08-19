@@ -49,6 +49,7 @@ module Oriented
         end
       end
 
+
       private
 
       def vertex_query

@@ -108,6 +108,19 @@ module Oriented
           end
         end
       end
+      
+      describe "#relationship and relationship_class" do
+        let(:rel_class) {define_test_class(Edge)} 
+        subject{described_class.new("touches", dummy_class)}
+        it "takes a class" do
+          subject.relationship(rel_class) 
+        end
+
+        it "returns that class" do
+          subject.relationship(rel_class) 
+          subject.relationship_class.should == rel_class
+        end
+      end
     end
   end
 end

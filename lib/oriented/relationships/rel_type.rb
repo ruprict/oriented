@@ -38,6 +38,15 @@ module Oriented
         self
       end
 
+      def relationship(rel_class)
+        @relationship_class = rel_class
+        self
+      end
+
+      def relationship_class
+        @relationship_class ||= Oriented::Core::JavaEdge 
+      end
+
       private
 
       def get_direction(dir)
