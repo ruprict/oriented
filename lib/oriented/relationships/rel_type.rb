@@ -17,7 +17,7 @@ module Oriented
         @direction = Oriented::Relationships::Direction::OUT
         if Class === args[0] 
           @target_class = Oriented::Registry.odb_class_for(args[0])
-          @label = "#{@source_class}-#{@label}"
+          @label = "#{@source_class}__#{@label}"
         elsif Symbol === args[0]
           @label = args[0].to_s
         end
@@ -31,7 +31,7 @@ module Oriented
 
         if args.size > 1
           @target_class = Oriented::Registry.odb_class_for(args[0])
-          @label = "#{@target_class}-#{args[1].to_s}"
+          @label = "#{@target_class}__#{args[1].to_s}"
         elsif Symbol === args[0]
           @label = args[0].to_s
         end
