@@ -18,6 +18,10 @@ module Oriented
       self.instance_eval &block if block_given?
     end
 
+    def self.map(ruby_class, odb_class)
+      @@instance.map(ruby_class, odb_class)  
+    end
+
     # the mapping is done by the class names, to avoid
     # class-reloading issues in Rails dev mode
     def map ruby_class, odb_class
