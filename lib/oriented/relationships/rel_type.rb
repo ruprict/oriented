@@ -5,7 +5,7 @@ module Oriented
       attr_reader :direction, :cardinality, :label, :target_class
    
       def initialize(rel_label, source_class, options={})
-        @label = rel_label
+        @label = rel_label.to_s
         @source_class = Oriented::Registry.odb_class_for(source_class)
 
         @direction = get_direction(options.fetch(:dir, Oriented::Relationships::Direction::OUT) )
