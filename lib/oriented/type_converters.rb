@@ -184,15 +184,16 @@ module Oriented
           return nil if value.nil?
           value = value.new_offset(0) if value.respond_to?(:new_offset)
           if value.class == Date
-            Time.utc(value.year, value.month, value.day, 0, 0, 0).to_i
+            Time.utc(value.year, value.month, value.day, 0, 0, 0)
           else
-            Time.utc(value.year, value.month, value.day, value.hour, value.min, value.sec).to_i
+            Time.utc(value.year, value.month, value.day, value.hour, value.min, value.sec)
           end
         end
 
         def to_ruby(value)
           return nil if value.nil?
-          t = Time.at(value).utc
+          jv = value.getTime/1000 if value.class == Java.JavaUtil::Date
+          t = Time.at(jv).utc
           DateTime.civil(t.year, t.month, t.day, t.hour, t.min, t.sec)
         end
 
@@ -215,9 +216,9 @@ module Oriented
         def to_java(value)
           return nil if value.nil?
           if value.class == Date
-            Time.utc(value.year, value.month, value.day, 0, 0, 0).to_i
+            Time.utc(value.year, value.month, value.day, 0, 0, 0)
           else
-            value.utc.to_i
+            value.utc
           end
         end
 
