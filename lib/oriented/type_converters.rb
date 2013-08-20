@@ -155,13 +155,15 @@ module Oriented
 
         def to_java(value)
           return nil if value.nil?
-          Time.utc(value.year, value.month, value.day).to_i
+          Time.utc(value.year, value.month, value.day).to_date
         end
 
         def to_ruby(value)
           return nil if value.nil?
-          Time.at(value).utc.to_date
+          jv = value.getTime/1000 if value.class == Java.JavaUtil::Date
+          t = Time.at(jv).utc.to_date
         end
+
 
         def index_as
           Fixnum
@@ -222,9 +224,11 @@ module Oriented
           end
         end
 
+        
         def to_ruby(value)
           return nil if value.nil?
-          Time.at(value).utc
+          jv = value.getTime/1000 if value.class == Java.JavaUtil::Date
+          Time.at(jv).utc
         end
 
         def index_as
