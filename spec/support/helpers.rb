@@ -17,10 +17,10 @@ def define_test_class(includes=nil)
 end
 
 def define_vertex_type(vt)
-  Oriented.graph.create_vertex_type(vt) unless Oriented.connection.graph.get_vertex_type(vt)
+  Oriented.graph(true).create_vertex_type(vt) unless Oriented.connection.graph.get_vertex_type(vt)
 end
 
 def define_edge_type(vt)
-  Oriented.graph.create_edge_type(vt) unless Oriented.connection.graph.get_edge_type(vt)
+  Oriented.graph(true).create_edge_type(vt) unless Oriented.connection.graph.get_edge_type(vt)
 end
 

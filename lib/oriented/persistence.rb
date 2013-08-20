@@ -39,15 +39,15 @@ module Oriented
 
       # Removes the node from Neo4j and freezes the object.
       def destroy
-        # delete
+        delete
         # freeze
       end
 
       # Same as #destroy but doesn't run destroy callbacks and doesn't freeze
       # the object. Creates a new transaction
       def delete
-        # del unless new_record? || destroyed?
-        # set_deleted_properties
+        __java_obj.remove unless new_record? || destroyed?
+        set_deleted_properties
       end
       # tx_methods :delete
 
@@ -63,7 +63,7 @@ module Oriented
 
       # Returns +true+ if the record hasn't been saved to Neo4j yet.
       def new_record?
-        _java_entity.nil?
+        __java_obj.nil?
       end
 
       alias :new? :new_record?

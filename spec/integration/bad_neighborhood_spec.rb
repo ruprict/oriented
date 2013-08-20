@@ -8,17 +8,14 @@ describe "BadNeighborhood" do
 
   before do
     %w(Model DrugDealer Stylist).each do |vt|
-      Oriented.connection.graph.stop_transaction(OrientDB::Conclusion::SUCCESS)
-      Oriented.connection.graph.create_vertex_type(vt) unless Oriented.connection.graph.get_vertex_type(vt)
+      Oriented.graph(true).create_vertex_type(vt) unless Oriented.connection.graph.get_vertex_type(vt)
     end
     %w(drug_dealer stylists).each do |vt|
-      Oriented.connection.graph.stop_transaction(OrientDB::Conclusion::SUCCESS)
-      Oriented.connection.graph.create_edge_type(vt) unless Oriented.connection.graph.get_edge_type(vt)
+      Oriented.graph(true).create_edge_type(vt) unless Oriented.connection.graph.get_edge_type(vt)
     end
   end
   it "lets Barbie get a drug dealer" do
     barbie.drug_dealer = bad_guy
-    # puts bad_guy.__java_obj.id
     barbie.drug_dealer.id.should == bad_guy.id.to_s
   end
 
