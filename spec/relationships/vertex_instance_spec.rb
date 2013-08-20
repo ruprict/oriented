@@ -45,11 +45,13 @@ module Oriented
           end
         end
 
-        describe "#all" do
-          it "returns all the other vertices" do
-            
+        describe "#empty?" do
+          it "returns true when no rels" do
+            subject.empty?.should be_true
+
           end
         end
+
       end
 
       context "for a has one" do

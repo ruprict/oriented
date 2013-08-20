@@ -22,6 +22,10 @@ module Oriented
         vertex.get_edges(other_vertex.__java_obj, @rel_type.direction).to_a.map{|e| e.wrapper}
       end
 
+      def empty?
+        edge_query.count == 0
+      end
+
 
       private
 

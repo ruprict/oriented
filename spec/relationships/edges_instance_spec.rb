@@ -32,6 +32,13 @@ module Oriented
         end
       end
 
+      describe "#empty?" do
+        it "returns true when no rels" do
+          subject.empty?.should be_true
+
+        end
+      end
+
       describe "to_other" do
         context "without edge properties" do
           it "returns the edge from self to the other specified" do
