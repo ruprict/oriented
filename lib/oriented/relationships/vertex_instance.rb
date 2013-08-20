@@ -16,6 +16,13 @@ module Oriented
         end
       end
       
+      def create(node_attr = {}, rels_attrs = {})
+        objcls = @rel_type.target_class.constantize || Oriented::Core::JavaVertex
+        v = objcls.new(node_attr)
+        rel = self.create_relationship_to(v, rels_attrs)
+        v
+      end
+      
       def empty?
         return !other_vertex if @rel_type.cardinality == :one
         first == nil

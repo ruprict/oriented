@@ -37,7 +37,6 @@ module Oriented
 
       def property(*props)
         options = props.last.kind_of?(Hash) ? props.pop : {}
-        
         props.each do |prop|
           raise RestrctedPropertyError if RESTRICTED_PROPERTIES.include?(prop)
           next if _props.has_key?(prop)
@@ -45,7 +44,7 @@ module Oriented
           options.each {|k, v| _props[prop][k] = v}
           
           attribute_defaults[prop] = options[:default]  if options.has_key?(:default)
-
+          
           _props[prop][:converter] ||= Oriented::TypeConverters.converter(_props[prop][:type])
 
           create_property_methods(prop)
@@ -54,7 +53,7 @@ module Oriented
       end
 
       def create_property_methods(name)
-        define_method name do
+        define_method "#{name}" do
           self.class._converter(name).to_ruby(__java_obj.get_property(name.to_s))
         end
 
