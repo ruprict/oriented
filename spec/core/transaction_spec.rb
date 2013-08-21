@@ -45,13 +45,6 @@ module Oriented
             end
           end          
 
-          it "closes" do
-            @conn_mock.should_receive(:close)
-            @conn_mock.stub(:commit)
-            described_class.run  do
-              #doesn't matter
-            end
-          end          
         
         end
       end

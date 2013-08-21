@@ -1,5 +1,14 @@
 module Oriented
   module Core
+    #
+    # Class to encapsulate the transaction for OrientDB
+    #
+    # Currently, if anything fails, it will rollback the connection
+    # and then CLOSE it. This means any existing objects in your
+    # context will be hosed and you'll have to go get them from the db
+    # with a new connection.
+    #
+    # An Identity map would help this, methinks.
     class Transaction
 
       def self.run connection = Oriented.connection, &block
@@ -10,8 +19,8 @@ module Oriented
           ret
         rescue => ex
           connection.rollback
-        ensure
           connection.close
+        ensure
         end
       end
 
