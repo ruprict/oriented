@@ -16,7 +16,6 @@ module Oriented
       # @see Neo4j::Rails::Callbacks Neo4j::Rails::Callbacks - for callbacks
       def save(*)
         create_or_update
-        Oriented.connection.graph.commit()
       end
       wrap_in_transaction :save
 
