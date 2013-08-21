@@ -25,7 +25,7 @@ module Oriented
     end
 
     def connect
-      @java_connection ||= acquire_java_connection
+      @java_connection = (@java_connection && !@java_connection.closed?) ? @java_connection : acquire_java_connection
       @graph = OrientDB::OrientGraph.new(@java_connection)
     end
 
