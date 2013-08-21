@@ -33,6 +33,10 @@ module Oriented
 
     module ClassMethods 
 
+      class << self
+        include Oriented::Core::TransactionWrapper
+      end
+
       def new(*args)
         props = args.first
         wrapper = super()
@@ -49,10 +53,12 @@ module Oriented
         return nil unless vertex
         vertex.wrapper
       end
+      wrap_in_transaction :find
 
       def find_all
         Oriented.graph.get_vertices_of_class(Oriented::Registry.odb_class_for(self.name.to_s), false).map(&:wrapper)
       end
+      wrap_in_transaction :find_all
 
       
       def to_adapter 
