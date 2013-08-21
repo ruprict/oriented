@@ -6,6 +6,11 @@ module Oriented
       def get_rid
         get_id.to_s
       end
+      
+      def delete
+        remove
+      end
+      
     end
   end
 end

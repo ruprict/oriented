@@ -36,9 +36,9 @@ module Oriented
         other.wrapper if other
       end
 
-      def << (other)
+      def <<(other, attrs={})
         return if @rel_type.cardinality == :one
-        create_relationship_to(other)
+        create_relationship_to(other, attrs)
         other
       end
 

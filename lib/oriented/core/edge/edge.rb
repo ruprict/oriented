@@ -37,8 +37,8 @@ module Oriented
       # May raise an exception if delete was unsuccessful.
       #
       # @return [nil]
-      def del
-        delete
+      def delete
+        remove
       end
 
       # Same as Java::OrgNeo4jGraphdb::Relationship#getEndNode but returns the wrapper for it (if it exist)
