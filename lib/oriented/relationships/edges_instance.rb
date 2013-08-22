@@ -19,7 +19,7 @@ module Oriented
       end
 
       def to_other(other_vertex)
-        vertex.get_edges(other_vertex.__java_obj, @rel_type.direction).to_a.map{|e| e.wrapper}
+        vertex.get_edges(other_vertex.__java_obj, @rel_type.direction, @rel_type.label).to_a.map{|e| e.wrapper}
       end
 
       def empty?
