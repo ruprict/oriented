@@ -8,7 +8,7 @@ module Oriented
     end
 
     def graph(stop_transaction = false)
-      connection
+      connection 
       @connection.java_connection.transaction.close if stop_transaction
       @connection.graph
     end
@@ -25,13 +25,25 @@ module Oriented
     end
 
     def connect
-      @java_connection ||= acquire_java_connection
+      @java_connection = (@java_connection && !@java_connection.closed?) ? @java_connection : acquire_java_connection
       @graph = OrientDB::OrientGraph.new(@java_connection)
     end
 
     def close
-      @java_connection.close if @java_connection
-      @graph.close if @graph
+      @graph.shutdown if @graph
+      @java_connection = nil
+    end
+
+    def rollback
+      @graph.rollback
+    end
+
+    def commit
+      @graph.commit
+    end
+
+    def transaction_active?
+      @java_connection.transaction.active?
     end
 
     private

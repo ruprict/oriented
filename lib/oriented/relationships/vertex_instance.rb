@@ -2,6 +2,7 @@ module Oriented
   module Relationships
     class VertexInstance
       include Enumerable
+      extend Oriented::Core::TransactionWrapper
 
       def initialize(vertex, rel_type)
         @vertex = vertex
@@ -22,6 +23,7 @@ module Oriented
         rel = self.create_relationship_to(v, rels_attrs)
         v
       end
+      wrap_in_transaction :create
       
       def empty?
         return !other_vertex if @rel_type.cardinality == :one
@@ -43,10 +45,12 @@ module Oriented
       def create_relationship_to(other, attrs={})
         vertex.add_edge(@rel_type.label.to_s, other.__java_obj, nil, nil, attrs).wrapper
       end
+      wrap_in_transaction :create_relationship_to
 
       def destroy_relationship
         edge_query.each {|e| e.remove}
       end
+      wrap_in_transaction :destroy_relationship
       
       def destroy_relationship_to(other)
         edge_query.each do |e| 
@@ -55,6 +59,8 @@ module Oriented
           end
         end
       end
+      wrap_in_transaction :destroy_relationship_to
+      
 
 
       private

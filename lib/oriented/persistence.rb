@@ -4,7 +4,7 @@ module Oriented
     module Persistence
       
       extend ActiveSupport::Concern
-      # extend TxMethods
+      extend Oriented::Core::TransactionWrapper
 
 
       # Persist the object to the database.  Validations and Callbacks are included
@@ -16,9 +16,8 @@ module Oriented
       # @see Neo4j::Rails::Callbacks Neo4j::Rails::Callbacks - for callbacks
       def save(*)
         create_or_update
-        Oriented.connection.graph.commit()
       end
-      # tx_methods :save
+      wrap_in_transaction :save
 
       # Persist the object to the database.  Validations and Callbacks are included
       # by default but validation can be disabled by passing :validate => false
@@ -49,7 +48,7 @@ module Oriented
         __java_obj.remove unless new_record? || destroyed?
         set_deleted_properties
       end
-      # tx_methods :delete
+      wrap_in_transaction :delete
 
       # Returns +true+ if the object was destroyed.
       def destroyed?
@@ -80,8 +79,10 @@ module Oriented
         @_properties.frozen?
       end
 
-
       module ClassMethods
+        class << self
+          include Oriented::Core::TransactionWrapper
+        end
 
         def transaction(&block)
           # Neo4j::Rails::Transaction.run do |tx|
@@ -159,6 +160,7 @@ module Oriented
           # index = index_for_type(_decl_props[unique_factory_key][:index])
           # Neo4j::Core::Index::UniqueFactory.new(unique_factory_key, index) { |*| create!(*args) }.get_or_create(unique_factory_key, props[unique_factory_key]).wrapper
         end
+        wrap_in_transaction :get_or_create
 
         # Same as #create, but raises an error if there is a problem during save.
         # @return [Neo4j::Rails::Model, Neo4j::Rails::Relationship]

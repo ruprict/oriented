@@ -1,4 +1,5 @@
 require "oriented/core/to_java"
+require "oriented/core/transaction"
 require "oriented/core/wrapper/class_methods"
 require "oriented/core/wrapper/wrapper"
 require "oriented/core/property"
