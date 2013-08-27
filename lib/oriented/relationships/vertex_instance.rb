@@ -19,7 +19,6 @@ module Oriented
       
       def create(node_attr = {}, rels_attrs = {})
         objcls = @rel_type.target_class || Oriented::Core::JavaVertex
-        puts "objclas= #{objcls}"
         v = objcls.new(node_attr)
         rel = self.create_relationship_to(v, rels_attrs)
         v
@@ -61,7 +60,11 @@ module Oriented
         end
       end
       wrap_in_transaction :destroy_relationship_to
-      
+
+
+      def destroy_all
+        vertex_query().each {|v| v.wrapper.destroy}
+      end
 
 
       private

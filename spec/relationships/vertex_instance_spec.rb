@@ -88,7 +88,21 @@ module Oriented
           end
         end
       end
+      
+      context "#destroy_all" do
+        let(:rel_type) { RelType.new("spanks", dummy_class)}
+        let(:other) {related_class.new}
 
+        before do
+          subject << other
+        end
+
+         it "destroys the vertices in the relationship" do
+          subject.count.should == 1 
+          subject.destroy_all
+          subject.count.should == 0
+         end
+      end
     end
   end
 end
