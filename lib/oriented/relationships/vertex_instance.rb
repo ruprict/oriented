@@ -17,7 +17,7 @@ module Oriented
         end
       end
       
-      def create(node_attr = {}, rels_attrs = {})
+      def create(node_attr = {}, rels_attrs = nil)
         objcls = @rel_type.target_class.constantize || Oriented::Core::JavaVertex
         v = objcls.new(node_attr)
         rel = self.create_relationship_to(v, rels_attrs)
@@ -35,13 +35,19 @@ module Oriented
         other = vertex_query.first
         other.wrapper if other
       end
-
-      def <<(other, attrs={})
+      
+      def <<(other)
         return if @rel_type.cardinality == :one
-        create_relationship_to(other, attrs)
+        create_relationship_to(other)
         other
       end
-
+      
+      def connect(other, attrs={})
+        return if @rel_type.cardinality == :one
+        create_relationship_to(other, attrs)
+        other  
+      end
+      
       def create_relationship_to(other, attrs={})
         vertex.add_edge(@rel_type.label.to_s, other.__java_obj, nil, nil, attrs).wrapper
       end
