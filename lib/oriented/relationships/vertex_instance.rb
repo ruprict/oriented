@@ -35,13 +35,19 @@ module Oriented
         other = vertex_query.first
         other.wrapper if other
       end
-
-      def <<(other, attrs={})
+      
+      def <<(other)
         return if @rel_type.cardinality == :one
-        create_relationship_to(other, attrs)
+        create_relationship_to(other)
         other
       end
-
+      
+      def connect(other, attrs={})
+        return if @rel_type.cardinality == :one
+        create_relationship_to(other, attrs)
+        other  
+      end
+      
       def create_relationship_to(other, attrs={})
         vertex.add_edge(@rel_type.label.to_s, other.__java_obj, nil, nil, attrs).wrapper
       end
