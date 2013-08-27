@@ -20,6 +20,7 @@ module Oriented
         rescue => ex
           connection.rollback
           connection.close
+          raise 
         ensure
         end
       end

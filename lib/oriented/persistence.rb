@@ -184,6 +184,13 @@ module Oriented
         !!@_create_or_updating
       end
 
+
+      def update_attributes(attrs)
+        attrs.each_pair do |k,v|
+          self.public_send("#{k}=", v)
+        end
+      end
+
       protected
 
       def update

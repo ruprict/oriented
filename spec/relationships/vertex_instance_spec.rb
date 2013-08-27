@@ -52,6 +52,17 @@ module Oriented
           end
         end
 
+        describe "#create" do
+
+          let(:dummy) {dummy_class.new} 
+
+          it "creates a relationship to a new vertex of the target class" do
+            dummy_class.send(:has_n, :licks).to(related_class)
+            target = dummy.licks.create()
+            target.should be_a(related_class) 
+          end
+        end
+
       end
 
       context "for a has one" do

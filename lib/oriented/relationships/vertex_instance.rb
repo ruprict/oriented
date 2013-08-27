@@ -18,7 +18,8 @@ module Oriented
       end
       
       def create(node_attr = {}, rels_attrs = {})
-        objcls = @rel_type.target_class.constantize || Oriented::Core::JavaVertex
+        objcls = @rel_type.target_class || Oriented::Core::JavaVertex
+        puts "objclas= #{objcls}"
         v = objcls.new(node_attr)
         rel = self.create_relationship_to(v, rels_attrs)
         v

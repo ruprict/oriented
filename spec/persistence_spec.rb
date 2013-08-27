@@ -25,5 +25,19 @@ module Oriented
         vertex_class.find(vertex.id.to_s).should be_nil
       end
     end
+
+    describe "#update_attributes" do
+      before do
+        vertex_class.send(:property, :name)
+        vertex_class.send(:property, :kind)
+      end
+
+      it "updates the attributes of the object" do
+        vertex.update_attributes(name: "Fred", kind: "Yummy")  
+        vertex.name.should == "Fred"
+        vertex.kind.should == "Yummy"
+      end
+      
+    end
   end
 end

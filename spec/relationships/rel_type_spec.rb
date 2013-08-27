@@ -59,15 +59,14 @@ module Oriented
         end
 
         context "when a class name and a symbol are passed" do
-          before(:each){ Oriented::Registry.stub(:odb_class_for) {"TestODB"}}
           subject{described_class.new("touches", dummy_class).from(other_class, :target)}
 
           it "makes the direction in" do
             subject.direction.should == Oriented::Relationships::Direction::IN
           end
 
-          it "makes the label the symbol plus target class" do
-            subject.label.should == "#{other_class.odb_class_name}__target"
+          it "makes the label the symbol plus source class" do
+            subject.label.should == "#{dummy_class.odb_class_name}__target"
           end
 
           it "sets the target class" do
@@ -100,7 +99,7 @@ module Oriented
           end
 
           it "makes the label the source class name method target class name" do
-            subject.label.should == "#{dummy_class.odb_class_name}__touches" 
+            subject.label.should == "#{other_class.odb_class_name}__touches" 
           end
 
           it "sets the target class" do

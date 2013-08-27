@@ -45,7 +45,8 @@ module Oriented
             def #{method_name} 
               rel = self.class._rels[:'#{method_name}']
               rel_instance = Oriented::Relationships::VertexInstance.new(self, rel)
-              rel_instance.other_vertex
+              other_v = rel_instance.other_vertex
+              other_v.wrapper if other_v
             end
           RUBY
         end

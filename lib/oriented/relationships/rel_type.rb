@@ -2,7 +2,7 @@ module Oriented
   module Relationships
     class RelType
 
-      attr_reader :direction, :cardinality, :label, :target_class
+      attr_reader :direction, :cardinality, :label
    
       def initialize(rel_label, source_class, options={})
         @label = rel_label.to_s
@@ -15,9 +15,9 @@ module Oriented
 
       def to(*args)
         @direction = Oriented::Relationships::Direction::OUT
-        if Class === args[0] 
-          @target_class = Oriented::Registry.odb_class_for(args[0])
-          @label = "#{@source_class}__#{@label}"
+        if args[0].is_a?(Class)
+          @target_class = args[0]
+          @label = "#{@target_class}__#{@label}"
         elsif Symbol === args[0]
           @label = args[0].to_s
         end
@@ -30,8 +30,8 @@ module Oriented
         @direction = Oriented::Relationships::Direction::IN 
 
         if args.size > 1
-          @target_class = Oriented::Registry.odb_class_for(args[0])
-          @label = "#{@target_class}__#{args[1].to_s}"
+          @target_class = args[0]
+          @label = "#{@source_class}__#{args[1].to_s}"
         elsif Symbol === args[0]
           @label = args[0].to_s
         end
@@ -45,6 +45,11 @@ module Oriented
 
       def relationship_class
         @relationship_class ||= Oriented::Core::JavaEdge 
+      end
+
+      def target_class
+        return @target_class if @target_class
+        @target_class ? Object.const_get(Oriented::Registry.odb_class_for(@target_class)) : Oriented::Core::JavaVertex
       end
 
       private
