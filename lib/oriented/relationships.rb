@@ -10,6 +10,10 @@ module Oriented
     def self.included(base)
       base.extend ClassMethods
     end
+    
+    def rels(dir=:both, *types)
+      _rels(dir, *types).collect{|r| r.wrapper }
+    end
 
     module ClassMethods
       def _rels

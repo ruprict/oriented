@@ -20,6 +20,10 @@ module Oriented
         def _rel(dir, type)
           get_edges(ToJava.dir_to_java(dir), type.to_s.to_java).first
         end
+        
+        def rels(dir=:both, *types)
+          _rels(dir, types)
+        end
         # def rels(dir=:both, *types)
         #   raise "Illegal argument, first argument must be :both, :incoming or :outgoing, got #{dir.inspect}" unless [:incoming, :outgoing, :both].include?(dir)
         #   Neo4j::Core::Rels::Traverser.new(self, types, dir)
