@@ -47,6 +47,7 @@ module Oriented
       def delete
         __java_obj.remove unless new_record? || destroyed?
         set_deleted_properties
+        __java_obj.record.reload if __java_obj
       end
       wrap_in_transaction :delete
 
