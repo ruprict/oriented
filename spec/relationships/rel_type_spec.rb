@@ -66,7 +66,7 @@ module Oriented
           end
 
           it "makes the label the symbol plus source class" do
-            subject.label.should == "#{dummy_class.odb_class_name}__target"
+            subject.label.should == "#{other_class.odb_class_name}__target"
           end
 
           it "sets the target class" do
