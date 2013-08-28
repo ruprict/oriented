@@ -20,6 +20,7 @@ module Oriented
     module ClassMethods 
 
       def new(*args)
+        validate_constructor_args(*args)
         start_vertex, end_vertex, label, props = *args
         wrapper = super()
         java_obj = Oriented::Core::JavaEdge.new(start_vertex.__java_obj, end_vertex.__java_obj, label)        
@@ -41,6 +42,17 @@ module Oriented
 
       def to_adapter 
          self
+      end
+
+
+      private
+
+      def validate_constructor_args(*args)
+        start_vertex, end_vertex, label, props = *args
+        raise ArgumentError.new "Start vertex not supplied" unless start_vertex
+        raise ArgumentError.new "Start vertex is not a vertex" unless start_vertex.is_a?(Vertex)
+        raise ArgumentError.new "End vertex not supplied" unless end_vertex
+        raise ArgumentError.new "End vertex is not a vertex" unless end_vertex.is_a?(Vertex)
       end
       
     end

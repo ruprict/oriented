@@ -19,6 +19,22 @@ module Oriented
         dc.name = "Fred"
         dc.label.should == "knows"
       end
+
+      it "raises an error if args not supplied" do
+        expect{dc = dummy_class.new}.to raise_error ArgumentError
+      end
+
+      it "raises an error if first arg is not a Vertex" do
+        expect{dc = dummy_class.new(Object.new, vertex_class.new)}.to raise_error ArgumentError
+      end
+
+      it "raises an error if second arg is not supplied" do
+        expect{dc = dummy_class.new(Object.new)}.to raise_error ArgumentError
+      end
+
+      it "raises an error if second arg is not a Vertex" do
+        expect{dc = dummy_class.new(dummy_class.new, Object.new)}.to raise_error ArgumentError
+      end
     end
 
     describe "#start_vertex" do
