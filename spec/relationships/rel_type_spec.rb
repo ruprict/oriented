@@ -99,7 +99,7 @@ module Oriented
           end
 
           it "makes the label the source class name method target class name" do
-            subject.label.should == "#{other_class.odb_class_name}__touches" 
+            subject.label.should == "#{dummy_class.odb_class_name}__touches" 
           end
 
           it "sets the target class" do

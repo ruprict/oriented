@@ -17,7 +17,7 @@ module Oriented
         @direction = Oriented::Relationships::Direction::OUT
         if args[0].is_a?(Class)
           @target_class = args[0]
-          @label = "#{@target_class}__#{@label}"
+          @label = "#{@source_class}__#{@label}"
         elsif Symbol === args[0]
           @label = args[0].to_s
         end
