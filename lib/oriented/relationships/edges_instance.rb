@@ -29,11 +29,14 @@ module Oriented
         edge_query.count == 0
       end
 
+      def as_query
+        vertex.query().labels(@rel_type.label)
+      end
 
       private
 
       def edge_query
-        vertex.query().labels(@rel_type.label).edges()
+        as_query.edges()
       end
 
       def vertex
