@@ -40,6 +40,13 @@ module Oriented
         Oriented.graph.get_vertices_of_class(Oriented::Registry.odb_class_for(self.name.to_s), false)  
       end
 
+      def load_entity(rid)
+          edge = Oriented::Core::JavaEdge._load(rid)
+          return nil if edge.nil?
+          return edge if edge.class == Oriented::Core::JavaEdge
+          edge.kind_of?(self) ? edge : nil
+      end
+      
       def to_adapter 
          self
       end

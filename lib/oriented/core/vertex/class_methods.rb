@@ -42,15 +42,14 @@ module Oriented
 
 
         # Same as load but does not return the node as a wrapped Ruby object.
-        #
-        # def _load(vertex_id)
-        #   puts vertex_id
-        #   return nil if vertex_id.nil?
-        #   # db.graph.get_node_by_id(node_id.to_i)
-        #     $db.get_vertex(vertex_id)
-        # # rescue Java::OrgNeo4jGraphdb.NotFoundException
-        # #   nil
-        # end
+        
+        def _load(vertex_id)
+          return nil if vertex_id.nil?
+          # db.graph.get_node_by_id(node_id.to_i)
+            Oriented.connection.graph.get_vertex(vertex_id)
+        # rescue Java::OrgNeo4jGraphdb.NotFoundException
+        #   nil
+        end
 
 
         # Checks if the given entity node or entity id (Neo4j::Node#neo_id) exists in the database.
@@ -70,10 +69,10 @@ module Oriented
         #
         # @param [nil, #to_i] node_id the neo4j node id
         # @return [Object, Neo4j::Node, nil] If the node does not exist it will return nil otherwise the loaded node or wrapped node.
-        # def load(vertex_id)
-        #   vertex = _load(vertex_id)
-        #   vertex && vertex.wrapper
-        # end
+        def load(vertex_id)
+          vertex = _load(vertex_id)
+          vertex && vertex.wrapper
+        end
 
       end
     end
