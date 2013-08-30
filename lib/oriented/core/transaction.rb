@@ -38,7 +38,7 @@ module Oriented
         methods.each do |method|
           tx_method = "#{method}_no_tx"
           send(:alias_method, tx_method, method)
-          send(:define_method, method) do |*args|
+          send(:define_method, method) do |*args|            
             Oriented::Core::Transaction.run { send(tx_method, *args) }
           end
         end

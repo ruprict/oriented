@@ -38,16 +38,16 @@ module Oriented
         # @see #exist?
         # @return the wrapper for the relationship or nil
         def load(edge_id)
-          # edge = _load(edge_id)
-          # return nil if edge.nil?
-          # edge && edge.wrapper
+          edge = _load(edge_id)
+          return nil if edge.nil?
+          edge && edge.wrapper
         end
 
         # Same as load but does not return the node as a wrapped Ruby object.
         # @see #load
         def _load(edge_id)
-          # return nil if edge_id.nil?
-          # DB.get_edge(edge_id)
+          return nil if edge_id.nil?
+          Oriented.connection.graph.get_edge(edge_id)
         # rescue Java::OrgNeo4jGraphdb::NotFoundException
         #   nil
         end
