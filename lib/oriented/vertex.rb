@@ -59,7 +59,13 @@ module Oriented
         Oriented.graph.get_vertices_of_class(Oriented::Registry.odb_class_for(self.name.to_s), false).map(&:wrapper)
       end
       wrap_in_transaction :find_all
-
+      
+      def load_entity(rid)
+          vertex = Oriented::Core::JavaVertex._load(rid)
+          return nil if vertex.nil?
+          return vertex if vertex.class == Oriented::Core::JavaVertex
+          vertex.kind_of?(self) ? vertex : nil
+      end
       
       def to_adapter 
         self

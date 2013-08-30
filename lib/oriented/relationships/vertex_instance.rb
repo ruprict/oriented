@@ -70,6 +70,7 @@ module Oriented
 
       def destroy_all
         vertex_query().each {|v| v.wrapper.destroy}
+        vertex.record.reload
       end
 
 
