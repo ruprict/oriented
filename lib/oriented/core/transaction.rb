@@ -12,17 +12,15 @@ module Oriented
     class Transaction
 
       def self.run connection = Oriented.connection, &block
-        begin 
-          ensure_connection(connection)
-          ret = yield
-          connection.commit
-          ret
-        rescue => ex
-          connection.rollback
-          connection.close
-          raise 
-        ensure
-        end
+        ensure_connection(connection)
+        ret = yield
+        connection.commit
+        ret
+      rescue => ex
+        connection.rollback
+        connection.close
+        raise 
+      ensure
       end
 
       private
