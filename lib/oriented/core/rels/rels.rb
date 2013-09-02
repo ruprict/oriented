@@ -22,7 +22,7 @@ module Oriented
         end
         
         def rels(dir=:both, *types)
-          _rels(dir, types)
+          _rels(dir, *types)
         end
         # def rels(dir=:both, *types)
         #   raise "Illegal argument, first argument must be :both, :incoming or :outgoing, got #{dir.inspect}" unless [:incoming, :outgoing, :both].include?(dir)

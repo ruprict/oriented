@@ -7,7 +7,6 @@ module Oriented
       def initialize(rel_label, source_class, options={})
         @label = rel_label.to_s
         @source_class = Oriented::Registry.odb_class_for(source_class)
-
         @direction = get_direction(options.fetch(:dir, Oriented::Relationships::Direction::OUT) )
         @cardinality = options.fetch(:cardinality, :many)
       end
@@ -31,7 +30,7 @@ module Oriented
 
         if args.size > 1
           @target_class = args[0]
-          @label = "#{@target_class}__#{args[1].to_s}"
+          @label = "#{Oriented::Registry.odb_class_for(@target_class)}__#{args[1].to_s}"
         elsif Symbol === args[0]
           @label = args[0].to_s
         end

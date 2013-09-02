@@ -16,6 +16,7 @@ module Oriented
       # @see Neo4j::Rails::Callbacks Neo4j::Rails::Callbacks - for callbacks
       def save(*)
         create_or_update
+        __java_obj.save
       end
       wrap_in_transaction :save
 
@@ -47,7 +48,7 @@ module Oriented
       def delete
         __java_obj.remove unless new_record? || destroyed?
         set_deleted_properties
-        __java_obj.record.reload if __java_obj
+        # __java_obj.record.reload if __java_obj
       end
       wrap_in_transaction :delete
 
