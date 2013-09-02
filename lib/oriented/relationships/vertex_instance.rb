@@ -50,9 +50,9 @@ module Oriented
       
       def create_relationship_to(other, attrs={})
         edge = vertex.add_edge(@rel_type.label.to_s, other.__java_obj, nil, nil, attrs)
-        # edge.save()
-        # vertex.save()
-        # other.__java_obj.save()
+        edge.save()
+        vertex.save()
+        other.__java_obj.save()
         edge.wrapper
       end
       wrap_in_transaction :create_relationship_to
