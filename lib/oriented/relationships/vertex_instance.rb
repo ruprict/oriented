@@ -49,12 +49,22 @@ module Oriented
       end
       
       def create_relationship_to(other, attrs={})
-        vertex.add_edge(@rel_type.label.to_s, other.__java_obj, nil, nil, attrs).wrapper
+        edge = vertex.add_edge(@rel_type.label.to_s, other.__java_obj, nil, nil, attrs)
+        # edge.save()
+        # vertex.save()
+        # other.__java_obj.save()
+        edge.wrapper
       end
       wrap_in_transaction :create_relationship_to
 
       def destroy_relationship
-        edge_query.each {|e| e.remove}
+        edge_query.each {|e| 
+          # other =  e._other_vertex(vertex)
+          e.remove
+          # other.record.reload
+        
+        }
+        # vertex.record.reload        
       end
       wrap_in_transaction :destroy_relationship
       
@@ -62,6 +72,8 @@ module Oriented
         edge_query.each do |e| 
           if e.out_vertex.id == other.id || e.in_vertex.id == other.id
             e.remove
+            # vertex.record.reload
+            # other.record.reload
           end
         end
       end
