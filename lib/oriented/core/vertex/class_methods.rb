@@ -35,7 +35,7 @@ module Oriented
           if props
             nprop = {}            
             props.keys.each do |key|
-              nprop[key.to_s] = props[key]
+              nprop[key.to_s] = props[key] if props[key]
             end
             newprop = nprop.flatten
           end
