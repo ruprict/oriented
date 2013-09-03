@@ -5,7 +5,11 @@ require 'orientdb'
 Dir['./spec/support/**/*.rb'].sort.each {|f| require f}
 
 RSpec.configure do |config|
+  config.filter_run_excluding broken: true
   config.before(:each) do
+  end
+  
+  config.after(:each) do
   end
 
 end

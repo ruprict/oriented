@@ -31,6 +31,8 @@ require "oriented/vertex"
 require "oriented/edge/delegates"
 require "oriented/edge"
 
+require "oriented/base_hook"
+
 module Oriented
   # Your code goes here...
 end

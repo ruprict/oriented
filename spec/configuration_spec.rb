@@ -21,6 +21,7 @@ module Oriented
       after do
         Oriented.configure do |config|
           config.url = "local:#{TMP_DB_PATH}"
+          config.pooled = false
         end
       end
 
