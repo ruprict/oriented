@@ -58,9 +58,9 @@ module Oriented
     end
 
     def close
-      if @pooled
-        @java_connection.force_close() if @java_connection
-      end  
+      # if @pooled
+      #   @java_connection.force_close() if @java_connection
+      # end  
       @graph.shutdown if @graph
       @java_connection = nil
     end
