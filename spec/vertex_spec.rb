@@ -47,6 +47,10 @@ module Oriented
         it "doesn't override passed in attributes" do
           dummy_class.new(kind: :smarty).kind.should == :smarty
         end
+
+        it "assigns the right converte" do
+          dummy_class._converter(:kind).should == Oriented::TypeConverters::SymbolConverter
+        end
       end
 
       context "specifying a type" do

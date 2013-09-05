@@ -29,6 +29,17 @@ module Oriented
        end
     end
 
+    describe ".converter" do
+     
+      context "for a symbol" do
+
+        it "returns a SymbolConverter" do
+          Oriented::TypeConverters.converter(:symbol).should  == SymbolConverter
+        end
+     
+      end
+    end
+
 
     describe DateTimeConverter do
       describe ".to_ruby" do
@@ -56,6 +67,14 @@ module Oriented
           exp_dt = Time.new(2013, 12, 30)
           dt = Java::JavaUtil::Date.new(exp_dt.to_time.to_i * 1000)
           TimeConverter.to_ruby(dt).should == exp_dt
+        end
+      end
+    end
+
+    describe SymbolConverter do
+      describe ".to_ruby" do
+        it "converts java to ruby" do
+          SymbolConverter.to_ruby("symbol").should == :symbol
         end
       end
     end
