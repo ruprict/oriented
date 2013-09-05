@@ -44,6 +44,7 @@ module Oriented
         nprop = {}   
         if props         
           props.keys.each do |key|
+            # puts self._converter(key).to_java(props[key])
             nprop[key.to_s] = self._converter(key).to_java(props[key]) if props[key]
           end
         end
