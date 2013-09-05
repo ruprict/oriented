@@ -3,6 +3,7 @@ require "oriented/registry"
 
 require 'oriented/configuration'
 require 'oriented/connection'
+require "oriented/identity_map"
 
 # Core Java Object
 require "orientdb"

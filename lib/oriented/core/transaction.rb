@@ -18,7 +18,7 @@ module Oriented
         ret
       rescue => ex
         connection.rollback
-        connection.close
+        connection.close(true)
         raise 
       ensure
       end

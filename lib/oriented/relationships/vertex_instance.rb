@@ -48,7 +48,7 @@ module Oriented
         other  
       end
       
-      def create_relationship_to(other, attrs={})
+      def create_relationship_to(other, attrs=nil)
         edge = vertex.add_edge(@rel_type.label.to_s, other.__java_obj, nil, nil, attrs)
         edge.save()
         vertex.save()

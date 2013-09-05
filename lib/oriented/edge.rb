@@ -57,7 +57,7 @@ module Oriented
       def validate_constructor_args(*args)
         start_vertex, end_vertex, label, props = *args
         raise ArgumentError.new "Start vertex not supplied" unless start_vertex
-        raise ArgumentError.new "Start vertex is not a vertex" unless start_vertex.is_a?(Vertex)
+        raise ArgumentError.new "Start vertex is not a vertex, it's a #{start_vertex.class} - #{start_vertex.inspect}" unless start_vertex.is_a?(Vertex)
         raise ArgumentError.new "End vertex not supplied" unless end_vertex
         raise ArgumentError.new "End vertex is not a vertex" unless end_vertex.is_a?(Vertex)
       end
