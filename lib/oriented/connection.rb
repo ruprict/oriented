@@ -61,6 +61,7 @@ module Oriented
       if @pooled && force
         @java_connection.force_close() if @java_connection
       end  
+      @java_connection.close if @pooled
       @graph.shutdown if @graph
       @java_connection = nil
     end
