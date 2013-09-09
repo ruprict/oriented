@@ -6,7 +6,9 @@ module Oriented
       let(:vertex) { v = dummy_class.new; v.save; v}
       let(:rel_type) { RelType.new("spanks", dummy_class)}
       let(:other) {o= related_class.new; o.save; o}
-      subject {described_class.new(vertex, rel_type)}
+      subject {
+        vi = described_class.new(vertex, rel_type)
+      }
 
       describe "#create_relationship_to" do
         it "creates the relationship" do

@@ -8,7 +8,12 @@ module Oriented
       let(:vertex) { v = dummy_class.new; v.save; v}
       let(:rel_type) { RelType.new("spanks", dummy_class)}
       let(:other) {o= related_class.new; o.save; o}
-      subject {described_class.new(vertex, rel_type)}
+      subject {
+        vi = described_class.new(vertex, rel_type)
+        vertex.class._rels[rel_type.label.to_sym] = rel_type            
+        vertex.instance_variable_get("@_relationships")[rel_type.label.to_sym] = vi        
+        vi
+      }
 
       describe ".initialize" do
         it "takes a vertex and rel_type" do
@@ -20,6 +25,9 @@ module Oriented
         describe "<<" do
 
           it "adds a relationship" do
+            # subject << other
+
+
             expect{subject << other}.to change {subject.count}.by(1)
           end
 
@@ -38,24 +46,24 @@ module Oriented
             dummy.spanks << related2
             dummy.save
           end
-
+        
           it "iterates through the vertices" do
             ids = [related1.id, related2.id]            
             dummy.spanks.each {|r| ids.should include(r.id)}
           end
         end
-
+        
         describe "#empty?" do
           it "returns true when no rels" do
             subject.empty?.should be_true
-
+        
           end
         end
-
+        
         describe "#create" do
-
+        
           let(:dummy) {dummy_class.new} 
-
+        
           it "creates a relationship to a new vertex of the target class" do
             dummy_class.send(:has_n, :licks).to(related_class)
             target = dummy.licks.create()
@@ -67,19 +75,19 @@ module Oriented
 
       context "for a has one" do
         let(:rel_type) { RelType.new("spanks", dummy_class, {cardinality: :one})}
-
+        
         describe "#create_relationship_to" do
           it "creates the relationship" do
             subject.create_relationship_to(other)
             subject.map(&:id).should include(other.id)
           end
-
+      
           it "should take properties" do
             e = subject.create_relationship_to(other, {prop1: "val1"})
             e["prop1"].should == "val1"
           end
         end
-
+      
         describe "#other_vertex" do
           it "returns the other vertex" do
             e = subject.create_relationship_to(other)
@@ -92,11 +100,11 @@ module Oriented
       context "#destroy_all" do
         let(:rel_type) { RelType.new("spanks", dummy_class)}
         let(:other) {related_class.new}
-
+      
         before do
           subject << other
         end
-
+      
          it "destroys the vertices in the relationship" do
           subject.count.should == 1 
           subject.destroy_all

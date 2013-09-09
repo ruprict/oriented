@@ -5,9 +5,9 @@ module Oriented
     subject{described_class}
     let(:vertex_class) {define_test_class(Vertex) } 
     let(:edge_class) {define_test_class(Edge) } 
-    let(:vertex) {vertex_class.new}
-    let(:vertex2) {vertex_class.new}
-    let(:edge) {edge_class.new(vertex, vertex2, "test")}
+    let(:vertex) {vertex_class.create}
+    let(:vertex2) {vertex_class.create}
+    let(:edge) {edge_class.create(vertex, vertex2, "test")}
 
     describe ".enable" do
       it "creates the identity map" do
