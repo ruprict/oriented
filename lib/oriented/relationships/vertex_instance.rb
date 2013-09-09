@@ -74,7 +74,7 @@ module Oriented
         create_relationship_to(other, attrs)
         other  
       end
-      
+
       def create_relationship_to(other, attrs={})        
         return self if !other
         edge = @rel_class.new(@vertex, other, @rel_type.label.to_s, attrs)
@@ -84,6 +84,7 @@ module Oriented
         # other.__java_obj.save()
         # edge.wrapper
         edge
+
       end
       wrap_in_transaction :create_relationship_to
 

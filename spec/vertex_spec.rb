@@ -59,7 +59,10 @@ module Oriented
           d.kind = "dummy"
           d.__java_obj['kind'].should == :smarty
         end
-        
+
+        it "assigns the right converte" do
+          dummy_class._converter(:kind).should == Oriented::TypeConverters::SymbolConverter
+        end
       end
     
       context "specifying a type" do

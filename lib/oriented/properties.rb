@@ -133,9 +133,9 @@ module Oriented
           next if _props.has_key?(prop)
           _props[prop] ||= {}
           options.each {|k, v| _props[prop][k] = v}
-          
+
           attribute_defaults[prop.to_s] = options[:default]  if options.has_key?(:default)
-          
+
           _props[prop][:converter] ||= Oriented::TypeConverters.converter(_props[prop][:type])
 
           create_property_methods(prop)
