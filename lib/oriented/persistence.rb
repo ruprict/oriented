@@ -16,7 +16,7 @@ module Oriented
       # @see Neo4j::Rails::Callbacks Neo4j::Rails::Callbacks - for callbacks
       def save(*)
         create_or_update
-        __java_obj.save
+        # __java_obj.save
       end
       wrap_in_transaction :save
 
@@ -93,8 +93,8 @@ module Oriented
         end
 
         def new(*args, &block)
-          # instance = orig_new(*args, &block)
-          instance = super(*args, &block)          
+          instance = orig_new(*args, &block)
+          # instance = super(*args, &block)          
           instance.instance_eval(&block) if block
           instance
         end
@@ -197,25 +197,24 @@ module Oriented
 
       def update
         write_changed_attributes
-        clear_changes
         true
       end
 
       def create_or_update
         # since the same model can be created or updated twice from a relationship we have to have this guard
-        # @_create_or_updating = true
-        #       result = persisted? ? update : create
-        #       unless result != false
-        #         Neo4j::Rails::Transaction.fail if Neo4j::Rails::Transaction.running?
-        #         false
-        #       else
-        #         true
-        #       end
-        #     rescue => e
-        #       Neo4j::Rails::Transaction.fail if Neo4j::Rails::Transaction.running?
-        #       raise e
-        #     ensure
-        #       @_create_or_updating = nil
+        @_create_or_updating = true
+              result = persisted? ? update : create
+              unless result != false
+                # Neo4j::Rails::Transaction.fail if Neo4j::Rails::Transaction.running?
+                false
+              else
+                true
+              end
+            rescue => e
+              # Neo4j::Rails::Transaction.fail if Neo4j::Rails::Transaction.running?
+              raise e
+            ensure
+              @_create_or_updating = nil
       end
 
       def set_deleted_properties

@@ -77,7 +77,7 @@ module Oriented
       # @return [Neo4j::Node] the other node wrapper
       # @see #_other_node
       def other_vertex(vertex)
-        _other_vertex(vertex._java_vertex).wrapper
+        _other_vertex(vertex.__java_obj).wrapper
       end
 
 
