@@ -21,5 +21,6 @@ tmp
 
 .ruby-version
 .ruby-gemset
+.powrc
 spec/databases
 databases
