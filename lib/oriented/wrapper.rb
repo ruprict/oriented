@@ -12,6 +12,7 @@ module Oriented
 
     def self.wrapper(java_obj)
       classname = java_obj.get_label
+      return java_obj if classname.nil?      
       clname = Oriented::Registry.ruby_class_for(classname)
       return java_obj if clname[0].nil?
       clname = clname[0].upcase + clname[1..-1]

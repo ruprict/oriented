@@ -14,6 +14,87 @@ module Oriented
     def rels(dir=:both, *types)
       _rels(dir, *types).collect{|r| r.wrapper }
     end
+    
+    # @private
+    def initialize_relationships
+      @_relationships = {}
+    end
+
+    # @private
+    def write_changed_relationships #:nodoc:
+      @_relationships.each_value do |storage|
+        storage.persist
+      end
+    end
+
+    # @private
+    def relationships_changed?
+      @_relationships.each_value do |storage|
+        return true if !storage.persisted?
+      end
+      false
+    end
+
+    # @private
+    def clear_relationships
+      # @_relationships && @_relationships.each_value { |storage| storage.remove_from_identity_map }
+      initialize_relationships
+    end
+    
+    def add_unpersisted_rel(label, rel)
+      _create_or_get_vertex_instance(label).add_unpersisted_rel(rel)      
+    end
+    
+    def add_rel(label, rel)
+      _create_or_get_vertex_instance(label).add_rel(rel)      
+    end    
+
+    def add_incoming_rel(label, rel)
+      _create_or_get_vertex_instance(label).add_incoming_rel(rel)
+    end
+
+    def add_outgoing_rel(label, rel)
+      _create_or_get_vertex_instance(label).add_outgoing_rel(rel)      
+    end
+    
+    # Makes the given relationship available in callbacks
+    def add_unpersisted_incoming_rel(label, rel)
+      _create_or_get_vertex_instance(label).add_unpersisted_incoming_rel(rel)      
+    end
+
+    # Makes the given relationship available in callbacks
+    def add_unpersisted_outgoing_rel(label, rel)
+      _create_or_get_vertex_instance(label).add_unpersisted_outgoing_rel(rel)
+    end
+    
+    def rm_incoming_rel(label, rel)
+      _create_or_get_vertex_instance(label).rm_incoming_rel(rel)      
+    end
+
+    def rm_outgoing_rel(label, rel)
+      _create_or_get_vertex_instance(label).rm_outgoing_rel(rel)
+    end
+
+    def rm_unpersisted_incoming_rel(label, rel)
+      _create_or_get_vertex_instance(label).rm_unpersisted_incoming_rel(rel)
+    end
+
+    def rm_unpersisted_outgoing_rel(label, rel)
+      _create_or_get_vertex_instance(label).rm_unpersisted_outgoing_rel(rel)
+    end
+
+    def _create_or_get_vertex_instance(label) #:nodoc:
+      # puts "inside create or get vertex instance for decl rels label = #{label} and class = #{self.class}"
+      # puts "class rels = #{self.class._rels[label.to_sym].inspect}"
+      
+      self.class._rels[label.to_sym] = Oriented::Relationships::RelType.new(label, self, {cardinality: :many}) if !self.class._rels[label.to_sym]
+      @_relationships[label.to_sym] ||= Oriented::Relationships::VertexInstance.new(self, self.class._rels[label.to_sym])
+    end
+      
+    def _create_or_get_vertex_instance_for_decl_rels(decl_rels) #:nodoc:
+      # puts "inside create vertex instance for decl rels and the label = #{decl_rels.label}"
+      @_relationships[decl_rels.label.to_sym] ||= Oriented::Relationships::VertexInstance.new(self, decl_rels)
+    end
 
     module ClassMethods
       def _rels
@@ -26,7 +107,7 @@ module Oriented
           class_eval <<-RUBY, __FILE__, __LINE__
             def #{method_name} 
               rel = self.class._rels[:'#{method_name}']  
-              rel_instance = Oriented::Relationships::VertexInstance.new(self, rel)
+              rel_instance = _create_or_get_vertex_instance_for_decl_rels(rel)
             end
           RUBY
         end
@@ -48,7 +129,7 @@ module Oriented
           class_eval <<-RUBY, __FILE__, __LINE__
             def #{method_name} 
               rel = self.class._rels[:'#{method_name}']
-              rel_instance = Oriented::Relationships::VertexInstance.new(self, rel)
+              rel_instance = _create_or_get_vertex_instance_for_decl_rels(rel)
               other_v = rel_instance.other_vertex
               other_v.wrapper if other_v
             end
@@ -59,7 +140,7 @@ module Oriented
           class_eval <<-RUBY, __FILE__, __LINE__
             def #{method_name}=(other)
              rel = self.class._rels[:'#{method_name}']
-             rel_instance = Oriented::Relationships::VertexInstance.new(self, rel)
+             rel_instance = _create_or_get_vertex_instance_for_decl_rels(rel)
              rel_instance.destroy_relationship
              rel_instance.create_relationship_to(other)
             end
