@@ -8,6 +8,7 @@ module Oriented
         # @param (see #rels)
         # @return [Enumerable] of Neo4j::Relationship objects
         def _rels(dir=:both, *types)
+          self.load
           if types.size > 1
             get_edges(ToJava.dir_to_java(dir), ToJava.types_to_java(types)).iterator
           elsif types.size == 1

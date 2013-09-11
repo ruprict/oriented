@@ -10,7 +10,7 @@ module Oriented
         wrapper = super()
         java_obj = Oriented::Core::JavaEdge.new(start_vertex.__java_obj, end_vertex.__java_obj, label)        
         wrapper.__java_obj = java_obj
-        puts "INSIDE EDGE NEW"
+
         wrapper.write_default_values
         props.each_pair {|attr,val| wrapper.public_send("#{attr}=", val)} if props       
         wrapper

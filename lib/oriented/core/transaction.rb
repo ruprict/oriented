@@ -19,7 +19,16 @@ module Oriented
       rescue => ex
         connection.rollback
         connection.close(true)
-        raise 
+        puts "rescue att 1 e = #{ex.inspect}"
+        begin
+          connection = Oriented.connection
+          ensure_connection(connection)
+          ret = yield
+          connection.commit
+        rescue Exception=>e
+          puts "and second attempt = #{e.inspect}"
+          raise
+        end
       ensure
       end
 

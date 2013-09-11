@@ -46,7 +46,7 @@ module Oriented
       
       def create(node_attr = {}, rels_attrs = {})
         objcls = @rel_type.target_class || Oriented::Core::JavaVertex
-        v = objcls.new(node_attr)
+        v = objcls.create(node_attr)
         rel = self.create_relationship_to(v, rels_attrs)
         v
       end
@@ -158,6 +158,7 @@ module Oriented
       end
 
       def vertex
+        @vertex.__java_obj.load
         @vertex.__java_obj
       end
 
