@@ -11,6 +11,21 @@ module Oriented
         remove
       end
       
+      def loaded?
+        !!(record.internal_status.name == "LOADED")
+      end
+      
+      def load
+        if(!loaded?)
+          record.load(record.rid)
+          true
+        else
+          false
+        end
+        
+      end
+      
+      
     end
   end
 end

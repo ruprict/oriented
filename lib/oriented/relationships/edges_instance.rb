@@ -53,6 +53,7 @@ module Oriented
       end
 
       def vertex
+        @vertex.__java_obj.load        
         @vertex.__java_obj
       end
     end

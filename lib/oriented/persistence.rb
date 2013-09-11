@@ -54,7 +54,7 @@ module Oriented
 
       # Returns +true+ if the object was destroyed.
       def destroyed?
-        @_deleted || (!new_record? && !self.class.load_entity(_orient_id))
+        @_deleted # || (!new_record? && !self.class.load_entity(_orient_id))
       end
 
       # Returns +true+ if the record is persisted, i.e. it’s not a new record and it was not destroyed
