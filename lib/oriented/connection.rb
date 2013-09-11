@@ -52,8 +52,14 @@ module Oriented
     end
 
     def connect
-      @java_connection = (@java_connection && !@java_connection.closed?) ? @java_connection : acquire_java_connection
-      @graph = OrientDB::OrientGraph.new(@java_connection)
+      if (!@java_connection || @java_connection.closed?)
+        @java_connection = acquire_java_connection
+        @graph = OrientDB::OrientGraph.new(@java_connection)
+      else
+        
+      end
+      # @java_connection = (@java_connection && !@java_connection.closed?) ? @java_connection : acquire_java_connection
+      # @graph = OrientDB::OrientGraph.new(@java_connection)
       self
     end
 
@@ -61,6 +67,7 @@ module Oriented
       if @pooled && @java_connection
         if force
           @java_connection.force_close()
+          @graph = nil
         else
           @java_connection.close 
         end

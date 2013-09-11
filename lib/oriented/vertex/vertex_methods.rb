@@ -20,8 +20,6 @@ module Oriented
         end
     
         mergeprops = wrapper.class.attribute_defaults.merge(nprop||{})
-        Rails.logger.info("merge props = #{mergeprops}")
-        puts "merge props = #{mergeprops}"
                   
         java_obj = Oriented::Core::JavaVertex.new(mergeprops, "#{Oriented::Registry.odb_class_for(self.name.to_s)}")        
         wrapper.__java_obj = java_obj
