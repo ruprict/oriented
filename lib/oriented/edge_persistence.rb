@@ -36,6 +36,7 @@ module Oriented
             
       return unless _persist_vertex(@_start_vertex) && _persist_vertex(@_end_vertex)
 
+      Rails.logger.info("CREATING JAVA EDGE HERE label = #{self.label} and STVertex = #{self.start_vertex.inspect} and end_vertex = #{self.end_vertex.inspect} ")
       java_obj = Oriented::Core::JavaEdge.new(self.start_vertex.__java_obj, self.end_vertex.__java_obj, self.label)        
       self.__java_obj = java_obj
       self.write_all_attributes
@@ -86,12 +87,16 @@ module Oriented
     # @see http://rdoc.info/github/andreasronge/neo4j-core/Neo4j/Core/Relationship#start_node-instance_method
     def start_vertex
       @_start_vertex ||= __java_obj && __java_obj.start_vertex.wrapper
+      @_start_vertex.__java_obj.load
+      @_start_vertex      
     end
 
     # Returns the end node which can be unpersisted
     # @see http://rdoc.info/github/andreasronge/neo4j-core/Neo4j/Core/Relationship#end_node-instance_method
     def end_vertex
       @_end_vertex ||= __java_obj && __java_obj.end_vertex.wrapper
+      @_end_vertex.__java_obj.load
+      @_end_vertex      
     end
     
     def other_vertex(vertex)

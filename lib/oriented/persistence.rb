@@ -179,6 +179,11 @@ module Oriented
             n.destroy
           end
         end
+        
+        def destroy(obj)
+          obj.destroy
+        end
+        
       end
 
       # Returns if the entity is currently being updated or created
