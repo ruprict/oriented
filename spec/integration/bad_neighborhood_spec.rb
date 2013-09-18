@@ -83,7 +83,6 @@ describe "BadNeighborhood" do
     
     
     barbie.save
-    puts "wrapper = #{r}"
     barbie.stylists.destroy_relationship_to(r)
     barbie.stylists.count.should == 1    
   end
