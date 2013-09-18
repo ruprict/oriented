@@ -12,13 +12,13 @@ module Oriented
         if clname
           clname = clname[0].upcase + clname[1..-1]
           
-          # @rel_class = to_class(clname) if (Kernel.const_defined?(clname) || Object.const_defined?(clname))
-          begin
-            @rel_class = to_class(clname) #if (Kernel.const_defined?(clname) || Object.const_defined?(clname))
-          rescue Exception=>e
-            # Rails.logger.info("Exception = #{e.inspect}")
-            puts "Exception = #{e.inspect}"
-          end
+          @rel_class = to_class(clname) if (Kernel.const_defined?(clname) || Object.const_defined?(clname))
+          # begin
+          #   @rel_class = to_class(clname) #if (Kernel.const_defined?(clname) || Object.const_defined?(clname))
+          # rescue Exception=>e
+          #   # Rails.logger.info("Exception = #{e.inspect}")
+          #   puts "Exception = #{e.inspect}"
+          # end
                     
         end
 
