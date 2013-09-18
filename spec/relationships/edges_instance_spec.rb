@@ -13,6 +13,8 @@ module Oriented
       describe "#create_relationship_to" do
         it "creates the relationship" do
           e = subject.create_relationship_to(other)
+          e.save
+          Oriented.connection.commit
           subject.map(&:id).should include(e.id)
         end
 
@@ -56,6 +58,8 @@ module Oriented
             it "returns the right one, baby, uh-huh" do
               r1 = subject.create_relationship_to(other)
               r2 = subject.create_relationship_to(other2)
+              r1.save
+              r2.save
               Oriented.graph.commit
               e = subject.to_other(other)
               e.count.should == 1
@@ -67,6 +71,7 @@ module Oriented
         context "with edge properties" do
           it "returns the edge from self to the other specified" do
             r = subject.create_relationship_to(other, {prop1: "val1"})
+            r.save
             Oriented.graph.commit
             e = subject.to_other(other).first
             e.should_not be_nil 
@@ -78,6 +83,8 @@ module Oriented
             it "returns the right one, baby, uh-huh" do
               r1 = subject.create_relationship_to(other, {prop1: "val1"})
               r2 = subject.create_relationship_to(other2, {prop1: "val2"})
+              r1.save
+              r2.save
               Oriented.graph.commit
               e = subject.to_other(other)
               e.count.should == 1

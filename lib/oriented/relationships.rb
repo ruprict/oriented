@@ -92,7 +92,6 @@ module Oriented
     end
       
     def _create_or_get_vertex_instance_for_decl_rels(decl_rels) #:nodoc:
-      # puts "inside create vertex instance for decl rels and the label = #{decl_rels.label}"
       @_relationships[decl_rels.label.to_sym] ||= Oriented::Relationships::VertexInstance.new(self, decl_rels)
     end
 

@@ -2,6 +2,9 @@ require 'spec_helper'
 
 module Oriented
   describe Connection do
+    after do
+      Oriented.connection
+    end
     context "when configured explicitly" do
 
       it "creates a connection" do

@@ -13,9 +13,16 @@ module Oriented
       @connection.graph
     end
 
+    def close_connection
+      @connection.close if @connection
+      @connection = nil 
+    end
+
     def register_hook_class(hook_class)
       return hook_classes if hook_classes.include?(hook_class)
       hook_classes << hook_class
+      return unless connection.java_connection
+
       current_hooks = connection.java_connection.hooks.to_a.select {|h| h.instance_of?(hook_class)}
       if current_hooks.empty?
         connection.java_connection.register_hook(hook_class.new) 
@@ -27,6 +34,8 @@ module Oriented
     def unregister_hook_class(hook_class)
       return hook_classes unless hook_classes.include?(hook_class)
       hook_classes.delete(hook_class)
+      return unless connection.java_connection
+
       hookies = connection.java_connection.hooks.to_a
       hookies.each {|h| 
         if h.instance_of?(hook_class) 
