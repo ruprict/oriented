@@ -15,8 +15,10 @@ module Oriented
     end
 
     def close_connection
-      connection.close if Thread.current[:connection]
-      connection = nil 
+      if conn = Thread.current[:orient_db]
+        conn.close
+        Thread.current[:orient_db] = nil
+      end
     end
 
     def register_hook_class(hook_class)
