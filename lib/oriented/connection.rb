@@ -2,20 +2,21 @@ module Oriented
   class << self
     
     def connection
-      @connection ||= Connection.new 
-      @connection.connect
-      @connection
+      connection = Thread.current[:orient_db] || Connection.new
+      Thread.current[:orient_db] = connection
+      connection.connect
+      connection
     end
 
     def graph(stop_transaction = false)
       connection 
-      @connection.java_connection.transaction.close if stop_transaction
-      @connection.graph
+      connection.java_connection.transaction.close if stop_transaction
+      connection.graph
     end
 
     def close_connection
-      @connection.close if @connection
-      @connection = nil 
+      connection.close if Thread.current[:connection]
+      connection = nil 
     end
 
     def register_hook_class(hook_class)
