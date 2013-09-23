@@ -160,7 +160,9 @@ module Oriented
 
         def to_ruby(value)
           return nil if value.nil?
+          return value if value.class == Date
           jv = value.getTime/1000 if value.class == Java.JavaUtil::Date
+          return nil if jv.nil?
           t = Time.at(jv).utc.to_date
         end
 
