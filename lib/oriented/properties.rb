@@ -73,7 +73,7 @@ module Oriented
     def props
       ret = {}
       property_names.each do |property_name|
-        prval = respond_to?(property_name) ? send(property_name) : send(:[], property_name)
+        prval = self.respond_to?(property_name) ? send(property_name) : send(:[], property_name)
         ret[property_name] = prval if prval
       end
       ret      
