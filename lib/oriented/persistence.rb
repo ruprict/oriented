@@ -99,6 +99,10 @@ module Oriented
           instance
         end
 
+        def get(rid)
+          get!(rid)
+        end
+        
         def get!(rid)          
           if rid.kind_of?(Hash)
             if rid.count > 1
@@ -116,9 +120,10 @@ module Oriented
           end
 
           return nil unless vertex
-          m = orig_new
-          m.__java_obj = vertex
-          m
+          vertex.wrapper
+          # m = orig_new
+          # m.__java_obj = vertex
+          # m
         end
         
         # Initialize a model and set a bunch of attributes at the same time.  Returns
