@@ -27,7 +27,8 @@ module Oriented
       # clear_relationships
       true
     end
-    
+
+
     # # Reload the object from the DB
     # def reload(options = nil)
     #   # Can't reload a none persisted node
@@ -61,6 +62,30 @@ module Oriented
     #   reloaded
     # end
 
+    module ClassMethods
+      def get!(rid)          
+        if rid.kind_of?(Hash)
+          if rid.count > 1
+
+          else
+            clname = Oriented::Registry.odb_class_for(self.name.to_s)
+            rr = rid.flatten
+            key = clname+"."+rr[0].to_s.split(".").last
+            val = rr[1].to_s
+            vertex = Oriented.graph.get_vertices(key, val).first              
+          end
+
+        else
+          vertex = Oriented.graph.get_vertex(rid)            
+        end
+
+        return nil unless vertex
+        vertex.wrapper
+        # m = orig_new
+        # m.__java_obj = vertex
+        # m
+      end
+    end
 
   end
 end

@@ -103,28 +103,6 @@ module Oriented
           get!(rid)
         end
         
-        def get!(rid)          
-          if rid.kind_of?(Hash)
-            if rid.count > 1
-              
-            else
-              clname = Oriented::Registry.odb_class_for(self.name.to_s)
-              rr = rid.flatten
-              key = clname+"."+rr[0].to_s.split(".").last
-              val = rr[1].to_s
-              vertex = Oriented.graph.get_vertices(key, val).first              
-            end
-            
-          else
-            vertex = Oriented.graph.get_vertex(rid)            
-          end
-
-          return nil unless vertex
-          vertex.wrapper
-          # m = orig_new
-          # m.__java_obj = vertex
-          # m
-        end
         
         # Initialize a model and set a bunch of attributes at the same time.  Returns
         # the object whether saved successfully or not.

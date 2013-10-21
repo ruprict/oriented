@@ -18,6 +18,7 @@ tmp
 
 *.swp
 *.swo
+*.swn
 
 .ruby-version
 .ruby-gemset

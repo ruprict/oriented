@@ -37,7 +37,20 @@ module Oriented
         vertex.name.should == "Fred"
         vertex.kind.should == "Yummy"
       end
-      
+
+    end
+
+    describe ".get!" do
+
+
+      describe ".get!" do
+        it "returns an vertex" do
+          e = vertex_class.get!(vertex.id)
+          e.should_not be_nil
+        end
+      end
+
     end
   end
+
 end

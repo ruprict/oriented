@@ -27,18 +27,19 @@ module Oriented
       @label
     end
 
+
     def create
 
       raise ArgumentError.new "Start vertex not supplied" unless start_vertex
       raise ArgumentError.new "Start vertex is not a vertex" unless start_vertex.is_a?(Vertex)
       raise ArgumentError.new "End vertex not supplied" unless end_vertex
       raise ArgumentError.new "End vertex is not a vertex" unless end_vertex.is_a?(Vertex)
-            
+
       return unless _persist_vertex(@_start_vertex) && _persist_vertex(@_end_vertex)
 
       self.start_vertex.__java_obj.load
       self.end_vertex.__java_obj.load
-      
+
       java_obj = Oriented::Core::JavaEdge.new(self.start_vertex.__java_obj, self.end_vertex.__java_obj, self.label)        
       self.__java_obj = java_obj
       self.write_all_attributes
@@ -51,7 +52,7 @@ module Oriented
       # clear_relationships
       true
     end
-    
+
     # # Reload the object from the DB
     # def reload(options = nil)
     #   # Can't reload a none persisted node
@@ -98,7 +99,7 @@ module Oriented
       @_end_vertex ||= __java_obj && __java_obj.end_vertex.wrapper
       @_end_vertex      
     end
-    
+
     def other_vertex(vertex)
       n = if persisted?
             __java_obj._other_vertex(vertex.__java_obj)
@@ -107,8 +108,25 @@ module Oriented
           end
       n && n.wrapper
     end
-    
-    
+
+    module ClassMethods
+      def get!(rid)          
+        if rid.kind_of?(Hash)
+          clname = Oriented::Registry.odb_class_for(self.name.to_s)
+          rr = rid.flatten
+          key = clname+"."+rr[0].to_s.split(".").last
+          val = rr[1].to_s
+          edge = Oriented.graph.get_edges(key, val).first              
+
+        else
+          edge = Oriented.graph.get_edge(rid)            
+        end
+
+        return nil unless edge
+        edge.wrapper
+      end
+    end
+
     protected
 
     def start_vertex=(vertex)
@@ -130,7 +148,7 @@ module Oriented
       #   @_end_node.class != Neo4j::Node && @_end_node.add_incoming_rel(rel_type, self)
       # end
     end
-    
+
     def _persist_vertex(start_or_end_vertex)
       ((start_or_end_vertex.new_record? || start_or_end_vertex.relationships_changed?) && !start_or_end_vertex.create_or_updating?) ? start_or_end_vertex.save : true
     end
