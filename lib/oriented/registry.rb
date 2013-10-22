@@ -22,6 +22,14 @@ module Oriented
       @@instance.map(ruby_class, odb_class)  
     end
 
+    def self.ruby_to_odb_map
+      instance.ruby_to_odb_map
+    end
+
+    def self.odb_to_ruby_map
+      instance.odb_to_ruby_map
+    end
+
     # the mapping is done by the class names, to avoid
     # class-reloading issues in Rails dev mode
     def map ruby_class, odb_class
@@ -39,7 +47,7 @@ module Oriented
       ruby_class || odb_class.to_s
     end
 
-    private
+    #private
 
     def ruby_to_odb_map
       @ruby_to_odb_map ||= {}

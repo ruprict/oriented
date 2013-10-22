@@ -3,20 +3,6 @@ module Oriented
     module Edge
       module ClassMethods
 
-        # Returns a Java::OrgNeo4jGraphdb::Relationship java object which include the Neo4j::Relationship mixins.
-        # Will trigger a event that the relationship was created.
-        #
-        # @param [String, Symbol] type of relationship
-        # @param [#_java_node] from_node the start node of this relationship
-        # @param [#_java_node] end_node the end node of this relationship
-        # @param [Hash] props optional properties for the created relationship
-        #
-        # @return [Neo4j::Relationship] which is really a Java::OrgNeo4jGraphdb::Relationship java object including the Neo4j::Relationship mixins
-        #
-        # @example
-        #
-        #  Neo4j::Relationship.new :friend, node1, node2, :since => '2001-01-02', :status => 'okey'
-        #
         def new(start_vertex, end_vertex, type, props=nil)
           # java_type = ToJava.type_to_java(type)
           # rel = start_vertex._java_obj.create_relationship_to(end_vertex._java_obj, java_type)

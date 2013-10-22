@@ -193,13 +193,11 @@ module Oriented
         @_create_or_updating = true
               result = persisted? ? update : create
               unless result != false
-                # Neo4j::Rails::Transaction.fail if Neo4j::Rails::Transaction.running?
                 false
               else
                 true
               end
             rescue => e
-              # Neo4j::Rails::Transaction.fail if Neo4j::Rails::Transaction.running?
               raise e
             ensure
               @_create_or_updating = nil
