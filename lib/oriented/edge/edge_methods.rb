@@ -23,7 +23,7 @@ module Oriented
       end
 
       def find_all
-        Oriented.graph.get_vertices_of_class(Oriented::Registry.odb_class_for(self.name.to_s), false)  
+        Oriented.graph.get_edges_of_class(Oriented::Registry.odb_class_for(self.name.to_s), false).map(&:wrapper)
       end
 
       def load_entity(rid)

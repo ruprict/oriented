@@ -1,5 +1,4 @@
 require 'spec_helper'
-
 module Oriented
   describe Edge do
     let(:vertex_class) {define_test_class( Vertex) }
@@ -87,6 +86,26 @@ module Oriented
           dummy_class.find(subject.id).__java_obj.class.should == Oriented::Core::JavaEdge
         end
       end
+    end
+
+    describe "#find_all" do
+      let!(:edge) {
+        Oriented.connection.java_connection.get_edge_type("knows").truncate
+        dummy_class.send(:property, :prop)
+        d = dummy_class.new(start_vertex, end_vertex, "knows", {prop: "val"})
+        d.save
+        d
+      }
+      before do
+        Oriented::Registry.stub(:odb_class_for).with(dummy_class.name).and_return("knows")
+      end
+      context "without properties" do
+        it "returns a wrapped edge" do
+          puts dummy_class.find(edge.id)
+          dummy_class.find_all.count.should == 1
+        end
+      end
+    
     end
   end
 end
