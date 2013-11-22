@@ -59,15 +59,6 @@ module Oriented
             @conn_mock.stub(:transaction_active?).and_return(true)
           end
 
-          it "commits" do
-            @conn_mock.stub(:close)
-            @conn_mock.should_receive(:commit)
-            described_class.run  do
-              #doesn't matter
-            end
-          end          
-
-
         end
       end
     end

@@ -14,10 +14,8 @@ module Oriented
       def self.run connection = Oriented.connection, &block
         ensure_connection(connection)
         ret = yield
-        connection.commit
         ret
       rescue => ex
-        connection.rollback
         connection.close(true)
         puts "rescue att 1 e = #{ex}"
         # Rails.logger.info("first attempt = #{ex}")        
@@ -25,8 +23,8 @@ module Oriented
           connection = Oriented.connection
           ensure_connection(connection)
           ret = yield
-          connection.commit
         rescue Exception=>e
+          connection.rollback
           puts "and second attempt = #{e}"
           # Rails.logger.info("second attempt = #{e}")
           raise

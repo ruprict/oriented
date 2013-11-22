@@ -81,9 +81,7 @@ describe "BadNeighborhood" do
     barbie.stylists << pat
     barbie.stylists.count.should == 2
     
-    
-    barbie.save
-    barbie.stylists.destroy_relationship_to(r)
+    barbie.stylists.destroy_relationship_to(ramona)
     barbie.stylists.count.should == 1    
   end
 end
