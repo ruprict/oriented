@@ -11,9 +11,11 @@ module Oriented
     # An Identity map would help this, methinks.
     class Transaction
 
-      def self.run connection = Oriented.connection, &block
+      def self.run connection = Oriented.connection, options={}, &block
+        puts options.inspect if options[:commit_on_sucess]
         ensure_connection(connection)
         ret = yield
+        connection.commit if options.fetch(:commit_on_success, false) == true
         ret
       rescue => ex
         connection.close(true)
@@ -47,6 +49,9 @@ module Oriented
           send(:alias_method, tx_method, method)
           send(:define_method, method) do |*args|            
             Oriented::Core::Transaction.run { send(tx_method, *args) }
+          end
+          send(:define_method, "#{method}!") do |*args|            
+            Oriented::Core::Transaction.run(Oriented.connection, {commit_on_success: true}) { send(tx_method, *args) }
           end
         end
       end
