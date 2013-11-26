@@ -20,22 +20,6 @@ module Oriented
       end
       wrap_in_transaction :save
 
-      # Persist the object to the database.  Validations and Callbacks are included
-      # by default but validation can be disabled by passing :validate => false
-      # to #save!  Creates a new transaction.
-      #
-      # @raise a RecordInvalidError if there is a problem during save.
-      # @param (see Neo4j::Rails::Validations#save)
-      # @return nil
-      # @see #save
-      # @see Neo4j::Rails::Validations Neo4j::Rails::Validations - for the :validate parameter
-      # @see Neo4j::Rails::Callbacks Neo4j::Rails::Callbacks - for callbacks
-      def save!(*args)
-        save
-        # unless save(*args)
-        #   raise RecordInvalidError.new(self)
-        # end
-      end
 
       # Removes the node from Neo4j and freezes the object.
       def destroy
