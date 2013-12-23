@@ -72,7 +72,9 @@ module Oriented
             rr = rid.flatten
             key = clname+"."+rr[0].to_s.split(".").last
             val = rr[1].to_s
-            vertex = Oriented.graph.get_vertices(key, val).first              
+            vertex = Oriented.graph.get_vertices(key, val).first
+            vertex = nil if !vertex || (vertex.label != clname && !vertex.record.getSchemaClass().sub_class_of?(clname))
+            
           end
 
         else
