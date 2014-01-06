@@ -14,8 +14,6 @@ module Oriented
           
           @rel_class = to_class(clname) if (Kernel.const_defined?(clname) || Object.const_defined?(clname))
 
-          # if the clname is a vertex, we need it to be an edge
-          @rel_class = Oriented::BaseEdge unless @rel_class.ancestors.include?(Oriented::Edge)
           # begin
           #   @rel_class = to_class(clname) #if (Kernel.const_defined?(clname) || Object.const_defined?(clname))
           # rescue Exception=>e
