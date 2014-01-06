@@ -24,7 +24,6 @@ module Oriented
         model_class.new.stylists_rels.should be_a(Relationships::EdgesInstance)
       end
 
-
     end
 
     describe ".has_one" do

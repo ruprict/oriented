@@ -90,9 +90,6 @@ module Oriented
       keys.flatten.uniq
     end
     
-    # The behaviour of []= changes with a Rails Model, where nothing gets written
-    # to Neo4j until the object is saved, during which time all the validations
-    # and callbacks are run to ensure correctness
     def write_attribute(key, value)
       @_properties ||= {}      
       key_s = key.to_s

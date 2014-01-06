@@ -13,6 +13,9 @@ module Oriented
           clname = clname[0].upcase + clname[1..-1]
           
           @rel_class = to_class(clname) if (Kernel.const_defined?(clname) || Object.const_defined?(clname))
+
+          # if the clname is a vertex, we need it to be an edge
+          @rel_class = Oriented::BaseEdge unless @rel_class.ancestors.include?(Oriented::Edge)
           # begin
           #   @rel_class = to_class(clname) #if (Kernel.const_defined?(clname) || Object.const_defined?(clname))
           # rescue Exception=>e
@@ -86,11 +89,6 @@ module Oriented
       def create_relationship_to(other, attrs={})        
         return self if !other
         edge = @rel_class.new(@vertex, other, @rel_type.label.to_s, attrs)
-        # edge = vertex.add_edge(@rel_type.label.to_s, other.__java_obj, nil, nil, attrs)
-        # edge.save()
-        # vertex.save()
-        # other.__java_obj.save()
-        # edge.wrapper
 
         edge
 
