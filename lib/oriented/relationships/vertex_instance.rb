@@ -215,9 +215,6 @@ module Oriented
           end
 
         end
-        
-        
-      
     end
   end
 end

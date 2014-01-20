@@ -6,6 +6,7 @@ class Model
 
   has_n(:stylists)
   has_one(:drug_dealer).from(:clients)
+  has_n(:requests).from(:target)
 end
 
 class DrugDealer
@@ -21,4 +22,20 @@ class Stylist
 
   has_n(:pieces_of_gossip)
   has_one(:drug_dealer).from(:clients)  
+  has_n(:requests).from(:guru)
+end
+
+class ModelingRequest
+  include Oriented::Vertex
+
+  has_one(:target)
+  has_one(:issuer)
+  has_one(:guru)
+end
+
+class Agency
+  include Oriented::Vertex
+
+  has_n(:requests).from(:issuer)
+  has_n(:models)
 end

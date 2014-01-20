@@ -5,37 +5,37 @@ module Oriented
     RESTRICTED_PROPERTIES = [:_orient_id]
 
     class RestrictedPropertyError < StandardError; end
-    
+
     included do |base|
-      
+
       base.extend ClassMethods
       alias_method :read_property_from_db, :[]
       alias_method :write_property_to_db, :[]=
-    
+
       # wrap the read/write in type conversion
       # alias_method_chain :read_attribute, :type_conversion
       # alias_method_chain :write_attribute, :type_conversion
-      
+
       alias_method :read_attribute_without_type_conversion, :read_attribute
       alias_method :read_attribute, :read_attribute_with_type_conversion
-      
+
       alias_method :write_attribute_without_type_conversion, :write_attribute
       alias_method :write_attribute, :write_attribute_with_type_conversion
 
 
-    
+
       # whenever we refer to [] or []=. use our local properties store
       alias_method :[], :read_attribute
       alias_method :[]=, :write_attribute
-      
+
     end
-    
+
     def initialize_attributes(attributes)
       @_properties = {}
       @_properties_before_type_cast={}
       self.attributes = attributes if attributes
     end
-    
+
     # Mass-assign attributes.  Stops any protected attributes from being assigned.
     def attributes=(attributes, guard_protected_attributes = true)
       # attributes = sanitize_for_mass_assignment(attributes) if guard_protected_attributes
@@ -45,16 +45,16 @@ module Oriented
         # if k.to_s.include?("(")
         #   multi_parameter_attributes << [k, v]
         # else
-          respond_to?("#{k}=") ? send("#{k}=", v) : self[k] = v
+        respond_to?("#{k}=") ? send("#{k}=", v) : self[k] = v
         # end
       end
     end
-    
+
     # @private
     def reset_attributes
       @_properties = {}
     end
-    
+
     # Wrap the getter in a conversion from Java to Ruby
     def read_attribute_with_type_conversion(property)
       self.class._converter(property).to_ruby(read_attribute_without_type_conversion(property))
@@ -68,8 +68,8 @@ module Oriented
       write_attribute_without_type_conversion(property, conv_value)
     end
 
-      
-    
+
+
     def props
       ret = {}
       property_names.each do |property_name|
@@ -78,18 +78,18 @@ module Oriented
       end
       ret      
     end
-    
+
     def attribute_defaults
       self.class.attribute_defaults || {}
     end
-    
+
     def property_names 
       @_properties ||= {}
       keys = @_properties.keys + self.class._props.keys.map(&:to_s)      
       keys += __java_obj.property_keys.to_a if __java_obj
       keys.flatten.uniq
     end
-    
+
     def write_attribute(key, value)
       @_properties ||= {}      
       key_s = key.to_s
@@ -111,7 +111,7 @@ module Oriented
         @_properties[key] = (!new_record? && __java_obj.has_property?(key)) ? read_property_from_db(key) : attribute_defaults[key]
       end
     end
-    
+
 
     module ClassMethods
 
@@ -148,7 +148,7 @@ module Oriented
         define_method "#{name}=" do |val|
           send(:[]=, name, val)
         end
-        
+
       end
 
       def _converter(pname)
@@ -156,14 +156,14 @@ module Oriented
         (prop && prop[:converter]) || Oriented::TypeConverters::DefaultConverter
       end
     end
-    
+
     # Write attributes to the Neo4j DB only if they're altered
     def write_changed_attributes
       @_properties.each do |attribute, value|
-          write_property_to_db(attribute, value)
+        write_property_to_db(attribute, value)
       end
     end    
-    
+
     def write_all_attributes
       mergeprops = self.class.attribute_defaults.merge(self.props||{})      
       mergeprops.each do |attribute, value|
