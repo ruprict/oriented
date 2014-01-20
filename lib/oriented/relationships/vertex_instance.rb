@@ -165,7 +165,8 @@ module Oriented
       end
 
       def edge_query
-        vertex.query().labels(@rel_type.label).edges()
+        vertex.get_edges(@rel_type.direction, @rel_type.label)
+        # vertex.query().labels(@rel_type.label).edges()
       end
 
       def vertex
