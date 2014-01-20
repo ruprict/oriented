@@ -86,7 +86,13 @@ module Oriented
 
       def create_relationship_to(other, attrs={})        
         return self if !other
-        edge = @rel_class.new(@vertex, other, @rel_type.label.to_s, attrs)
+        sv = @vertex
+        ev = other
+        if @rel_type.direction == Oriented::Relationships::Direction::IN
+          sv = other
+          ev = @vertex
+        end
+        edge = @rel_class.new(sv, ev, @rel_type.label.to_s, attrs)
 
         edge
 
