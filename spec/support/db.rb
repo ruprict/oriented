@@ -1,7 +1,5 @@
 require 'fileutils'
-puts '1'
 return if defined?(DB_CREATED)
-puts '2'
 
 
 GEM_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..' ))
