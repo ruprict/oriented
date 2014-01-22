@@ -46,6 +46,10 @@ module Oriented
       #   end
       # end
       
+      def count 
+        vertex.query().direction(@rel_type.direction).labels(@rel_type.label).count()
+      end
+      
       def each
         relationships().each do |r|
           yield r.other_vertex(@vertex)
