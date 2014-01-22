@@ -14,9 +14,10 @@ module Oriented
       connection.graph
     end
 
-    def close_connection
+    def close_connection(force=false)
       if conn = Thread.current[:orient_db]
-        conn.close
+        puts "**  Forcing close on connection #{conn.inspect}"
+        conn.close(force)
         Thread.current[:orient_db] = nil
       end
     end
@@ -78,6 +79,8 @@ module Oriented
     def close(force = false)
       if @pooled && @java_connection
         if force
+          puts "** Yes, I got in here to force close"
+          puts Java::ComOrientechnologiesOrientCoreDbGraph::OGraphDatabasePool.global().pools.inspect
           @java_connection.force_close()
           @graph = nil
         else

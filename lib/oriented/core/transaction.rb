@@ -13,21 +13,22 @@ module Oriented
 
       def self.run connection = Oriented.connection, options={}, &block
         puts options.inspect if options[:commit_on_sucess]
-        ensure_connection(connection)
+        ensure_connection(Oriented.connection)
         ret = yield
-        connection.commit if options.fetch(:commit_on_success, false) == true
+        Oriented.connection.commit if options.fetch(:commit_on_success, false) == true
         ret
       rescue => ex
-        connection.close(true)
+        Oriented.close_connection
         puts "rescue att 1 e = #{ex}"
         # Rails.logger.info("first attempt = #{ex}")        
         begin
           connection = Oriented.connection
-          ensure_connection(connection)
+          connection.connect
           ret = yield
         rescue Exception=>e
-          connection.rollback
+          puts connection.inspect
           puts "and second attempt = #{e}"
+          connection.rollback
           # Rails.logger.info("second attempt = #{e}")
           raise
         end
