@@ -32,6 +32,7 @@ module Oriented
           raise
         end
       ensure
+        
       end
 
       private

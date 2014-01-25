@@ -3,7 +3,7 @@ module Oriented
     module Property
 
       # the valid values on a property, and arrays of those.
-      VALID_PROPERTY_VALUE_CLASSES = Set.new([Array, NilClass, String, Float, TrueClass, FalseClass, Fixnum, Time, Date, Hash, Symbol])
+      VALID_PROPERTY_VALUE_CLASSES = Set.new([Array, NilClass, String, Float, TrueClass, FalseClass, Fixnum, Time, Date, Java::JavaUtil::Date, Hash, Symbol])
 
       # @return [Hash] all properties plus the id of the node with the key <tt>_neo_id</tt>
       def props
