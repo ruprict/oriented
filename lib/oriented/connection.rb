@@ -57,11 +57,11 @@ module Oriented
   class Connection
     attr_accessor :java_connection, :graph, :connection_factory, :pooled
 
-    def initialize
-      @url = ENV["ORIENTDB_URL"] || Oriented.configuration.url
+    def initialize(options={})
+      @url = options.fetch(:url, ENV["ORIENTDB_URL"] || Oriented.configuration.url)
       @pooled = Oriented.configuration.pooled || false
-      @user = ENV["ORIENTDB_DB_USER"] || Oriented.configuration.username || "admin"
-      @pass = ENV["ORIENTDB_DB_PASSWORD"] || Oriented.configuration.password || "admin"
+      @user = options.fetch(:username, ENV["ORIENTDB_DB_USER"] || Oriented.configuration.username || "admin")
+      @pass = options.fetch(:password, ENV["ORIENTDB_DB_PASSWORD"] || Oriented.configuration.password || "admin")
     end
 
     def connect

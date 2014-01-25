@@ -1,3 +1,4 @@
+require 'spec_helper'
 module Oriented
   module Core
     describe Transaction do
@@ -15,6 +16,7 @@ module Oriented
           it "rollbacks the transaction" do
             @conn_mock.stub(:close)
             @conn_mock.should_receive(:rollback)
+            @conn_mock.should_receive(:connect)
             begin
               described_class.run  do
                 raise StandardError
@@ -27,6 +29,7 @@ module Oriented
           it "raises the error" do
             @conn_mock.stub(:close)
             @conn_mock.should_receive(:rollback)
+            @conn_mock.should_receive(:connect)
             raised = false
             begin
               described_class.run  do
@@ -40,7 +43,7 @@ module Oriented
 
           it "closes the connection" do
             @conn_mock.stub(:rollback)
-            @conn_mock.should_receive(:close)
+            @conn_mock.should_receive(:connect)
             begin
               described_class.run  do
                 raise StandardError
