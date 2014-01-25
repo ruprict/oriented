@@ -58,6 +58,7 @@ module Oriented
     attr_accessor :java_connection, :graph, :connection_factory, :pooled
 
     def initialize
+      # Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::USE_WAL.setValue(false)      
       @url = ENV["ORIENTDB_URL"] || Oriented.configuration.url
       @pooled = Oriented.configuration.pooled || false
       @user = ENV["ORIENTDB_DB_USER"] || Oriented.configuration.username || "admin"
