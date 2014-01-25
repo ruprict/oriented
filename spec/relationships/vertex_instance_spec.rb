@@ -28,7 +28,11 @@ module Oriented
             # subject << other
 
 
-            expect{subject << other}.to change {subject.count}.by(1)
+            expect{
+              subject << other
+              other.save
+              Oriented.graph.commit
+            }.to change {subject.count}.by(1)
           end
 
           it "returns a vertex" do
@@ -79,6 +83,8 @@ module Oriented
         describe "#create_relationship_to" do
           it "creates the relationship" do
             subject.create_relationship_to(other)
+            other.save
+            Oriented.graph.commit
             subject.map(&:id).should include(other.id)
           end
       
@@ -103,6 +109,8 @@ module Oriented
       
         before do
           subject << other
+          other.save
+          Oriented.graph.commit
         end
       
          it "destroys the vertices in the relationship" do

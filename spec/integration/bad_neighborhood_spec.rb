@@ -1,4 +1,5 @@
 require_relative "../fixtures/models"
+require 'spec_helper'
 
 describe "BadNeighborhood" do
   let(:barbie) { Model.new(name: "Barbie")}  
@@ -37,13 +38,11 @@ describe "BadNeighborhood" do
     end
     
     it "should create the relationship from the drug_dealer client to the stylists" do
-      ramona.drug_dealer.id.should == nil
-      bad_guy.id.should == nil
-      ramona.drug_dealer.should == bad_guy
+      ramona.save
+      ramona.drug_dealer.id.should == bad_guy.id
     end
     
     it "should create the relationship from the drug_dealer client to the stylists when persisted" do
-      ramona.drug_dealer.id.should == nil      
       ramona.save
       ramona.drug_dealer.id.should_not == nil      
       ramona.drug_dealer.id.should == bad_guy.id
@@ -60,28 +59,17 @@ describe "BadNeighborhood" do
     end
     
   end
-  # it "lets Barbie get a drug dealer" do
-  #   barbie.save    
-  #   barbie.drug_dealer = bad_guy
-  #   # puts "barbi = #{barbie.inspect}"
-  #   # puts "drug dealer = #{barbie.drug_dealer}"
-  #   barbie.save
-  #   # barbie.drug_dealer = nil
-  #   puts "barbie id = #{barbie.drug_dealer}"
-  #   # puts "drug dealer now = #{barbie.__java_obj.rels.to_a[0].label}"  
-  #   # bad_guy.__java_obj.rels.to_a.each{|b| puts b.start_vertex.id }
-  #   puts bad_guy
-  #   # bad_guy.clients.to_a[0].save
-  #   puts "bad guy clients = #{bad_guy.clients.to_a[0].id}"
-  #   puts bad_guy.id
-  #   # barbie.drug_dealer.id.should == bad_guy.id.to_s
-  # end
+
   it "lets Barbie have multiple stylists" do
-    r = barbie.stylists << ramona
+    ramona.save
+    pat.save
+    Oriented.graph.commit
+    barbie.stylists << ramona
     barbie.stylists << pat
-    barbie.stylists.count.should == 2
-    
+    barbie.save
+
     barbie.stylists.destroy_relationship_to(ramona)
+    barbie.save
     barbie.stylists.count.should == 1    
   end
 end

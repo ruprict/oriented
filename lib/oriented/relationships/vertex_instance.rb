@@ -124,7 +124,7 @@ module Oriented
           javaobj = (e.respond_to?(:__java_obj) ? e.__java_obj : e)
           if javaobj
             if e.start_vertex.id == other.id || e.end_vertex.id == other.id
-              javaobj.remove  if javaobj
+              javaobj.delete  if javaobj
               rm_rel(e)          
               vertex.save()
               other.save()            
@@ -202,7 +202,7 @@ module Oriented
       end
       
       def rm_rel(rel)
-        @rels.delete(rel)
+        @rels.delete_if  {|r| r.id == rel.id}
       end 
       
       def rm_unpersisted_rel(rel)

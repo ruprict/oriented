@@ -1,4 +1,5 @@
 module Oriented
+
   module Core
     #
     # Class to encapsulate the transaction for OrientDB
@@ -13,9 +14,9 @@ module Oriented
 
       def self.run connection = Oriented.connection, options={}, &block
         puts options.inspect if options[:commit_on_sucess]
-        ensure_connection(Oriented.connection)
+        ensure_connection(connection)
         ret = yield
-        Oriented.connection.commit if options.fetch(:commit_on_success, false) == true
+        connection.commit if options.fetch(:commit_on_success, false) == true
         ret
       rescue => ex
         Oriented.close_connection
@@ -26,8 +27,6 @@ module Oriented
           connection.connect
           ret = yield
         rescue Exception=>e
-          puts connection.inspect
-          puts "and second attempt = #{e}"
           connection.rollback
           # Rails.logger.info("second attempt = #{e}")
           raise
