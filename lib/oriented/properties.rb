@@ -91,6 +91,7 @@ module Oriented
     end
 
     def write_attribute(key, value)
+      puts "writing attribute key = #{key} val = #{value} class = #{value.class}"
       @_properties ||= {}      
       key_s = key.to_s
       if !@_properties.has_key?(key_s) || @_properties[key_s] != value
@@ -157,7 +158,7 @@ module Oriented
       end
     end
 
-    # Write attributes to the Neo4j DB only if they're altered
+    # Write attributes to the Orient DB only if they're altered
     def write_changed_attributes
       @_properties.each do |attribute, value|
         write_property_to_db(attribute, value)

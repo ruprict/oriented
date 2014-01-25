@@ -155,6 +155,7 @@ module Oriented
 
         def to_java(value)
           return nil if value.nil?
+          return value if value.class == Java::JavaUtil::Date          
           Time.utc(value.year, value.month, value.day).to_date
         end
 

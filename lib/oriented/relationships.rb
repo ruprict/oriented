@@ -89,11 +89,12 @@ module Oriented
       
       self.class._rels[label.to_sym] = Oriented::Relationships::RelType.new(label, self, {cardinality: :many}) if !self.class._rels[label.to_sym]
       decl_rels = self.class._rels[label.to_sym]
-      @_relationships["#{decl_rels.label.to_s}_#{decl_rels.direction.to_s}".to_sym] ||= Oriented::Relationships::VertexInstance.new(self, decl_rels)
+      @_relationships["#{decl_rels.label}".to_sym] ||= Oriented::Relationships::VertexInstance.new(self, decl_rels)
     end
       
     def _create_or_get_vertex_instance_for_decl_rels(decl_rels) #:nodoc:
-      @_relationships["#{decl_rels.label.to_s}_#{decl_rels.direction.to_s}".to_sym] ||= Oriented::Relationships::VertexInstance.new(self, decl_rels)
+      # @_relationships["#{decl_rels.label.to_s}_#{decl_rels.direction.to_s}".to_sym] ||= Oriented::Relationships::VertexInstance.new(self, decl_rels)
+      @_relationships["#{decl_rels.label}".to_sym] ||= Oriented::Relationships::VertexInstance.new(self, decl_rels)      
     end
 
     module ClassMethods
