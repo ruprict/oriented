@@ -38,13 +38,18 @@ describe "BadNeighborhood" do
     end
     
     it "should create the relationship from the drug_dealer client to the stylists" do
-      ramona.save
-      ramona.drug_dealer.id.should == bad_guy.id
+      ramona.drug_dealer.should_not be_nil 
+      ramona.drug_dealer.name.should_not be_nil 
+      ramona.drug_dealer.name.should == bad_guy.name
     end
     
     it "should create the relationship from the drug_dealer client to the stylists when persisted" do
-      ramona.save
-      ramona.drug_dealer.id.should_not == nil      
+      bad_guy.save
+      Oriented.graph.commit
+      
+      ramona = bad_guy.clients.to_a.last
+     
+      ramona.drug_dealer.should_not == nil      
       ramona.drug_dealer.id.should == bad_guy.id
     end
     
