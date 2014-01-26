@@ -91,7 +91,6 @@ module Oriented
     end
 
     def write_attribute(key, value)
-      puts "writing attribute key = #{key} val = #{value} class = #{value.class}"
       @_properties ||= {}      
       key_s = key.to_s
       if !@_properties.has_key?(key_s) || @_properties[key_s] != value
