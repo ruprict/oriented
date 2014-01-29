@@ -36,6 +36,7 @@ module Oriented
         end
         self
       end
+      
 
       def relationship(rel_class)
         @relationship_class = rel_class

@@ -41,6 +41,7 @@ module Oriented
       self.end_vertex.__java_obj.load
 
       java_obj = Oriented::Core::JavaEdge.new(self.start_vertex.__java_obj, self.end_vertex.__java_obj, self.label)        
+      java_obj.save
       self.__java_obj = java_obj
       self.write_all_attributes
 
