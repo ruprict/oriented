@@ -65,6 +65,18 @@ describe "BadNeighborhood" do
     
   end
 
+  context "saving the in of a has n" do
+
+    let(:fifi) {Model.new(name: "fifi")}
+
+    it "does not unset the other end" do
+      bad_guy.clients << fifi
+      fifi.drug_dealer.id.should == bad_guy.id
+      bad_guy.save
+      fifi.drug_dealer.should_not be_nil
+    end
+  end
+
   it "lets Barbie have multiple stylists" do
     ramona.save
     pat.save
