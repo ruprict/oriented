@@ -22,6 +22,29 @@ describe "BadNeighborhood" do
       bad_guy.clients << barbie
       bad_guy.clients << ramona      
     end
+
+    it "won't overwrite the first client when a 2nd one is added" do
+      dd = DrugDealer.new(name: "Baddie2", product: 'Crank')
+      dd.save!
+
+      barbie.save
+      dd.clients << barbie
+      dd.save!
+      dd.clients.to_a.count.should == 1
+      Oriented.graph.commit
+
+      dd.clients << ramona
+      dd.save
+      dd.clients.to_a.count.should == 2
+      Oriented.graph.commit
+
+      fifi = Model.new(name: 'Fifi')
+      dd.clients << fifi
+      dd.save!
+      dd.clients.count.should == 3
+
+    end
+
     it "should persist the drug dealer and the clients" do
 
       bad_guy.id.should == nil

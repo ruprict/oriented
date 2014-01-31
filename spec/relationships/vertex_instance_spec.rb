@@ -38,6 +38,20 @@ module Oriented
           it "returns a vertex" do
             (subject << other).should be_a(Vertex)
           end
+
+          context "when one exists" do
+            before do
+              subject << other
+              other.save!
+            end
+            let(:other2) { o=related_class.new; o.save; o }
+
+            it "doesn't overwrite it" do
+              subject << other2
+              other2.save!
+              subject.to_a.count.should == 2
+            end
+          end
         end
 
         describe "#each" do 

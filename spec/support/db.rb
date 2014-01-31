@@ -8,7 +8,7 @@ TMP_DB_PATH = "#{DB_PATH}/db_#{rand(999) + 1}"
 FileUtils.remove_dir DB_PATH rescue nil
 FileUtils.mkdir_p TMP_DB_PATH
 puts "making #{TMP_DB_PATH}"
-$odb = OrientDB::GraphDatabase.new("local:#{TMP_DB_PATH}").create
+$odb = OrientDB::GraphDatabase.new("plocal:#{TMP_DB_PATH}").create
 $odb.close
 
 

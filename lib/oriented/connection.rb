@@ -16,7 +16,6 @@ module Oriented
 
     def close_connection(force=false)
       if conn = Thread.current[:orient_db]
-        puts "**  Forcing close on connection #{conn.inspect}"
         conn.close(force)
         Thread.current[:orient_db] = nil
       end

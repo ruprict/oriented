@@ -90,7 +90,7 @@ module Oriented
 
     describe "#find_all" do
       let!(:edge) {
-        Oriented.connection.java_connection.get_edge_type("knows").truncate
+        Oriented.graph.get_edge_type("knows").truncate
         dummy_class.send(:property, :prop)
         d = dummy_class.new(start_vertex, end_vertex, "knows", {prop: "val"})
         d.save

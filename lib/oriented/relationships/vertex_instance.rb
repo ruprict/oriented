@@ -47,6 +47,7 @@ module Oriented
       # end
       
       def count 
+        @unpersisted_rels.count + 
         vertex.query().direction(@rel_type.direction).labels(@rel_type.label).count()
       end
       
