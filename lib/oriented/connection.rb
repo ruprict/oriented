@@ -79,8 +79,6 @@ module Oriented
     def close(force = false)
       if @pooled && @java_connection
         if force
-          puts "** Yes, I got in here to force close"
-          puts Java::ComOrientechnologiesOrientCoreDbGraph::OGraphDatabasePool.global().pools.inspect
           @java_connection.force_close()
           @graph = nil
         else
