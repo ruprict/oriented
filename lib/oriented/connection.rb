@@ -58,6 +58,7 @@ module Oriented
 
     def initialize(options={})
       # Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::USE_WAL.setValue(false)            
+      Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::CACHE_LEVEL2_ENABLED.setValue(Oriented.configuration.enable_level2_cache)            
       @url = options.fetch(:url, ENV["ORIENTDB_URL"] || Oriented.configuration.url)
       @pooled = Oriented.configuration.pooled || false
       @user = options.fetch(:username, ENV["ORIENTDB_DB_USER"] || Oriented.configuration.username || "admin")
@@ -101,6 +102,9 @@ module Oriented
       @java_connection.transaction.active?
     end
 
+    def to_s
+      "Oriented Connection: url=#{@url}" 
+    end
 
     private
 

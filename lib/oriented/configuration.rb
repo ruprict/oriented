@@ -13,7 +13,7 @@ module Oriented
 
   class Configuration
     attr_accessor :pooled, :url, :username, :password
-    attr_accessor :min_pool, :max_pool
+    attr_accessor :min_pool, :max_pool, :enable_level2_cache
 
     def initialize
       # defaults
@@ -21,15 +21,21 @@ module Oriented
       @pooled = false
       @min_pool = 1
       @max_pool = 5
+      @enable_level2_cache = true
     end
 
     def clear
+      @enable_level2_cache = true
       @pooled = false
       @url = nil
       @password = nil
       @username = nil
       @min_pool = 1
       @max_pool = 5
+    end
+
+    def to_s
+      "Oriented Configuration: url=#{@url}" 
     end
   end
 end
