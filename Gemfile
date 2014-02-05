@@ -4,4 +4,4 @@ source 'https://rubygems.org'
 gemspec
 
 
-gem 'orientdb', github: 'kmussel/orientdb-jruby', branch:'ridsbtree'
+gem 'orientdb', github: 'kmussel/orientdb-jruby', branch:'master'
