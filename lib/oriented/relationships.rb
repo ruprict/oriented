@@ -151,7 +151,8 @@ module Oriented
           class_eval <<-RUBY, __FILE__, __LINE__
             def #{method_name}_rel
               rel = self.class._rels[:'#{method_name}']
-              rel_instance = Oriented::Relationships::EdgesInstance.new(self, rel).first.wrapper
+              rel_instance = Oriented::Relationships::EdgesInstance.new(self, rel).first
+              rel_instance.wrapper if rel_instance
             end
           RUBY
         end
