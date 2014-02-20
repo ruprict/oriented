@@ -54,7 +54,7 @@ module Oriented
   end
 
   class Connection
-    attr_accessor :java_connection, :graph, :connection_factory, :pooled
+    attr_accessor :java_connection, :graph, :connection_factory, :pooled, :user, :url
 
     def initialize(options={})
       # Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::USE_WAL.setValue(false)            
@@ -79,6 +79,7 @@ module Oriented
 
     def close(force = false)
       if @pooled && @java_connection
+        puts "** Oriented, closing pooled connection"
         if force
           @java_connection.force_close()
           @graph = nil
@@ -86,6 +87,7 @@ module Oriented
           @java_connection.close 
         end
       end
+      puts "** Oriented, closing graph" if @graph
       @graph.shutdown if @graph
       @java_connection = nil
     end
@@ -110,6 +112,7 @@ module Oriented
 
     def acquire_java_connection
       jdb = if @pooled
+              Java::ComOrientechnologiesOrientCoreDbDocument::ODatabaseDocumentPool.global().acquire(@url, @user, @pass);
               Java::ComOrientechnologiesOrientCoreDbDocument::ODatabaseDocumentPool.global().acquire(@url, @user, @pass);
             else
               db = OrientDB::GraphDatabase.new(@url)
