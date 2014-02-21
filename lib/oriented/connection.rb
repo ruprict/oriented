@@ -78,14 +78,15 @@ module Oriented
     end
 
     def close(force = false)
-      if @pooled && @java_connection
-        if force
-          @java_connection.force_close()
-          @graph = nil
-        else
-          @java_connection.close 
-        end
-      end
+#      if @pooled && @java_connection
+#        if force
+#          @java_connection.force_close()
+#          @graph = nil
+#        else
+#          @java_connection.close 
+#        end
+#      end
+      puts "** Oriented, closing graph" if @graph
       @graph.shutdown if @graph
       @java_connection = nil
     end
