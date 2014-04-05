@@ -20,9 +20,13 @@ tmp
 *.swp
 *.swo
 *.swn
+*.swm
 
 .ruby-version
 .ruby-gemset
 .powrc
 spec/databases
 databases
+
+.DS_Store
+

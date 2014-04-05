@@ -1,6 +1,7 @@
 require 'rspec'
 require_relative '../lib/oriented'
 require 'orientdb'
+require 'active_support'
 
 Dir['./spec/support/**/*.rb'].sort.each {|f| require f}
 

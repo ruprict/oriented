@@ -1,3 +1,6 @@
+require 'active_support/hash_with_indifferent_access'
+require 'set'
+
 module Oriented
   module Core
     module Property

@@ -1,43 +1,43 @@
-require "oriented/version"
-require "oriented/registry"
+require 'orientdb'
+require_relative "oriented/version"
+require_relative "oriented/registry"
 
-require 'oriented/configuration'
-require 'oriented/connection'
-require "oriented/identity_map"
+require_relative 'oriented/configuration'
+require_relative 'oriented/connection'
+require_relative "oriented/identity_map"
 
 # Core Java Object
-require "orientdb"
-require "oriented/core/core"
+require_relative "oriented/core/core"
 
 # Persistence
-require "oriented/persistence"
+require_relative "oriented/persistence"
 
 # Relationships
-require "oriented/wrapper/class_methods"
-require "oriented/wrapper"
-require "oriented/relationships/rel_type"
-require "oriented/relationships/vertex_instance"
-require "oriented/relationships/edges_instance"
-require "oriented/relationships"
+require_relative "oriented/wrapper/class_methods"
+require_relative "oriented/wrapper"
+require_relative "oriented/relationships/rel_type"
+require_relative "oriented/relationships/vertex_instance"
+require_relative "oriented/relationships/edges_instance"
+require_relative "oriented/relationships"
 
-require "oriented/type_converters"
-require "oriented/class_name"
-require "oriented/properties"
+require_relative "oriented/type_converters"
+require_relative "oriented/class_name"
+require_relative "oriented/properties"
 
 # Vertex
-require "oriented/vertex/delegates"
-require "oriented/vertex/vertex_methods"
-require "oriented/vertex_persistence"
-require "oriented/vertex"
+require_relative "oriented/vertex/delegates"
+require_relative "oriented/vertex/vertex_methods"
+require_relative "oriented/vertex_persistence"
+require_relative "oriented/vertex"
 
 # Edge
-require "oriented/edge/delegates"
-require "oriented/edge/edge_methods"
-require "oriented/edge_persistence"
-require "oriented/edge"
-require "oriented/edge/base_edge"
+require_relative "oriented/edge/delegates"
+require_relative "oriented/edge/edge_methods"
+require_relative "oriented/edge_persistence"
+require_relative "oriented/edge"
+require_relative "oriented/edge/base_edge"
 
-require "oriented/base_hook"
+require_relative "oriented/base_hook"
 
 module Oriented
   # Your code goes here...

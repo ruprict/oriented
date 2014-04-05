@@ -95,8 +95,6 @@ module Oriented
       end
     end
 
-
-
     class FixnumConverter
       class << self
 
@@ -258,6 +256,28 @@ module Oriented
 
         def index_as
           Set 
+        end
+      end
+    end
+
+    class HashConverter
+      class << self
+
+        def convert?(clazz_or_symbol)
+          [Hash, :hash, :embedded_map].include? clazz_or_symbol
+        end
+        def to_java(value)
+          return {} if value.nil? || value.empty?
+          value.to_java
+        end
+
+        def to_ruby(value)
+          return {} if value.nil? || value.empty?
+          value 
+        end
+
+        def index_as
+          Hash 
         end
       end
     end

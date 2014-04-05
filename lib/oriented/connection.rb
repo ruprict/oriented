@@ -86,7 +86,6 @@ module Oriented
 #          @java_connection.close 
 #        end
 #      end
-      puts "** Oriented, closing graph" if @graph
       @graph.shutdown if @graph
       @java_connection = nil
     end

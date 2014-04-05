@@ -1,3 +1,4 @@
+require 'spec_helper'
 module Oriented
   module TypeConverters
     describe ".convert" do
@@ -26,6 +27,11 @@ module Oriented
        it "converts a Set" do
          set = Set.new([1,2,3])
          Oriented::TypeConverters.convert(set).should == Set.new([ 1,2,3 ]).to_java
+       end
+
+       it "converts a Hash" do
+         set =  {a: 1, b: 2, c: 3}
+         Oriented::TypeConverters.convert(set).should == {a: 1, b:2, c:3}.to_java
        end
     end
 
