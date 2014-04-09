@@ -49,7 +49,8 @@ module Oriented
       private
 
       def edge_query
-        as_query.edges()
+        vertex.get_edges(@rel_type.direction, @rel_type.label)        
+        # as_query.edges()
       end
 
       def vertex

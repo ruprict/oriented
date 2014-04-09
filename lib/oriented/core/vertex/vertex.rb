@@ -16,13 +16,9 @@ module Oriented
       end
       
       def load
-        if(!loaded?)
-          record.load(record.rid)
-          true
-        else
-          false
+        if !loaded?
+          record.load(record.rid)                  
         end
-        
       end
       
       
