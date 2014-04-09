@@ -174,8 +174,8 @@ module Oriented
       end
 
       def edge_query
+        # vertex.query().labels(@rel_type.label).edges()        
         vertex.get_edges(@rel_type.direction, @rel_type.label)
-        # vertex.query().labels(@rel_type.label).edges()
       end
 
       def vertex
@@ -191,8 +191,9 @@ module Oriented
       end
       
       def relationships()
+        # puts "UNPERSISTED RELS = #{@unpersisted_rels}"
           if @vertex.persisted?
-            @unpersisted_rels + edge_query.to_a
+            @unpersisted_rels + edge_query.to_a()
           else 
             @unpersisted_rels
           end
