@@ -1,6 +1,5 @@
 module Oriented
   class << self
-    
     def connection
       connection = Thread.current[:orient_db] || Connection.new
       Thread.current[:orient_db] = connection
@@ -57,12 +56,13 @@ module Oriented
     attr_accessor :java_connection, :graph, :connection_factory, :pooled, :user, :url
 
     def initialize(options={})
-      # Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::USE_WAL.setValue(false)            
       Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::CACHE_LEVEL1_ENABLED.setValue(Oriented.configuration.enable_level1_cache||false)
       Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::CACHE_LEVEL2_ENABLED.setValue(Oriented.configuration.enable_level2_cache||false)            
 
       @url = options.fetch(:url, ENV["ORIENTDB_URL"] || Oriented.configuration.url)
       @pooled = Oriented.configuration.pooled || false
+      @min_pool = Oriented.configuration.min_pool || 5
+      @max_pool = Oriented.configuration.max_pool || 100
       @user = options.fetch(:username, ENV["ORIENTDB_DB_USER"] || Oriented.configuration.username || "admin")
       @pass = options.fetch(:password, ENV["ORIENTDB_DB_PASSWORD"] || Oriented.configuration.password || "admin")
     end
@@ -71,23 +71,11 @@ module Oriented
       if (!@java_connection || @java_connection.closed?)
         @java_connection = acquire_java_connection
         @graph = OrientDB::OrientGraph.new(@java_connection)
-      else
-        
       end
-      # @java_connection = (@java_connection && !@java_connection.closed?) ? @java_connection : acquire_java_connection
-      # @graph = OrientDB::OrientGraph.new(@java_connection)
       self
     end
 
     def close(force = false)
-#      if @pooled && @java_connection
-#        if force
-#          @java_connection.force_close()
-#          @graph = nil
-#        else
-#          @java_connection.close 
-#        end
-#      end
       @graph.shutdown if @graph
       @java_connection = nil
     end
@@ -112,13 +100,13 @@ module Oriented
 
     def acquire_java_connection
       jdb = if @pooled
+              Java::ComOrientechnologiesOrientCoreDbDocument::ODatabaseDocumentPool.setup(@min_pool, @max_pool)
               Java::ComOrientechnologiesOrientCoreDbDocument::ODatabaseDocumentPool.global().acquire(@url, @user, @pass);
             else
               db = OrientDB::GraphDatabase.new(@url)
               db.open(@user, @pass)
               db
             end
-
       Oriented.hook_classes.each {|h| jdb.register_hook(h.new)}
       jdb
     end
