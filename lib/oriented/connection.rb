@@ -100,8 +100,7 @@ module Oriented
 
     def acquire_java_connection
       jdb = if @pooled
-              Java::ComOrientechnologiesOrientCoreDbDocument::ODatabaseDocumentPool.setup(@min_pool, @max_pool)
-              Java::ComOrientechnologiesOrientCoreDbDocument::ODatabaseDocumentPool.global().acquire(@url, @user, @pass);
+              Java::ComOrientechnologiesOrientCoreDbDocument::ODatabaseDocumentPool.global(@min_pool, @max_pool).acquire(@url, @user, @pass);
             else
               db = OrientDB::GraphDatabase.new(@url)
               db.open(@user, @pass)
