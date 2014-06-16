@@ -96,6 +96,10 @@ module Oriented
       "Oriented Connection: url=#{@url}" 
     end
 
+    def available_connections
+      Java::ComOrientechnologiesOrientCoreDbDocument::ODatabaseDocumentPool.global().getAvailableConnections(url, @user)
+    end
+
     private
 
     def acquire_java_connection
