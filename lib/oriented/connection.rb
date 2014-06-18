@@ -52,7 +52,7 @@ module Oriented
     include Singleton
 
     def initialize(options={})
-      puts "initializng"
+      puts "** initializng ORIENTDB ConnectionFactory"
       Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::CACHE_LEVEL1_ENABLED.setValue(Oriented.configuration.enable_level1_cache||false)
       Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::CACHE_LEVEL2_ENABLED.setValue(Oriented.configuration.enable_level2_cache||false)            
 
@@ -62,21 +62,17 @@ module Oriented
       @max_pool = Oriented.configuration.max_pool || 100
       @user = options.fetch(:username, ENV["ORIENTDB_DB_USER"] || Oriented.configuration.username || "admin")
       @pass = options.fetch(:password, ENV["ORIENTDB_DB_PASSWORD"] || Oriented.configuration.password || "admin")
-      puts 'conn'
       @factory = OrientDB::BLUEPRINTS.impls.orient.OrientGraphFactory.new(@url, @user, @pass).setupPool(@min_pool, @max_pool)
     end
 
     def connection
+      puts "*** getTx()"
       @factory.getTx();
     end
   end
 
   class Connection
     attr_accessor :java_connection, :graph, :connection_factory, :pooled, :user, :url
-
-    def initialize(options={})
-      puts "initializng"
-    end
 
     def connect
       unless @graph
@@ -89,6 +85,7 @@ module Oriented
       if @graph
         puts " *** ORIENTDB Closed graph"
         @graph.shutdown
+        @java_connection.close if @java_connection
         @graph=nil
       end
     end
