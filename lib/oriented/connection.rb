@@ -1,23 +1,19 @@
+require 'singleton'
 module Oriented
   class << self
     def connection
-      connection = Thread.current[:orient_db] || Connection.new
-      Thread.current[:orient_db] = connection
-      connection.connect
-      connection
+      @connection ||= Connection.new
+      @connection.connect
+      @connection
     end
 
     def graph(stop_transaction = false)
-      connection 
-      connection.java_connection.transaction.close if stop_transaction
       connection.graph
     end
 
     def close_connection(force=false)
-      if conn = Thread.current[:orient_db]
-        conn.close(force)
-        Thread.current[:orient_db] = nil
-      end
+      @connection.close
+      @connection =nil
     end
 
     def register_hook_class(hook_class)
@@ -52,10 +48,11 @@ module Oriented
 
   end
 
-  class Connection
-    attr_accessor :java_connection, :graph, :connection_factory, :pooled, :user, :url
+  class ConnectionFactory
+    include Singleton
 
     def initialize(options={})
+      puts "initializng"
       Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::CACHE_LEVEL1_ENABLED.setValue(Oriented.configuration.enable_level1_cache||false)
       Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::CACHE_LEVEL2_ENABLED.setValue(Oriented.configuration.enable_level2_cache||false)            
 
@@ -65,19 +62,35 @@ module Oriented
       @max_pool = Oriented.configuration.max_pool || 100
       @user = options.fetch(:username, ENV["ORIENTDB_DB_USER"] || Oriented.configuration.username || "admin")
       @pass = options.fetch(:password, ENV["ORIENTDB_DB_PASSWORD"] || Oriented.configuration.password || "admin")
+      puts 'conn'
+      @factory = OrientDB::BLUEPRINTS.impls.orient.OrientGraphFactory.new(@url, @user, @pass).setupPool(@min_pool, @max_pool)
+    end
+
+    def connection
+      @factory.getTx();
+    end
+  end
+
+  class Connection
+    attr_accessor :java_connection, :graph, :connection_factory, :pooled, :user, :url
+
+    def initialize(options={})
+      puts "initializng"
     end
 
     def connect
-      if (!@java_connection || @java_connection.closed?)
-        @java_connection = acquire_java_connection
-        @graph = OrientDB::OrientGraph.new(@java_connection)
+      unless @graph
+        @graph = ConnectionFactory.instance.connection
+        @java_connection = @graph.raw_graph
       end
-      self
     end
 
     def close(force = false)
-      @graph.shutdown if @graph
-      @java_connection = nil
+      if @graph
+        puts " *** ORIENTDB Closed graph"
+        @graph.shutdown
+        @graph=nil
+      end
     end
 
     def rollback
