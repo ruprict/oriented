@@ -12,7 +12,7 @@ module Oriented
     end
 
     def close_connection(force=false)
-      @connection.close
+      @connection.close if @connection
       @connection =nil
     end
 
