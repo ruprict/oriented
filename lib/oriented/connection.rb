@@ -66,7 +66,6 @@ module Oriented
     end
 
     def connection
-      puts "*** getTx()"
       @factory.getTx();
     end
   end
@@ -83,7 +82,6 @@ module Oriented
 
     def close(force = false)
       if @graph
-        puts " *** ORIENTDB Closed graph"
         @graph.shutdown
         @java_connection.close if @java_connection
         @graph=nil
