@@ -55,7 +55,8 @@ module Oriented
       puts "** initializng ORIENTDB ConnectionFactory"
       Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::CACHE_LEVEL1_ENABLED.setValue(Oriented.configuration.enable_level1_cache||false)
       Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::CACHE_LEVEL2_ENABLED.setValue(Oriented.configuration.enable_level2_cache||false)            
-
+      Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::NETWORK_BINARY_DNS_LOADBALANCING_ENABLED.setValue(Oriented.configuration.network_binary_dns_loadbalancing_enabled);
+      
       @url = options.fetch(:url, ENV["ORIENTDB_URL"] || Oriented.configuration.url)
       @pooled = Oriented.configuration.pooled || false
       @min_pool = Oriented.configuration.min_pool || 5
