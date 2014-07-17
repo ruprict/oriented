@@ -1,4 +1,7 @@
 require 'orientdb'
+
+require 'forwardable'
+
 require_relative "oriented/version"
 require_relative "oriented/registry"
 
