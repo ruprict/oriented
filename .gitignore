@@ -17,10 +17,7 @@ test/tmp
 test/version_tmp
 tmp
 
-*.swp
-*.swo
-*.swn
-*.swm
+*.sw*
 
 .ruby-version
 .ruby-gemset
