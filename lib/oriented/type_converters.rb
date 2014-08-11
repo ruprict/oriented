@@ -153,7 +153,9 @@ module Oriented
 
         def to_java(value)
           return nil if value.nil?
-          return value if value.class == Java::JavaUtil::Date          
+          return value if value.class == Java::JavaUtil::Date
+          value = parse_date_from_string(value) if value.class == String
+          # We should now have a date
           Time.utc(value.year, value.month, value.day).to_date
         end
 
@@ -170,6 +172,31 @@ module Oriented
           Fixnum
         end
 
+        private
+
+        def parse_date_from_string(value)
+          return value unless value.class == String
+          if value.length == 8
+            if value[/\//]
+              #dd/mm/yy
+              return Date.strptime(value, '%m/%d/%y')
+            else value[/-/]
+              #dd-mm-yy
+              return Date.strptime(value, '%m-%d-%y')
+            end
+          elsif value.length == 10
+            if value[/\//]
+              #dd/mm/yyyy
+              return Date.strptime(value, '%m/%d/%Y')
+            else value[/-/]
+              #dd-mm-yyyy
+              return Date.strptime(value, '%m-%d-%Y')
+            end
+          end
+          Date.strptime(value)
+        rescue => ex
+          value
+        end
       end
     end
 
@@ -225,7 +252,7 @@ module Oriented
           end
         end
 
-        
+
         def to_ruby(value)
           return nil if value.nil?
           jv = value.getTime/1000 if value.class == Java.JavaUtil::Date
@@ -251,11 +278,11 @@ module Oriented
         end
 
         def to_ruby(value)
-          value 
+          value
         end
 
         def index_as
-          Set 
+          Set
         end
       end
     end
@@ -273,11 +300,11 @@ module Oriented
 
         def to_ruby(value)
           return {} if value.nil? || value.empty?
-          value 
+          value
         end
 
         def index_as
-          Hash 
+          Hash
         end
       end
     end

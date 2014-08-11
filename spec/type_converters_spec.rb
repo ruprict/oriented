@@ -55,6 +55,7 @@ module Oriented
           DateTimeConverter.to_ruby(dt).should == exp_dt
         end
       end
+
     end
 
     describe DateConverter do
@@ -63,6 +64,32 @@ module Oriented
           exp_dt = Date.new(2013, 12, 30)
           dt = Java::JavaUtil::Date.new(exp_dt.to_time.to_i * 1000)
           DateConverter.to_ruby(dt).should == exp_dt
+        end
+      end
+      describe '.to_java' do
+        context "with 2 digit year" do
+          it "converts a string with slashes" do
+            exp_dt = Date.new(2000, 1, 7)
+            dt = '01/07/00'
+            DateConverter.to_java(dt).should == exp_dt
+          end
+          it "converts a string with dashess" do
+            exp_dt = Date.new(2000, 1, 7)
+            dt = '01-07-00'
+            DateConverter.to_java(dt).should == exp_dt
+          end
+        end
+        context "with 4 digit year" do
+          it "converts a string with slashes" do
+            exp_dt = Date.new(2000, 1, 7)
+            dt = '01/07/2000'
+            DateConverter.to_java(dt).should == exp_dt
+          end
+          it "converts a string with dashess" do
+            exp_dt = Date.new(2000, 1, 7)
+            dt = '01-07-2000'
+            DateConverter.to_java(dt).should == exp_dt
+          end
         end
       end
     end
