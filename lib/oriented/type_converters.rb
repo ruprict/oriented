@@ -176,7 +176,8 @@ module Oriented
 
         def parse_date_from_string(value)
           return value unless value.class == String
-          if value.length == 8
+          match = value.match(/[-|\/]\d{2}$/)
+          if match
             if value[/\//]
               #dd/mm/yy
               return Date.strptime(value, '%m/%d/%y')
@@ -184,7 +185,7 @@ module Oriented
               #dd-mm-yy
               return Date.strptime(value, '%m-%d-%y')
             end
-          elsif value.length == 10
+          else
             if value[/\//]
               #dd/mm/yyyy
               return Date.strptime(value, '%m/%d/%Y')
@@ -194,7 +195,7 @@ module Oriented
             end
           end
           Date.strptime(value)
-        rescue => ex
+        rescue => e
           value
         end
       end

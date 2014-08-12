@@ -68,9 +68,19 @@ module Oriented
       end
       describe '.to_java' do
         context "with 2 digit year" do
-          it "converts a string with slashes" do
+          it "converts a string with and 2 digit month slashes" do
             exp_dt = Date.new(2000, 1, 7)
             dt = '01/07/00'
+            DateConverter.to_java(dt).should == exp_dt
+          end
+          it "converts a string with slashes and 1-digit month/day" do
+            exp_dt = Date.new(2000, 1, 7)
+            dt = '1/7/00'
+            DateConverter.to_java(dt).should == exp_dt
+          end
+          it "converts a string with slashes" do
+            exp_dt = Date.new(2000, 12, 7)
+            dt = '12/7/00'
             DateConverter.to_java(dt).should == exp_dt
           end
           it "converts a string with dashess" do
@@ -88,6 +98,16 @@ module Oriented
           it "converts a string with dashess" do
             exp_dt = Date.new(2000, 1, 7)
             dt = '01-07-2000'
+            DateConverter.to_java(dt).should == exp_dt
+          end
+          it "converts a string with dashess" do
+            exp_dt = Date.new(2000, 1, 7)
+            dt = '1-7-2000'
+            DateConverter.to_java(dt).should == exp_dt
+          end
+          it "converts a string with dashess" do
+            exp_dt = Date.new(2000, 1, 7)
+            dt = '1-07-2000'
             DateConverter.to_java(dt).should == exp_dt
           end
         end
