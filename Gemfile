@@ -4,4 +4,4 @@ source 'https://rubygems.org'
 gemspec
 
 
-gem 'orientdb', github: 'KYCK/orientdb-jruby', branch:'master'
+gem 'orientdb', github: 'ruprict/orientdb-jruby', branch:'2.0-M1'

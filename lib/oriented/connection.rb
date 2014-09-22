@@ -23,7 +23,7 @@ module Oriented
 
       current_hooks = connection.java_connection.hooks.to_a.select {|h| h.instance_of?(hook_class)}
       if current_hooks.empty?
-        connection.java_connection.register_hook(hook_class.new) 
+        connection.java_connection.register_hook(hook_class.new)
         connection.connect
       end
 
@@ -35,8 +35,8 @@ module Oriented
       return unless connection.java_connection
 
       hookies = connection.java_connection.hooks.to_a
-      hookies.each {|h| 
-        if h.instance_of?(hook_class) 
+      hookies.each {|h|
+        if h.instance_of?(hook_class)
           connection.java_connection.unregister_hook(h)
         end
       }
@@ -53,10 +53,8 @@ module Oriented
 
     def initialize(options={})
       puts "** initializng ORIENTDB ConnectionFactory"
-      Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::CACHE_LEVEL1_ENABLED.setValue(Oriented.configuration.enable_level1_cache||false)
-      Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::CACHE_LEVEL2_ENABLED.setValue(Oriented.configuration.enable_level2_cache||false)            
       Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::NETWORK_BINARY_DNS_LOADBALANCING_ENABLED.setValue(Oriented.configuration.network_binary_dns_loadbalancing_enabled);
-      
+
       @url = options.fetch(:url, ENV["ORIENTDB_URL"] || Oriented.configuration.url)
       @pooled = Oriented.configuration.pooled || false
       @min_pool = Oriented.configuration.min_pool || 5
@@ -102,7 +100,7 @@ module Oriented
     end
 
     def to_s
-      "Oriented Connection: url=#{@url}" 
+      "Oriented Connection: url=#{@url}"
     end
 
     def available_connections
