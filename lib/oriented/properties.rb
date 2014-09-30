@@ -7,6 +7,7 @@ module Oriented
     class RestrictedPropertyError < StandardError; end
 
     included do |base|
+      include ActiveModel::Dirty
 
       base.extend ClassMethods
       alias_method :read_property_from_db, :[]
@@ -94,7 +95,7 @@ module Oriented
       @_properties ||= {}      
       key_s = key.to_s
       if !@_properties.has_key?(key_s) || @_properties[key_s] != value
-        # attribute_will_change!(key_s)
+        attribute_will_change!(key_s)
         @_properties[key_s] = value.nil? ? attribute_defaults[key_s] : value
       end
       value
@@ -160,21 +161,27 @@ module Oriented
     # Write attributes to the Orient DB only if they're altered
     def write_changed_attributes
       @_properties.each do |attribute, value|
-        write_property_to_db(attribute, value)
+        write_property_to_db(attribute, value)  if changed_attributes.has_key?(attribute)
       end
-    end    
+    end
 
     def write_all_attributes
-      mergeprops = self.class.attribute_defaults.merge(self.props||{})      
+      mergeprops = self.class.attribute_defaults.merge(self.props||{})
       mergeprops.each do |attribute, value|
         write_property_to_db(attribute, value)
-      end      
+      end
     end
 
     def write_default_values
-      self.class.attribute_defaults.each_pair do |attr, val| 
-        self.send("#{attr}=", val)
+      self.class.attribute_defaults.each_pair do |attr, val|
+        self.send("#{attr}=", val)  unless changed_attributes.has_key?(attribute) || __java_obj.has_property?(attribute)
       end
     end
+
+    def clear_changes
+      @previously_changed = changes
+      @changed_attributes.clear
+    end
+
   end
 end
