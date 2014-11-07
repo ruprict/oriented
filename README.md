@@ -1,5 +1,7 @@
 # Oriented
 
+[![Code Climate](https://codeclimate.com/github/ruprict/oriented/badges/gpa.svg)](https://codeclimate.com/github/ruprict/oriented)
+
 Oriented attempts to wrap access to OrientDB in an ORM-like manner. 
 
 The conception of this gem started with a lot of copying/pasting of
