@@ -1,3 +1,5 @@
+require 'active_model'
+
 module Oriented
   module Properties
     extend ActiveSupport::Concern
