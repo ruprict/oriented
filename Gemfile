@@ -4,3 +4,4 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'orientdb', github: 'KYCK/orientdb-jruby', branch:'master'
+gem "codeclimate-test-reporter", group: :test, require: nil
