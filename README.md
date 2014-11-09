@@ -88,9 +88,7 @@ OrientDB has a relatively robust SQL-ish query language that offloads most of th
 (should probably put some examples here)
 
 ## Roadmap
-
-* Need to revisit the conection handling code.
-    * Specifically, look at their newer factory for connections.
+* Move to 2.0 when it is released
 * Need docs around configuration
 * Should probably look into a decent query DSL
     * Thinking of starting with Arel
