@@ -11,12 +11,12 @@ module Oriented
         clname = Oriented::Registry.ruby_class_for(rel_type.label)
         if clname
           clname = clname[0].upcase + clname[1..-1]
-          @rel_class = to_class(clname) if (Kernel.const_defined?(clname) || Object.const_defined?(clname))
+          @rel_class = to_class(clname) if ( eval("defined?(#{clname})") || Kernel.const_defined?(clname) || Object.const_defined?(clname))
         end
       end  
       
       def to_class(class_name)
-        class_name.split("::").inject(Kernel) { |container, name| container.const_get(name.to_s) }
+        class_name.to_s.split("::").inject(Kernel) { |container, name| container.const_get(name.to_s) }
       end      
 
       def each

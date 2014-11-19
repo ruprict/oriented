@@ -36,12 +36,18 @@ module Oriented
         end
         self
       end
-      
 
-      def relationship(rel_class)
+      def relationship(*args)
+        rel_class = args[0]
         @relationship_class = rel_class
+        @label = args[1].to_s unless args[1].blank?
         self
       end
+
+      # def label(lab)
+      #   puts "THE LABEL = #{lab}"
+      #   @label = lab
+      # end
 
       def relationship_class
         @relationship_class ||= Oriented::Core::JavaEdge 
