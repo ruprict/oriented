@@ -53,21 +53,20 @@ module Oriented
     end
 
     it "adds hooks to the connection" do
-      Oriented.register_hook_class(BaseHook)
-      includes_hook = false
-
-      Oriented.connection.java_connection.hooks.each {|h| includes_hook = true if h.is_a?(BaseHook)}
-      includes_hook.should be_true
+      puts Oriented.connection.java_connection.hooks.count
+      expect { Oriented.register_hook_class(BaseHook) }.to change {
+        Oriented.connection.java_connection.hooks.count
+      }.by(1)
     end
 
     it "adds only one hook to the connection" do
-      Oriented.register_hook_class(BaseHook)
-      Oriented.register_hook_class(OtherHook)
-      Oriented.register_hook_class(BaseHook)
-      counter = 0
-
-      Oriented.connection.java_connection.hooks.each {|h| counter+= 1  if h.instance_of?(BaseHook)}
-      counter.should == 1
+      expect { 
+        Oriented.register_hook_class(BaseHook)
+        Oriented.register_hook_class(OtherHook)
+        Oriented.register_hook_class(BaseHook)
+         }.to change {
+        Oriented.connection.java_connection.hooks.count
+      }.by(2)
     end
 
     it "removes the hook" do

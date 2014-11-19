@@ -1,5 +1,11 @@
 # Oriented
 
+[![Code Climate](https://codeclimate.com/github/ruprict/oriented/badges/gpa.svg)](https://codeclimate.com/github/ruprict/oriented)
+[![Test Coverage](https://codeclimate.com/github/ruprict/oriented/badges/coverage.svg)](https://codeclimate.com/github/ruprict/oriented)
+
+[ ![Codeship Status for ruprict/oriented](https://codeship.com/projects/61212180-41ed-0132-0f27-6ee7d852ff61/status?branch=master)](https://codeship.com/projects/44312)
+
+
 Oriented attempts to wrap access to OrientDB in an ORM-like manner. 
 
 The conception of this gem started with a lot of copying/pasting of
@@ -84,9 +90,7 @@ OrientDB has a relatively robust SQL-ish query language that offloads most of th
 (should probably put some examples here)
 
 ## Roadmap
-
-* Need to revisit the conection handling code.
-    * Specifically, look at their newer factory for connections.
+* Move to 2.0 when it is released
 * Need docs around configuration
 * Should probably look into a decent query DSL
     * Thinking of starting with Arel
