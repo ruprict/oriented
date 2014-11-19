@@ -67,8 +67,26 @@ module Oriented
     end
 
     def connection
-      @factory.getTx();
+      g = @factory.getTx();
+      if g.closed?
+        self.connection()
+      else
+        @retries = 0
+        return g
+      end
+    rescue => e
+      # puts "THE CONNECTION is #{e.class} #{e.inspect}"
+      @factory.close()
+      @factory.setupPool(@min_pool, @max_pool)
+      @retries ||= 0
+      if @retries < 1
+        @retries += 1
+        retry
+      else
+        raise e
+      end
     end
+
   end
 
   class Connection
@@ -84,7 +102,7 @@ module Oriented
     def close(force = false)
       if @graph
         @graph.shutdown
-        @java_connection.close if @java_connection
+        @java_connection = nil
         @graph=nil
       end
     end
@@ -111,17 +129,17 @@ module Oriented
 
     private
 
-    def acquire_java_connection
-      jdb = if @pooled
-              Java::ComOrientechnologiesOrientCoreDbDocument::ODatabaseDocumentPool.global(@min_pool, @max_pool).acquire(@url, @user, @pass);
-            else
-              db = OrientDB::GraphDatabase.new(@url)
-              db.open(@user, @pass)
-              db
-            end
-      Oriented.hook_classes.each {|h| jdb.register_hook(h.new)}
-      jdb
-    end
+    # def acquire_java_connection
+    #   jdb = if @pooled
+    #           Java::ComOrientechnologiesOrientCoreDbDocument::ODatabaseDocumentPool.global(@min_pool, @max_pool).acquire(@url, @user, @pass);
+    #         else
+    #           db = OrientDB::GraphDatabase.new(@url)
+    #           db.open(@user, @pass)
+    #           db
+    #         end
+    #   Oriented.hook_classes.each {|h| jdb.register_hook(h.new)}
+    #   jdb
+    # end
 
   end
 end
