@@ -84,7 +84,7 @@ module Oriented
     def close(force = false)
       if @graph
         @graph.shutdown
-        @java_connection.close if @java_connection
+        @java_connection = nil
         @graph=nil
       end
     end
