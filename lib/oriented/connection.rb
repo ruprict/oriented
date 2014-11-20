@@ -69,15 +69,18 @@ module Oriented
     def connection
       g = @factory.getTx();
       if g.closed?
+        @resetpool = true
         self.connection()
       else
         @retries = 0
         return g
       end
     rescue => e
-      # puts "THE CONNECTION is #{e.class} #{e.inspect}"
-      @factory.close()
-      @factory.setupPool(@min_pool, @max_pool)
+      if @resetpool
+        @factory.close()
+        @factory.setupPool(@min_pool, @max_pool)
+        @resetpool = false
+      end
       @retries ||= 0
       if @retries < 1
         @retries += 1
@@ -102,7 +105,7 @@ module Oriented
     def close(force = false)
       if @graph
         @graph.shutdown
-        @java_connection = nil
+        @java_connection = nil        
         @graph=nil
       end
     end
