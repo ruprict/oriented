@@ -20,7 +20,6 @@ module Oriented
       end
       wrap_in_transaction :save
 
-
       # Removes the node from Neo4j and freezes the object.
       def destroy
         delete
@@ -46,12 +45,15 @@ module Oriented
         !new_record? && !destroyed?
       end
 
-      # Returns +true+ if the record hasn't been saved to Neo4j yet.
+      # Returns +true+ if the record hasn't been saved to Orientdb yet.
       def new_record?
         __java_obj.nil?
       end
-
       alias :new? :new_record?
+
+      def committed?
+        !__java_obj.identity.new?
+      end
 
       # Freeze the properties hash.
       def freeze

@@ -2,9 +2,6 @@ require 'spec_helper'
 
 module Oriented
   describe Connection do
-    after do
-      Oriented.connection
-    end
     context "when configured explicitly" do
 
       it "creates a connection" do
@@ -16,7 +13,7 @@ module Oriented
     context "when it's closed" do
 
       it "gets a new connection" do
-        Oriented.connection.close 
+        Oriented.connection.close
         Oriented.connection.java_connection.closed?.should be_false
       end
     end
@@ -32,6 +29,7 @@ module Oriented
           Oriented.connection.close
           Oriented.connection
           Oriented.connection.close
+          Oriented.connection
         end
       end
     end

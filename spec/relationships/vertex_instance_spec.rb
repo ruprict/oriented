@@ -130,6 +130,7 @@ module Oriented
          it "destroys the vertices in the relationship" do
           subject.count.should == 1 
           subject.destroy_all
+          subject.vertex.reload
           subject.count.should == 0
          end
       end

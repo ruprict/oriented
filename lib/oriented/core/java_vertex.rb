@@ -18,7 +18,6 @@ module Oriented
           Oriented::Core::JavaVertex
         end
 
-
         class << self
 
           def extend_java_class(java_clazz)

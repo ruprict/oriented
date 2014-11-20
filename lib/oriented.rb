@@ -1,5 +1,5 @@
 require 'orientdb'
-
+require 'active_model'
 require 'forwardable'
 
 require_relative "oriented/version"

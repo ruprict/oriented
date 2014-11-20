@@ -12,10 +12,15 @@ module Oriented
     include Oriented::ClassName      
     include Oriented::Relationships
     # extend Oriented::Wrapper::ClassMethods
-        
 
     include Oriented::Properties
 
+    def self.included(base)
+      base.extend(ClassMethods)
+    end
+
+    module ClassMethods
+    end
 
     # def self.included(base)
     #   # base.extend Oriented::Wrapper::ClassMethods      

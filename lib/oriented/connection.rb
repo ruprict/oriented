@@ -53,8 +53,8 @@ module Oriented
 
     def initialize(options={})
       puts "** initializng ORIENTDB ConnectionFactory"
-      Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::CACHE_LEVEL1_ENABLED.setValue(Oriented.configuration.enable_level1_cache||false)
-      Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::CACHE_LEVEL2_ENABLED.setValue(Oriented.configuration.enable_level2_cache||false)            
+      Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::CACHE_LOCAL_ENABLED.setValue(Oriented.configuration.enable_local_cache||false)
+      # Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::CACHE_LEVEL2_ENABLED.setValue(Oriented.configuration.enable_level2_cache||false)            
       Java::ComOrientechnologiesOrientCoreConfig::OGlobalConfiguration::NETWORK_BINARY_DNS_LOADBALANCING_ENABLED.setValue(Oriented.configuration.network_binary_dns_loadbalancing_enabled);
       
       @url = options.fetch(:url, ENV["ORIENTDB_URL"] || Oriented.configuration.url)
@@ -67,8 +67,29 @@ module Oriented
     end
 
     def connection
-      @factory.getTx();
+      g = @factory.getTx();
+      if g.closed?
+        @resetpool = true
+        self.connection()
+      else
+        @retries = 0
+        return g
+      end
+    rescue => e
+      if @resetpool
+        @factory.close()
+        @factory.setupPool(@min_pool, @max_pool)
+        @resetpool = false
+      end
+      @retries ||= 0
+      if @retries < 1
+        @retries += 1
+        retry
+      else
+        raise e
+      end
     end
+
   end
 
   class Connection
@@ -84,7 +105,7 @@ module Oriented
     def close(force = false)
       if @graph
         @graph.shutdown
-        @java_connection.close if @java_connection
+        @java_connection = nil        
         @graph=nil
       end
     end
@@ -111,17 +132,17 @@ module Oriented
 
     private
 
-    def acquire_java_connection
-      jdb = if @pooled
-              Java::ComOrientechnologiesOrientCoreDbDocument::ODatabaseDocumentPool.global(@min_pool, @max_pool).acquire(@url, @user, @pass);
-            else
-              db = OrientDB::GraphDatabase.new(@url)
-              db.open(@user, @pass)
-              db
-            end
-      Oriented.hook_classes.each {|h| jdb.register_hook(h.new)}
-      jdb
-    end
+    # def acquire_java_connection
+    #   jdb = if @pooled
+    #           Java::ComOrientechnologiesOrientCoreDbDocument::ODatabaseDocumentPool.global(@min_pool, @max_pool).acquire(@url, @user, @pass);
+    #         else
+    #           db = OrientDB::GraphDatabase.new(@url)
+    #           db.open(@user, @pass)
+    #           db
+    #         end
+    #   Oriented.hook_classes.each {|h| jdb.register_hook(h.new)}
+    #   jdb
+    # end
 
   end
 end

@@ -5,7 +5,6 @@ module Oriented
     def initialize(*args)
       return initialize_attributes(nil) if args.size < 3 # then we have been loaded
 
-      
       start_vertex, end_vertex, label, props = *args
       raise ArgumentError.new "Start vertex not supplied" unless start_vertex
       raise ArgumentError.new "Start vertex is not a vertex" unless start_vertex.is_a?(Vertex)
@@ -29,7 +28,6 @@ module Oriented
 
 
     def create
-
       raise ArgumentError.new "Start vertex not supplied" unless start_vertex
       raise ArgumentError.new "Start vertex is not a vertex" unless start_vertex.is_a?(Vertex)
       raise ArgumentError.new "End vertex not supplied" unless end_vertex

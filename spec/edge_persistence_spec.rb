@@ -1,5 +1,7 @@
+require 'spec_helper'
+
 module Oriented 
-  describe "EdgePerisistence" do
+  describe "EdgePersistence" do
     let(:vertex_class) {define_test_class(Vertex)}  
     let(:vertex) {
       v = vertex_class.new

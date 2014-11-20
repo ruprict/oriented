@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 module Oriented
   module Relationships
     describe EdgesInstance do

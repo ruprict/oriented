@@ -11,7 +11,7 @@ module Oriented
         clname = Oriented::Registry.ruby_class_for(rel_type.label)
         if clname
           clname = clname[0].upcase + clname[1..-1]
-          @rel_class = to_class(clname) if (Kernel.const_defined?(clname) || Object.const_defined?(clname))
+          @rel_class = to_class(clname) if (eval("defined?(#{clname})") || Kernel.const_defined?(clname) || Object.const_defined?(clname))
         end
 
         @rels = []
@@ -20,7 +20,7 @@ module Oriented
       end
 
       def to_class(class_name)
-        class_name.split("::").inject(Kernel) { |container, name| container.const_get(name.to_s) }
+        class_name.to_s.split("::").inject(Kernel) { |container, name| container.const_get(name.to_s) }
       end
 
       # def each_node(dir, &block)
@@ -142,21 +142,21 @@ module Oriented
 
 
       def destroy_all(only_unpersisted=false)
-        relationships().each do |e|
+        rels = relationships().clone
+        rels.each do |e|
           rm_unpersisted_rel(e)
           javaobj = (e.respond_to?(:__java_obj) ? e.__java_obj : e)
 
           if !only_unpersisted && javaobj
-            other =  e.other_vertex(@vertex)
             rm_rel(e)
-            javaobj.remove
-            vertex.save()
-            other.save()
+            other =  e.other_vertex(@vertex)
+            javaobj.delete
+            # @vertex.save()
+            # other.save()
+
           end
         end
-
       end
-
 
       # private
 
@@ -205,7 +205,6 @@ module Oriented
       def rm_unpersisted_rel(rel)
         @unpersisted_rels.delete(rel)
       end
-
 
       def persisted?
         @unpersisted_rels.empty?
