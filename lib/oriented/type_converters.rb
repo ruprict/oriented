@@ -156,7 +156,7 @@ module Oriented
           return value if value.class == Java::JavaUtil::Date
           value = parse_date_from_string(value) if value.class == String
           # We should now have a date
-          Time.utc(value.year, value.month, value.day).to_date
+          value.to_time.to_java(java.util.Date)
         end
 
         def to_ruby(value)

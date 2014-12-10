@@ -15,7 +15,7 @@ module Oriented
       self.start_vertex = start_vertex
       self.end_vertex = end_vertex
       initialize_attributes(props)
-
+    
       @_start_vertex.add_unpersisted_outgoing_rel(label, self)
       @_end_vertex.add_unpersisted_incoming_rel(label, self)
       

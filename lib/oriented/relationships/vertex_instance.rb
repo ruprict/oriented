@@ -104,14 +104,24 @@ module Oriented
           javaobj = (e.respond_to?(:__java_obj) ? e.__java_obj : e)
           if javaobj
             other =  e.other_vertex(@vertex)
+            rm_rel(e)            
+            # puts "DESTROY REL"
+            # Oriented.graph.removeEdge(javaobj)
             javaobj.remove
-            rm_rel(e)
-            vertex.save()
-            other.save()
+            # puts "#{@vertex.props}"
+            # puts "RELOADING VERTEX"
+            # puts "vertexid = #{@vertex.id} and otherid = #{other.id}"
+            Oriented.graph.getVertex(other.id) if other.id
+            # vertex.save()
+            # other.save()
           else
             rm_unpersisted_rel(e)
           end
         }
+
+        @vertex.__java_obj = Oriented.graph.getVertex(@vertex.id) if @vertex.id
+
+        # @vertex.reload
       end
       wrap_in_transaction :destroy_relationship
 
@@ -170,7 +180,7 @@ module Oriented
       end
 
       def vertex
-        @vertex.__java_obj.load
+        # @vertex.__java_obj.load
         @vertex.__java_obj
       end
 
@@ -213,8 +223,10 @@ module Oriented
        def persist
           rels = @unpersisted_rels.clone
           @unpersisted_rels.clear
+          # puts "THE self = #{self.inspect} and @RELS = #{rels.inspect}"
+          # puts "THE STORED RELS = #{@rels.inspect}"
           rels.each do |rel|
-            # Rails.logger.info("rel = #{rel.inspect} rel persisted = #{rel.persisted?} or relcoru = #{rel.create_or_updating?}")
+            # puts "rel = #{rel.inspect} rel persisted = #{rel.persisted?} or relcoru = #{rel.create_or_updating?}"
             success = rel.persisted? || rel.create_or_updating? || rel.save
             add_rel(rel)
             # don't think this can happen - just in case, TODO

@@ -6,7 +6,7 @@ require 'oriented/version'
 Gem::Specification.new do |spec|
   spec.name          = "oriented"
   spec.version       = Oriented::VERSION
-  spec.authors       = ["Glenn Goodrich"]
+  spec.authors       = ["Glenn Goodrich", "Kevin Musselman"]
   spec.email         = ["glenn.goodrich@gmail.com"]
   spec.description   = %q{A simple wrapper around OrientDB}
   spec.summary       = %q{Adds a declarative language around the OrientDB JRuby api}

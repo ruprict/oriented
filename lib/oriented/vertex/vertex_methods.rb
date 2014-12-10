@@ -18,9 +18,8 @@ module Oriented
             nprop[key.to_s] = self._converter(key).to_java(props[key]) if props[key]
           end
         end
-    
+
         mergeprops = wrapper.class.attribute_defaults.merge(nprop||{})
-                  
         java_obj = Oriented::Core::JavaVertex.new(mergeprops, "#{Oriented::Registry.odb_class_for(self.name.to_s)}")        
         wrapper.__java_obj = java_obj
         # wrapper.write_default_values
