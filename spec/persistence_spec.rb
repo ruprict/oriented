@@ -8,9 +8,19 @@ module Oriented
       v.save
       v
     }
+    describe "save" do
+      it "adds the object to the IdentityMap" do
+        v = vertex_class.new
+        expect { v.save }.to change {
+          Oriented::IdentityMap.vertex_repository.count
+        }.by(1)
+        Oriented::IdentityMap.vertex_repository.keys.include?(v.id.to_s).should == true
+      end
+    end
     describe "destroy" do
 
       before do
+        vertex.save
         vertex.should be_persisted   
       end
 
@@ -44,7 +54,7 @@ module Oriented
 
 
       describe ".get!" do
-        it "returns an vertex" do
+        it "returns a vertex" do
           e = vertex_class.get!(vertex.id)
           e.should_not be_nil
         end

@@ -49,7 +49,6 @@ module Oriented
             rescue 
               nil 
             end
-
           end
         end
 
@@ -64,13 +63,11 @@ module Oriented
               @conn_mock.stub(:transaction_active?) { true}
               described_class.run(@conn_mock, {commit_on_success: true}) do
               end
-
             end
 
           end
 
-
-        end
+        end # End When options are passed
 
         context "success" do
           before do
@@ -79,7 +76,8 @@ module Oriented
             @conn_mock.stub(:transaction_active?).and_return(true)
           end
         end
-      end
-    end
+
+      end # End Run
+    end # End Describe Transaction
   end
 end

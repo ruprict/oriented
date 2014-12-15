@@ -52,6 +52,19 @@ module Oriented
       true
     end
 
+    def persisted?
+      if !new_record? && !destroyed?
+        if __java_obj.lightweight?
+          return (start_vertex.persisted? && end_vertex.persisted?) ? true : false
+        elsif !committed? && Oriented.graph.raw_graph.transaction.get_record(__java_obj.id).nil?
+          @__java_obj = nil
+          return false
+        end
+        return true
+      end
+      false
+    end
+
     # # Reload the object from the DB
     # def reload(options = nil)
     #   # Can't reload a none persisted node
@@ -149,7 +162,7 @@ module Oriented
     end
 
     def _persist_vertex(start_or_end_vertex)
-      ((start_or_end_vertex.new_record? || start_or_end_vertex.relationships_changed?) && !start_or_end_vertex.create_or_updating?) ? start_or_end_vertex.save : true
+      ((!start_or_end_vertex.persisted? || start_or_end_vertex.relationships_changed?) && !start_or_end_vertex.create_or_updating?) ? start_or_end_vertex.save : true
     end
 
   end

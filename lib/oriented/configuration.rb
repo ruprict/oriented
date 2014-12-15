@@ -13,7 +13,7 @@ module Oriented
 
   class Configuration
     attr_accessor :pooled, :url, :username, :password
-    attr_accessor :min_pool, :max_pool, :enable_local_cache, :network_binary_dns_loadbalancing_enabled
+    attr_accessor :min_pool, :max_pool, :enable_local_cache, :network_binary_dns_loadbalancing_enabled, :use_identity_map
 
     def initialize
       # defaults
@@ -23,6 +23,7 @@ module Oriented
       @max_pool = 5
       @enable_local_cache = false
       @network_binary_dns_loadbalancing_enabled = false
+      @use_identity_map = true
     end
 
     def clear
@@ -34,6 +35,7 @@ module Oriented
       @min_pool = 1
       @max_pool = 5
       @network_binary_dns_loadbalancing_enabled = false
+      @use_identity_map = true
     end
 
     def to_s

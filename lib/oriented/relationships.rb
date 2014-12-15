@@ -68,11 +68,11 @@ module Oriented
     end
     
     def rm_incoming_rel(label, rel)
-      _create_or_get_vertex_instance(label).rm_incoming_rel(rel)      
+      _create_or_get_vertex_instance(label, "IN").rm_rel(rel)
     end
 
     def rm_outgoing_rel(label, rel)
-      _create_or_get_vertex_instance(label).rm_outgoing_rel(rel)
+      _create_or_get_vertex_instance(label, "OUT").rm_rel(rel)
     end
 
     def rm_unpersisted_incoming_rel(label, rel)
