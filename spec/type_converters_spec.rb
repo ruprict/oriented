@@ -21,7 +21,7 @@ module Oriented
 
        it "converts a Date" do
          dt = Date.new(2013, 12, 30)
-         Oriented::TypeConverters.convert(dt).should == dt
+         Oriented::TypeConverters.convert(dt).should == dt.to_time.to_java(java.util.Date)
        end
 
        it "converts a Set" do
@@ -71,44 +71,44 @@ module Oriented
           it "converts a string with and 2 digit month slashes" do
             exp_dt = Date.new(2000, 1, 7)
             dt = '01/07/00'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).should == exp_dt.to_time.to_java(java.util.Date)
           end
           it "converts a string with slashes and 1-digit month/day" do
             exp_dt = Date.new(2000, 1, 7)
             dt = '1/7/00'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).should == exp_dt.to_time.to_java(java.util.Date)
           end
           it "converts a string with slashes" do
             exp_dt = Date.new(2000, 12, 7)
             dt = '12/7/00'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).should == exp_dt.to_time.to_java(java.util.Date)
           end
           it "converts a string with dashess" do
             exp_dt = Date.new(2000, 1, 7)
             dt = '01-07-00'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).should == exp_dt.to_time.to_java(java.util.Date)
           end
         end
         context "with 4 digit year" do
           it "converts a string with slashes" do
             exp_dt = Date.new(2000, 1, 7)
             dt = '01/07/2000'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).should == exp_dt.to_time.to_java(java.util.Date)
           end
           it "converts a string with dashess" do
             exp_dt = Date.new(2000, 1, 7)
             dt = '01-07-2000'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).should == exp_dt.to_time.to_java(java.util.Date)
           end
           it "converts a string with dashess" do
             exp_dt = Date.new(2000, 1, 7)
             dt = '1-7-2000'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).should == exp_dt.to_time.to_java(java.util.Date)
           end
           it "converts a string with dashess" do
             exp_dt = Date.new(2000, 1, 7)
             dt = '1-07-2000'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).should == exp_dt.to_time.to_java(java.util.Date)
           end
         end
       end

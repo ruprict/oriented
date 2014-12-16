@@ -15,10 +15,8 @@ module Oriented
       it "should take start and end vertices, a label,  and a set of properties" do
         dc=nil
         expect{dc = dummy_class.new(start_vertex, end_vertex, "knows", name: "Fred")}.to_not raise_error
-        # dc.name = "Fred"
         dc.save
         dc.label.should == "knows"
-
       end
 
       it "raises an error if args not supplied" do
@@ -67,7 +65,6 @@ module Oriented
           subject.save
           obj = dummy_class.find(subject.id)
           obj.class.should.to_s === Oriented::Core::JavaEdge.to_s
-
         end
       end
 

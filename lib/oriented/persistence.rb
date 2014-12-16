@@ -15,11 +15,11 @@ module Oriented
       # @see Neo4j::Rails::Validations Neo4j::Rails::Validations - for the :validate parameter
       # @see Neo4j::Rails::Callbacks Neo4j::Rails::Callbacks - for callbacks
       def save(*)
-        create_or_update
-        # __java_obj.save
+        c = create_or_update
+        Oriented::IdentityMap.add(__java_obj, self)
+        c
       end
       wrap_in_transaction :save
-
 
       # Removes the node from Neo4j and freezes the object.
       def destroy
@@ -43,15 +43,25 @@ module Oriented
 
       # Returns +true+ if the record is persisted, i.e. it’s not a new record and it was not destroyed
       def persisted?
-        !new_record? && !destroyed?
+        if !new_record? && !destroyed?
+          if !committed? && Oriented.graph.raw_graph.transaction.get_record(__java_obj.id).nil?
+            @__java_obj = nil
+            return false
+          end
+          return true
+        end
+        false
       end
 
-      # Returns +true+ if the record hasn't been saved to Neo4j yet.
+      # Returns +true+ if the record hasn't been saved to Orientdb yet.
       def new_record?
         __java_obj.nil?
       end
-
       alias :new? :new_record?
+
+      def committed?
+        !__java_obj.identity.new?
+      end
 
       # Freeze the properties hash.
       def freeze

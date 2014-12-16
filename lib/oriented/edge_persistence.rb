@@ -5,7 +5,6 @@ module Oriented
     def initialize(*args)
       return initialize_attributes(nil) if args.size < 3 # then we have been loaded
 
-      
       start_vertex, end_vertex, label, props = *args
       raise ArgumentError.new "Start vertex not supplied" unless start_vertex
       raise ArgumentError.new "Start vertex is not a vertex" unless start_vertex.is_a?(Vertex)
@@ -16,7 +15,7 @@ module Oriented
       self.start_vertex = start_vertex
       self.end_vertex = end_vertex
       initialize_attributes(props)
-
+    
       @_start_vertex.add_unpersisted_outgoing_rel(label, self)
       @_end_vertex.add_unpersisted_incoming_rel(label, self)
       
@@ -29,7 +28,6 @@ module Oriented
 
 
     def create
-
       raise ArgumentError.new "Start vertex not supplied" unless start_vertex
       raise ArgumentError.new "Start vertex is not a vertex" unless start_vertex.is_a?(Vertex)
       raise ArgumentError.new "End vertex not supplied" unless end_vertex
@@ -52,6 +50,19 @@ module Oriented
       # write_changed_relationships
       # clear_relationships
       true
+    end
+
+    def persisted?
+      if !new_record? && !destroyed?
+        if __java_obj.lightweight?
+          return (start_vertex.persisted? && end_vertex.persisted?) ? true : false
+        elsif !committed? && Oriented.graph.raw_graph.transaction.get_record(__java_obj.id).nil?
+          @__java_obj = nil
+          return false
+        end
+        return true
+      end
+      false
     end
 
     # # Reload the object from the DB
@@ -151,7 +162,7 @@ module Oriented
     end
 
     def _persist_vertex(start_or_end_vertex)
-      ((start_or_end_vertex.new_record? || start_or_end_vertex.relationships_changed?) && !start_or_end_vertex.create_or_updating?) ? start_or_end_vertex.save : true
+      ((!start_or_end_vertex.persisted? || start_or_end_vertex.relationships_changed?) && !start_or_end_vertex.create_or_updating?) ? start_or_end_vertex.save : true
     end
 
   end

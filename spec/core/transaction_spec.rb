@@ -11,12 +11,12 @@ module Oriented
             @conn_mock = double("connection")
             Oriented.stub(:connection) {@conn_mock}
             @conn_mock.stub(:transaction_active?).and_return(true)
+            @conn_mock.stub_chain("java_connection.closed?").and_return(false)
           end
 
           it "rollbacks the transaction" do
             @conn_mock.stub(:close)
             @conn_mock.should_receive(:rollback)
-            @conn_mock.should_receive(:connect)
             begin
               described_class.run  do
                 raise StandardError
@@ -29,7 +29,6 @@ module Oriented
           it "raises the error" do
             @conn_mock.stub(:close)
             @conn_mock.should_receive(:rollback)
-            @conn_mock.should_receive(:connect)
             raised = false
             begin
               described_class.run  do
@@ -43,7 +42,6 @@ module Oriented
 
           it "closes the connection" do
             @conn_mock.stub(:rollback)
-            @conn_mock.should_receive(:connect)
             begin
               described_class.run  do
                 raise StandardError
@@ -51,7 +49,6 @@ module Oriented
             rescue 
               nil 
             end
-
           end
         end
 
@@ -66,13 +63,11 @@ module Oriented
               @conn_mock.stub(:transaction_active?) { true}
               described_class.run(@conn_mock, {commit_on_success: true}) do
               end
-
             end
 
           end
 
-
-        end
+        end # End When options are passed
 
         context "success" do
           before do
@@ -81,7 +76,8 @@ module Oriented
             @conn_mock.stub(:transaction_active?).and_return(true)
           end
         end
-      end
-    end
+
+      end # End Run
+    end # End Describe Transaction
   end
 end

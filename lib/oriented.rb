@@ -1,5 +1,5 @@
 require 'orientdb'
-
+require 'active_model'
 require 'forwardable'
 
 require_relative "oriented/version"
@@ -41,6 +41,7 @@ require_relative "oriented/edge"
 require_relative "oriented/edge/base_edge"
 
 require_relative "oriented/base_hook"
+require_relative "oriented/listener"
 
 module Oriented
   # Your code goes here...

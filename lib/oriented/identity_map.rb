@@ -76,6 +76,9 @@ module Oriented
         edge_repository.clear
       end
 
+      def all
+        vertex_repository.merge(edge_repository)
+      end
 
       #TODO: PUt in hooks for commit?
     end

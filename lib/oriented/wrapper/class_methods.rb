@@ -1,5 +1,5 @@
 module Oriented
-  # Responsible for loading the correct Ruby wrapper class for the Neo4j Entity
+  # Responsible for loading the correct Ruby wrapper class for the Orient Entity
   module Wrapper
     module ClassMethods
       # Loads the wrapper by using the original new method and initialize it
