@@ -10,29 +10,23 @@ module Oriented
     # with a new connection.
     #
     # An Identity map would help this, methinks.
+    
     class Transaction
 
       def self.run connection = Oriented.connection, options={}, &block
         puts options.inspect if options[:commit_on_sucess]
         ensure_connection(connection)
         ret = yield
-        connection.commit if options.fetch(:commit_on_success, false) == true
+        connection.commit if options.fetch(:commit_on_success, false)
+        @retries = 0 # RESET to 0 if it's able ot commit
         ret
       rescue => ex
-        @retries ||= 0
-        if @retries < 1
-          @retries += 1
-          puts "rescue att 1 e = #{ex}"
-          Oriented.connection
-          retry
-        else
-          unless connection.java_connection.closed?
-            connection.rollback
-          end
-          raise ex
+        puts "REGULAR RESCUE"
+        unless connection.java_connection.closed?
+          connection.rollback
         end
+        raise ex
       ensure
-        
       end
 
       private

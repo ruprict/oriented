@@ -92,7 +92,7 @@ module Oriented
       # @param [String,Fixnum,Float,true,false, Array] value to set
       def []=(key, value)
         raise "Not valid OrientDB Property value #{value.class}, valid: #{VALID_PROPERTY_VALUE_CLASSES.to_a.join(', ')}" unless valid_property?(value)
-        
+
         k = key.to_s
         if value.nil?
           remove_property(k)

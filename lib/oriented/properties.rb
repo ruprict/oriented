@@ -72,7 +72,6 @@ module Oriented
     end
 
 
-
     def props
       ret = {}
       property_names.each do |property_name|
@@ -163,7 +162,7 @@ module Oriented
     # Write attributes to the Orient DB only if they're altered
     def write_changed_attributes
       @_properties.each do |attribute, value|
-        write_property_to_db(attribute, value)  if changed_attributes.has_key?(attribute)
+        write_property_to_db(attribute, value) if changed_attributes.has_key?(attribute)
       end
     end
 

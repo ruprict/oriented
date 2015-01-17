@@ -39,7 +39,7 @@ module Oriented
             end
             newprop = nprop.flatten
           end
-          
+
           vertex = Oriented.connection.graph.add_vertex("class:#{cls.to_s}", *newprop)   
           # props.each_pair { |k, v| vertex[k]= v } if props
           vertex
