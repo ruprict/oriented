@@ -42,6 +42,7 @@ If, for example, you had these models:
       property :name
 
       has_n(:knows).relationship(Knows)
+    end
 
     class Knows
       include Oriented::Edge
