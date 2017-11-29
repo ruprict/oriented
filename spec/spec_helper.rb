@@ -2,8 +2,6 @@ require 'rspec'
 require_relative '../lib/oriented'
 require 'orientdb'
 require 'active_support'
-require "codeclimate-test-reporter"
-CodeClimate::TestReporter.start
 
 Dir['./spec/support/**/*.rb'].sort.each {|f| require f}
 
