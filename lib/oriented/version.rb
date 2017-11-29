@@ -1,3 +1,3 @@
 module Oriented
-  VERSION = "0.0.1"
+  VERSION = "2.2.26"
 end

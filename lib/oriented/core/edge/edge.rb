@@ -3,6 +3,10 @@ module Oriented
     # Can be used to define your own wrapper class around nodes and relationships
     module Edge
 
+      def id
+        get_id.to_s
+      end
+
       def get_rid
         get_id.to_s
       end

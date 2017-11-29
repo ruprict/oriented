@@ -13,7 +13,7 @@ $odb.close
 
 
 Oriented.configure do |config|
-  config.url = "local:#{TMP_DB_PATH}"
+  config.url = "plocal:#{TMP_DB_PATH}"
 end
 
 DB_CREATED = true
